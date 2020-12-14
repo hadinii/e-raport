@@ -19,6 +19,7 @@ class CreateSiswaTable extends Migration
             $table->string('nisn')->unique()->nullable();
             $table->string('tempat_lahir');
             $table->string('tanggal_lahir');
+            $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->boolean('is_aktif')->default(true);
             $table->string('tahun_masuk');
             $table->string('tahun_keluar')->nullable();

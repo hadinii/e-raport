@@ -61,6 +61,7 @@ class UserController extends Controller
             'nip' => 'required|digits:18|unique:users,nip,' . $user->id,
         ]);
 
+        $form['is_aktif'] = $request->is_aktif ? true : false;
         $user->update($form);
 
         return redirect()
@@ -76,7 +77,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        // $user = User::find($request->id);
         $user->delete();
 
         return redirect()

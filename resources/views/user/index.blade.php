@@ -116,7 +116,7 @@ $showNav = true;
                             </div>
                             <div class="j-unit">
                                 <label class="j-checkbox-toggle">
-                                    <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked>
+                                    <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked="{{ old('is_aktif') }}">
                                 </label>
                             </div>
                             <small class="">*: Password default untuk guru baru adalah angka 1-8</small>
@@ -163,14 +163,18 @@ $showNav = true;
     <script src="{{ asset('adminty\files\bower_components\datatables.net-bs4\js\dataTables.bootstrap4.min.js') }}"></script>
     <!-- Switch component js -->
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\switchery\js\switchery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('adminty\files\assets\pages\advance-elements\swithces.js') }}"></script>
     <!-- Max-length js -->
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\bootstrap-maxlength\js\bootstrap-maxlength.js') }}"></script>
     <script>
+
+        var elemsingle = document.querySelector('#is_aktif');
+        var is_aktif = new Switchery(elemsingle, { color: '#4680ff', jackColor: '#fff', size: 'small' });
+
         $(document).ready(function() {
             $('#simpletable').DataTable();
         });
 
+        // on edit btn clicked
         $('.btn-edit').click(function() {
             $('#modal-create-edit').modal('show');
             const form = $(this).data('form');
@@ -184,9 +188,10 @@ $showNav = true;
             // change form to specific row
             $('#nama').val(form.nama);
             $('#nip').val(form.nip);
-            form.is_aktif ? $('#is_aktif').removeAttr('checked') : $('#is_aktif').attr('checked');
+            _switchAktif(form.is_aktif);
         });
 
+        // on delete btn clicked
         $('.btn-delete').click(function() {
             $('#modal-delete').modal('show');
             const id = $(this).data('id');
@@ -196,10 +201,18 @@ $showNav = true;
             $('#form-delete').attr('action', `${url}/${id}`);
         });
 
+        // change switch value
+        function _switchAktif (val) {
+            elemsingle.checked = val;
+            is_aktif.handleOnchange(val);
+        }
+
+        // show modal if any errors
         @if ($errors->any())
             $('#modal-create-edit').modal('show');
         @endif
 
+        // show success notification on success
         @if ($message = session('success'))
             const message = '{{ $message }}'
             notify('fas fa-check', 'success', message);

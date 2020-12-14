@@ -29,7 +29,7 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        //
+        return view('siswa.create');
     }
 
     /**
@@ -85,6 +85,10 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
-        //
+        $siswa->delete();
+
+        return redirect()
+            ->route('siswa.index')
+            ->withSuccess('Berhasil menghapus data siswa!');
     }
 }

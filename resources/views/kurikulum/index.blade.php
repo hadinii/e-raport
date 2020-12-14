@@ -1,5 +1,5 @@
 <?php
-$title = 'Title Here';
+$title = 'Data Kurikulum';
 $showNav = true;
 ?>
 @extends('layouts.adminty')
@@ -14,7 +14,7 @@ $showNav = true;
                 <div class="col-lg-8">
                     <div class="page-header-title">
                         <div class="d-inline">
-                            <h4>{{$title}}</h4>
+                            <h4>{{ $title }}</h4>
                             <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
                         </div>
                     </div>

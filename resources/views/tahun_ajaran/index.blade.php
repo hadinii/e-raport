@@ -15,7 +15,7 @@ $showNav = true;
                     <div class="page-header-title">
                         <div class="d-inline">
                             <h4>{{$title}}</h4>
-                            <span>Halaman data guru, digunakan untuk melihat, menambah, mengubah, dan menghapus data guru. </span>
+                            <span>Halaman data tahun ajaran, digunakan untuk melihat, menambah, mengubah, dan menghapus data tahun ajaran. </span>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ $showNav = true;
                     <div class="card">
                         <div class="card-header">
                             <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modal-create-edit">
-                                <i class="feather icon-plus"></i>Tambah Guru
+                                <i class="feather icon-plus"></i>Tambah tahun ajaran
                             </button>
                         </div>
                         <div class="card-block">
@@ -184,7 +184,7 @@ $showNav = true;
             // change form to specific row
             $('#nama').val(form.nama);
             $('#nip').val(form.nip);
-            form.is_aktif ? $('#is_aktif').removeAttr('checked') : $('#is_aktif').attr('checked');
+
         });
 
         $('.btn-delete').click(function() {
