@@ -40,7 +40,18 @@ class TahunAjaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form = $this->validate($request, [
+            'tahun_aktif' => 'required|string',
+            'semester' => 'required|string|in:Ganjil,Genap',
+            'tanggal_raport' => 'required|date',
+        ]);
+
+        $form['is_aktif'] = $request->is_aktif ? true : false;
+        $semester = TahunAjaran::create($form);
+
+        return redirect()
+            ->route('tahun.index')
+            ->withSuccess('Berhasil menambah data tahun ajaran!');
     }
 
     /**

@@ -17,4 +17,13 @@ class TahunAjaran extends Model
     protected $casts = [
         'tanggal_raport' => 'datetime',
     ];
+
+    public function setIsAktifAttribute($value)
+    {
+        if ($value) {
+            $allSemester = TahunAjaran::where('id', '!=', $this->id);
+            $allSemester->update(['is_aktif' => 0]);
+        }
+        $this->attributes['is_aktif'] = $value;
+    }
 }

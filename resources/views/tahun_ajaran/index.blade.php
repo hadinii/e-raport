@@ -83,12 +83,12 @@ $showNav = true;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Guru</h4>
+                        <h4 class="modal-title">Tahun Ajaran</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-create-edit" action="{{ route('user.store') }}" method="POST">
+                    <form id="form-create-edit" action="{{ route('tahun.store') }}" method="POST">
                         @csrf
                         <input id="method-form-create-edit" type="hidden" name="_method" value="">
                         <div class="modal-body">
@@ -105,21 +105,29 @@ $showNav = true;
                                 </div>
                             @endif
                             <div class="form-group form-primary">
-                                <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Lengkap" value="{{ old('nama') }}" required>
+                                <input type="text" id="tahun_aktif" name="tahun_aktif" class="form-control @error('tahun_aktif') is-invalid @enderror" placeholder="Tahun Aktif" value="{{ old('tahun_aktif') }}" required>
                                 <span class="form-bar"></span>
-                                <small class="text-muted">Nama lengkap dan gelar</small>
+                                <small class="text-muted">Tahun ajaran, cth: 2020/2021</small>
                             </div>
                             <div class="form-group form-primary">
-                                <input type="number" min="0" maxlength="18" id="nip" name="nip" class="nip form-control treshold-i @error('nip') is-invalid @enderror" placeholder="NIP" value="{{ old('nip') }}" required>
+                                <select id="semester" name="semester" class="semester form-control treshold-i @error('semester') is-invalid @enderror" placeholder="Semester" value="{{ old('semester') }}" required>
+                                    <option value="">Pilih Semester</option>
+                                    <option value="Ganjil">Ganjil</option>
+                                    <option value="Genap">Genap</option>
+                                </select>
                                 <span class="form-bar"></span>
-                                <small class="text-muted">Terdiri dari 18 digit angka</small>
+                                {{-- <small class="text-muted">Terdiri dari 18 digit angka</small> --}}
+                            </div>
+                            <div class="form-group form-primary">
+                                <input type="text" id="tanggal_raport" name="tanggal_raport" class="form-control @error('tanggal_raport') is-invalid @enderror" placeholder="Tanggal Raport" value="{{ old('tanggal_raport') }}" required>
+                                <span class="form-bar"></span>
+                                <small class="text-muted">Tanggal yang akan tertera di raport</small>
                             </div>
                             <div class="j-unit">
                                 <label class="j-checkbox-toggle">
                                     <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked>
                                 </label>
                             </div>
-                            <small class="">*: Password default untuk guru baru adalah angka 1-8</small>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
@@ -166,9 +174,17 @@ $showNav = true;
     <script type="text/javascript" src="{{ asset('adminty\files\assets\pages\advance-elements\swithces.js') }}"></script>
     <!-- Max-length js -->
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\bootstrap-maxlength\js\bootstrap-maxlength.js') }}"></script>
+    <!-- Date-dropper js -->
+    <script type="text/javascript" src="{{ asset('adminty\files\bower_components\datedropper\js\datedropper.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#simpletable').DataTable();
+            $("#tanggal_raport").dateDropper( {
+                format: "d F Y",
+                dropWidth: 200,
+                dropPrimaryColor: "#1abc9c",
+                dropBorder: "1px solid #1abc9c"
+            });
         });
 
         $('.btn-edit').click(function() {

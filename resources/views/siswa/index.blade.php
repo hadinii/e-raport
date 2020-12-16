@@ -263,10 +263,15 @@ $showNav = true;
             $('#form-create-edit').attr('action', `${url}/${form.id}`);
             $('#method-form-create-edit').val('PUT');
 
-
             // change form to specific row
             $('#nama').val(form.nama);
-            $('#nip').val(form.nip);
+            $('#nisn').val(form.nisn);
+            $('#jenis_kelamin').val(form.jenis_kelamin);
+            $('#tempat_lahir').val(form.tempat_lahir);
+            $('#tanggal_lahir').val(form.tanggal_lahir);
+            $('#tahun_masuk').val(form.tahun_masuk);
+            $('#tahun_keluar').val(form.tahun_keluar);
+            _switchAktif(form.is_aktif);
         });
 
         // on delete btn clicked
@@ -287,6 +292,8 @@ $showNav = true;
             }else {
                 tahun_keluar.attr('disabled', false);
             }
+            elemsingle.checked = val;
+            is_aktif.handleOnchange(val);
         }
 
         // show modal if any errors

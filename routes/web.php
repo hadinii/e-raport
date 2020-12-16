@@ -29,12 +29,14 @@ Route::prefix('/user')->name('user.')->group(function () {
 Route::prefix('/siswa')->name('siswa.')->group(function () {
     Route::get('/', 'SiswaController@index')->name('index')->middleware('auth');
     Route::post('/', 'SiswaController@store')->name('store')->middleware('auth');
+    Route::put('/{siswa?}', 'SiswaController@update')->name('update')->middleware('auth');
     Route::delete('/{siswa?}', 'SiswaController@destroy')->name('destroy')->middleware('auth');
 });
 
 // Tahun Ajaran Routes
 Route::prefix('/tahun')->name('tahun.')->group(function () {
     Route::get('/', 'TahunAjaranController@index')->name('index')->middleware('auth');
+    Route::post('/', 'TahunAjaranController@store')->name('store')->middleware('auth');
 });
 
 // Kurikulum Routes
