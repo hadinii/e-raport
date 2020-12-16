@@ -49,4 +49,14 @@ class User extends Authenticatable
             ->orderByDesc('id')
             ->get();
     }
+
+    public function pelajaran()
+    {
+        return $this->hasMany('App\Jadwal');
+    }
+
+    public function kelas()
+    {
+        return $this->hasOne('App\Kelas');
+    }
 }

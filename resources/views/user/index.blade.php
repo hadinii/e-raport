@@ -122,8 +122,8 @@ $showNav = true;
                             <small class="">*: Password default untuk guru baru adalah angka 1-8</small>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light ">Simpan</button>
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -167,6 +167,7 @@ $showNav = true;
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\bootstrap-maxlength\js\bootstrap-maxlength.js') }}"></script>
     <script>
 
+        const url = '{{ route('user.index') }}';
         var elemsingle = document.querySelector('#is_aktif');
         var is_aktif = new Switchery(elemsingle, { color: '#4680ff', jackColor: '#fff', size: 'small' });
 
@@ -180,7 +181,6 @@ $showNav = true;
             const form = $(this).data('form');
 
             // change url to specific row
-            const url = '{{ route('user.update') }}';
             $('#form-create-edit').attr('action', `${url}/${form.id}`);
             $('#method-form-create-edit').val('PUT');
 
@@ -197,7 +197,6 @@ $showNav = true;
             const id = $(this).data('id');
 
             // change url to specific row
-            const url = '{{ route('user.update') }}';
             $('#form-delete').attr('action', `${url}/${id}`);
         });
 

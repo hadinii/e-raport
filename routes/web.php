@@ -17,11 +17,7 @@ Route::get('/', 'HomeController@index')->name('dashboard');
 
 Auth::routes();
 
-/*
-|---------------------
-| User Routes
-|---------------------
-*/
+// User Routes
 Route::prefix('/user')->name('user.')->group(function () {
     Route::get('/', 'UserController@index')->name('index')->middleware('auth');
     Route::post('/', 'UserController@store')->name('store')->middleware('auth');
@@ -29,39 +25,24 @@ Route::prefix('/user')->name('user.')->group(function () {
     Route::delete('/{user?}', 'UserController@destroy')->name('destroy')->middleware('auth');
 });
 
-/*
-|---------------------
-| Siswa Routes
-|---------------------
-*/
+// Siswa Routes
 Route::prefix('/siswa')->name('siswa.')->group(function () {
     Route::get('/', 'SiswaController@index')->name('index')->middleware('auth');
-    Route::get('/create', 'SiswaController@create')->name('create')->middleware('auth');
-    // Route::post('/', 'SiswaController@store')->name('store')->middleware('auth');
-    // Route::put('/{siswa?}', 'SiswaController@update')->name('update')->middleware('auth');
+    Route::post('/', 'SiswaController@store')->name('store')->middleware('auth');
     Route::delete('/{siswa?}', 'SiswaController@destroy')->name('destroy')->middleware('auth');
 });
 
-/*
-|---------------------
-| Tahun Ajaran Routes
-|---------------------
-*/
+// Tahun Ajaran Routes
 Route::prefix('/tahun')->name('tahun.')->group(function () {
     Route::get('/', 'TahunAjaranController@index')->name('index')->middleware('auth');
-    // Route::post('/', 'TahunAjaranController@store')->name('store')->middleware('auth');
-    // Route::put('/{tahun?}', 'TahunAjaranController@update')->name('update')->middleware('auth');
-    // Route::delete('/{tahun?}', 'TahunAjaranController@destroy')->name('destroy')->middleware('auth');
 });
 
-/*
-|---------------------
-| Kurikulum Routes
-|---------------------
-*/
+// Kurikulum Routes
 Route::prefix('/kurikulum')->name('kurikulum.')->group(function () {
     Route::get('/', 'KurikulumController@index')->name('index')->middleware('auth');
-    // Route::post('/', 'KurikulumController@store')->name('store')->middleware('auth');
-    // Route::put('/{kurikulum?}', 'KurikulumController@update')->name('update')->middleware('auth');
-    // Route::delete('/{kurikulum?}', 'KurikulumController@destroy')->name('destroy')->middleware('auth');
+});
+
+// Kelas Routes
+Route::prefix('/kelas')->name('kelas.')->group(function () {
+    Route::get('/', 'KelasController@index')->name('index')->middleware('auth');
 });

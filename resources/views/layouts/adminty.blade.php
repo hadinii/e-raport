@@ -26,6 +26,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\files\assets\css\component.css') }}">
     <!-- Notification.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\files\assets\pages\notification\notification.css') }}">
+    <!-- Date-Dropper css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\files\bower_components\datedropper\css\datedropper.min.css') }}">
     <!-- Animate.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\files\bower_components\animate.css\css\animate.css') }}">
     <!-- Switch component css -->

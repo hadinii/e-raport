@@ -39,7 +39,6 @@ class UserController extends Controller
         // make default password
         $form['password'] = '12345678';
         $form['is_aktif'] = $request->is_aktif ? true : false;
-        // return $form;
         $user = User::create($form);
 
         return redirect()

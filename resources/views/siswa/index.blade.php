@@ -65,9 +65,9 @@ $showNav = true;
                     <!-- Zero config.table start -->
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('siswa.create') }}" class="btn btn-sm btn-primary float-right">
+                            <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modal-create-edit">
                                 <i class="feather icon-plus"></i>Tambah Siswa
-                            </a>
+                            </button>
                         </div>
                         <div class="card-block">
                             <div class="dt-responsive table-responsive">
@@ -95,11 +95,11 @@ $showNav = true;
                                                 </label>
                                             </td>
                                             <td>
+                                                <button class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
+                                                    <i class="feather icon-info mx-auto"></i>
+                                                </button>
                                                 <button class="btn btn-sm btn-primary btn-edit px-2" data-form="{{ $row }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
                                                     <i class="feather icon-edit mx-auto"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ubah Password">
-                                                    <i class="feather icon-unlock mx-auto"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger btn-delete px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Hapus">
                                                     <i class="feather icon-trash-2 mx-auto"></i>
@@ -119,15 +119,15 @@ $showNav = true;
         <!-- Page Body end -->
         <!-- Modal create and edit start -->
         <div class="modal fade" id="modal-create-edit" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Guru</h4>
+                        <h4 class="modal-title">Siswa</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-create-edit" action="{{ route('user.store') }}" method="POST">
+                    <form id="form-create-edit" action="{{ route('siswa.store') }}" method="POST">
                         @csrf
                         <input id="method-form-create-edit" type="hidden" name="_method" value="">
                         <div class="modal-body">
@@ -143,21 +143,57 @@ $showNav = true;
                                     </ul>
                                 </div>
                             @endif
-                            <div class="form-group form-primary">
-                                <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Lengkap" value="{{ old('nama') }}" required>
-                                <span class="form-bar"></span>
-                                <small class="text-muted">Nama lengkap dan gelar</small>
+                            <div class="col-12 row">
+                                <div class="col-6">
+                                    <div class="form-group form-primary">
+                                        <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Lengkap" value="{{ old('nama') }}" required>
+                                        <span class="form-bar"></span>
+                                    </div>
+                                    <div class="form-group form-primary">
+                                        <input type="number" min="0" minlength="10" id="nisn" name="nisn" class="form-control @error('nisn') is-invalid @enderror" placeholder="Nomor Induk Siswa Nasional" value="{{ old('nisn') }}" required>
+                                        <span class="form-bar"></span>
+                                        <small class="text-muted">Terdiri dari 10 digit angka</small>
+                                    </div>
+                                    <div class="form-group form-primary">
+                                        <select id="jenis_kelamin" name="jenis_kelamin" class="form-control @error('jenis_kelamin') is-invalid @enderror" placeholder="Jenis Kelamin" value="{{ old('jenis_kelamin') }}" required>
+                                            <option value="">Jenis Kelamin</option>
+                                            <option value="Laki-Laki">Laki-Laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                        </select>
+                                        <span class="form-bar"></span>
+                                    </div>
+                                    <div class="form-group form-primary row">
+                                        <div class="col-6">
+                                            <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control @error('tempat_lahir') is-invalid @enderror" placeholder="Tempat Lahir" value="{{ old('tempat_lahir') }}" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" id="tanggal_lahir" name="tanggal_lahir" class="form-control" placeholder="Tanggal Lahir" value="{{ old('tanggal_lahir') }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-primary row">
+                                        <div class="col-6">
+                                            <input type="text" id="tahun_masuk" name="tahun_masuk" class="form-control @error('tahun_masuk') is-invalid @enderror" placeholder="Tahun Masuk" value="{{ old('tahun_masuk') }}" required>
+                                            <span class="form-bar"></span>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" id="tahun_keluar" name="tahun_keluar" class="form-control @error('tahun_keluar') is-invalid @enderror" placeholder="Tahun Keluar" value="{{ old('tahun_keluar') }}" disabled>
+                                            <span class="form-bar"></span>
+                                        </div>
+                                        {{-- <small>Kosongkan tahun keluar bila masih dalam masa studi</small> --}}
+                                    </div>
+                                    <div class="j-unit">
+                                        <label class="j-checkbox-toggle">
+                                            <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked="{{ old('is_aktif') }}">
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group form-primary">
-                                <input type="number" min="0" minlength="18" id="nip" name="nip" class="form-control @error('nip') is-invalid @enderror" placeholder="NIP" value="{{ old('nip') }}" required>
-                                <span class="form-bar"></span>
-                                <small class="text-muted">Nomor Induk Pengajar. 18 digit angka</small>
-                            </div>
-                            <small class="">*: Password default untuk guru baru adalah angka 1-8</small>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light ">Simpan</button>
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -169,16 +205,16 @@ $showNav = true;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Hapus data guru</h4>
+                        <h4 class="modal-title">Hapus data siswa</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-delete" action="{{ route('user.destroy') }}" method="POST">
+                    <form id="form-delete" action="{{ route('siswa.destroy') }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body">
-                            <p class="text-center">Apakah anda yakin ingin menghapus data guru ini ?</p>
+                            <p class="text-center">Apakah anda yakin ingin menghapus data siswa ini ?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
@@ -195,9 +231,28 @@ $showNav = true;
     <!-- data-table js -->
     <script src="{{ asset('adminty\files\bower_components\datatables.net\js\jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('adminty\files\bower_components\datatables.net-bs4\js\dataTables.bootstrap4.min.js') }}"></script>
+    <!-- Switch component js -->
+    <script type="text/javascript" src="{{ asset('adminty\files\bower_components\switchery\js\switchery.min.js') }}"></script>
+    <!-- Date-dropper js -->
+    <script type="text/javascript" src="{{ asset('adminty\files\bower_components\datedropper\js\datedropper.min.js') }}"></script>
     <script>
+
+        const url = '{{ route('siswa.index') }}';
+        var elemsingle = document.querySelector('#is_aktif');
+        var is_aktif = new Switchery(elemsingle, { color: '#4680ff', jackColor: '#fff', size: 'small' });
+
         $(document).ready(function() {
             $('#simpletable').DataTable();
+            $("#tanggal_lahir").dateDropper( {
+                format: "d F Y",
+                dropWidth: 200,
+                dropPrimaryColor: "#1abc9c",
+                dropBorder: "1px solid #1abc9c"
+            });
+        });
+
+        $('#is_aktif').click(function() {
+            _switchAktif(elemsingle.checked);
         });
 
         $('.btn-edit').click(function() {
@@ -205,7 +260,6 @@ $showNav = true;
             const form = $(this).data('form');
 
             // change url to specific row
-            const url = '{{ route('user.update') }}';
             $('#form-create-edit').attr('action', `${url}/${form.id}`);
             $('#method-form-create-edit').val('PUT');
 
@@ -215,19 +269,32 @@ $showNav = true;
             $('#nip').val(form.nip);
         });
 
+        // on delete btn clicked
         $('.btn-delete').click(function() {
             $('#modal-delete').modal('show');
             const id = $(this).data('id');
 
             // change url to specific row
-            const url = '{{ route('user.update') }}';
             $('#form-delete').attr('action', `${url}/${id}`);
         });
 
+        // change switch value
+        function _switchAktif(val) {
+            const tahun_keluar = $('#tahun_keluar');
+            if (val) {
+                tahun_keluar.val(null);
+                tahun_keluar.attr('disabled', true);
+            }else {
+                tahun_keluar.attr('disabled', false);
+            }
+        }
+
+        // show modal if any errors
         @if ($errors->any())
             $('#modal-create-edit').modal('show');
         @endif
 
+        // show success notification on success
         @if ($message = session('success'))
             const message = '{{ $message }}'
             notify('fas fa-check', 'success', message);

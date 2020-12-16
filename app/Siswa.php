@@ -11,6 +11,6 @@ class Siswa extends Model
 
     public function kelas()
     {
-        return $this->belongsTo('App\Kelas');
+        return $this->hasMany('App\Raport', 'siswa_id');
     }
 }

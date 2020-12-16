@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Kelas;
+use App\Jadwal;
 use Illuminate\Http\Request;
 
-class KelasController extends Controller
+class JadwalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,7 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelas = Kelas::with(['wali_kelas'])->get();
-
-        $data = [
-            'kelas' => $kelas
-        ];
-        return view('kelas.index', $data);
+        //
     }
 
     /**
@@ -46,10 +41,10 @@ class KelasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Kelas  $kelas
+     * @param  \App\Jadwal  $jadwal
      * @return \Illuminate\Http\Response
      */
-    public function show(Kelas $kelas)
+    public function show(Jadwal $jadwal)
     {
         //
     }
@@ -57,10 +52,10 @@ class KelasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Kelas  $kelas
+     * @param  \App\Jadwal  $jadwal
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kelas $kelas)
+    public function edit(Jadwal $jadwal)
     {
         //
     }
@@ -69,10 +64,10 @@ class KelasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Kelas  $kelas
+     * @param  \App\Jadwal  $jadwal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kelas $kelas)
+    public function update(Request $request, Jadwal $jadwal)
     {
         //
     }
@@ -80,10 +75,10 @@ class KelasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Kelas  $kelas
+     * @param  \App\Jadwal  $jadwal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kelas $kelas)
+    public function destroy(Jadwal $jadwal)
     {
         //
     }

@@ -40,7 +40,23 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        $form = $this->validate($request, [
+            'nama' => 'required|string',
+            'nisn' => 'required|digits:10|unique:siswa,nisn',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|string',
+            'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
+            'tahun_masuk' => 'required|string',
+            'tahun_keluar' => '',
+        ]);
+
+        $form['is_aktif'] = $request->is_aktif ? true : false;
+        $siswa = Siswa::create($form);
+
+        return redirect()
+            ->route('siswa.index')
+            ->withSuccess('Berhasil menambah dat siswa!');
     }
 
     /**

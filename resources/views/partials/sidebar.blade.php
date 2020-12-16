@@ -49,8 +49,8 @@ $currentUrl = url()->current();
                         <span class="pcoded-mtext">Data Tahun Ajaran</span>
                     </a>
                 </li>
-                <li class="">
-                    <a href="{{ route('dashboard') }}">
+                <li class="{{ $currentUrl == route('kelas.index') ? 'active pcoded-trigger' : '' }}">
+                    <a href="{{ route('kelas.index') }}">
                         <span class="pcoded-micon"><i class="feather icon-server"></i></span>
                         <span class="pcoded-mtext">Data Kelas</span>
                     </a>
