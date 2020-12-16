@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Kelas;
+use App\TahunAjaran;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
@@ -12,11 +13,16 @@ class KelasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TahunAjaran $semester = null)
     {
-        $kelas = Kelas::with(['wali_kelas'])->get();
+        is_null($semester) && $semester = TahunAjaran::getActive();
+        $kelas = $semester->kelas;
+        $allSemester = TahunAjaran::getAll();
+        return $semester;
 
         $data = [
+            'semester' => $semester,
+            'allSemester' => $allSemester,
             'kelas' => $kelas
         ];
         return view('kelas.index', $data);

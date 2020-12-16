@@ -9,12 +9,18 @@ class Kelas extends Model
     protected $table = 'kelas';
     protected $guarded = ['id'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
     protected $appends = [
         'tingkat',
         'jumlah_siswa',
         'jumlah_mapel'
     ];
 
+    // Getters
     public function getTingkatAttribute()
     {
         return $this->tingkat()->first()->nama;
@@ -30,6 +36,7 @@ class Kelas extends Model
         return $this->pelajaran()->count();
     }
 
+    // Relations
     public function tingkat()
     {
         return $this->belongsTo('App\Tingkat');
@@ -37,7 +44,7 @@ class Kelas extends Model
 
     public function wali_kelas()
     {
-        return $this->belongsTo('App\User', 'wali_kelas_id');
+        return $this->belongsTo('App\User');
     }
 
     public function siswa()
@@ -48,5 +55,10 @@ class Kelas extends Model
     public function pelajaran()
     {
         return $this->hasMany('App\Jadwal', 'pelajaran_id');
+    }
+
+    public function tahun_ajaran()
+    {
+        return $this->belongsTo('App\TahunAjaran');
     }
 }

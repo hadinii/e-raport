@@ -38,18 +38,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // Setters
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
     }
 
-    public static function getAllUsers()
+    // Getters
+    public static function getAll()
     {
         return User::where('role', 'Non-Admin')
             ->orderByDesc('id')
             ->get();
     }
 
+    // Relations
     public function pelajaran()
     {
         return $this->hasMany('App\Jadwal');

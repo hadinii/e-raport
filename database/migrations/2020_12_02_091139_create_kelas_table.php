@@ -15,6 +15,7 @@ class CreateKelasTable extends Migration
     {
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
+            $table->integer('tahun_ajaran_id');
             $table->integer('tingkat_id');
             $table->integer('wali_kelas_id');
             $table->string('nama');

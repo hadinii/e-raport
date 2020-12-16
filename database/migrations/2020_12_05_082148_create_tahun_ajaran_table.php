@@ -19,6 +19,7 @@ class CreateTahunAjaranTable extends Migration
             $table->enum('semester', ['Genap', 'Ganjil']);
             $table->date('tanggal_raport');
             $table->boolean('is_aktif')->default(false);
+            $table->integer('kurikulum_id');
             $table->timestamps();
         });
     }

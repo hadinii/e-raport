@@ -38,22 +38,13 @@ $showNav = true;
                         </div>
                         <div class="card-block">
                             <div class="col-4 form-group row px-0">
-                                <label class="col-sm-5 col-form-label">Status :</label>
+                                <label class="col-sm-5 col-form-label">Tahun Ajaran :</label>
                                 <div class="col-sm-7">
                                     <select name="status" class="form-control">
                                         <option value="">Semua</option>
-                                        <option value="Aktif">Aktif</option>
-                                        <option value="Non-Aktif">Non-Aktif</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-4 form-group row px-0">
-                                <label class="col-sm-5 col-form-label">Tahun Masuk :</label>
-                                <div class="col-sm-7">
-                                    <select name="status" class="form-control">
-                                        <option value="">Semua</option>
-                                        <option value="Aktif">Aktif</option>
-                                        <option value="Non-Aktif">Non-Aktif</option>
+                                        @foreach ($allSemester as $row)
+                                            <option value="{{ $row->id }}" {{ $semester->id == $row->id ? 'selected' : '' }}>{{ $row->tahun_aktif.' - '.$row->semester }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
