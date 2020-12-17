@@ -18,22 +18,36 @@ class TahunAjaran extends Model
         'tanggal_raport' => 'datetime',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'kurikulum'
+    ];
+
     // Getters
+    public function getKurikulumAttribute()
+    {
+        return $this->kurikulum()->first()->nama;
+    }
+
     public static function getActive()
     {
-        return TahunAjaran::where('is_aktif', 1)->first();
+        return self::where('is_aktif', 1)->first();
     }
 
     public static function getAll()
     {
-        return TahunAjaran::latest()->get();
+        return self::latest()->get();
     }
 
     // Setters
     public function setIsAktifAttribute($value)
     {
         if ($value) {
-            $allSemester = TahunAjaran::where('id', '!=', $this->id);
+            $allSemester = self::where('id', '!=', $this->id);
             $allSemester->update(['is_aktif' => 0]);
         }
         $this->attributes['is_aktif'] = $value;
@@ -43,5 +57,10 @@ class TahunAjaran extends Model
     public function kelas()
     {
         return $this->hasMany('App\Kelas', 'tahun_ajaran_id');
+    }
+
+    public function kurikulum()
+    {
+        return $this->belongsTo('App\Kurikulum');
     }
 }

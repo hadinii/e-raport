@@ -9,6 +9,7 @@ class Raport extends Model
     protected $table = 'raport';
     protected $guarded = ['id'];
 
+    // Relations
     public function siswa()
     {
         return $this->belongsTo('App\Siswa');

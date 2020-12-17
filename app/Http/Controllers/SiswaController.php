@@ -96,7 +96,7 @@ class SiswaController extends Controller
             'tanggal_lahir' => 'required|string',
             'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
             'tahun_masuk' => 'required|string',
-            'tahun_keluar' => '',
+            'tahun_keluar' => $request->is_aktif ? '' : 'required|string',
         ]);
 
         $form['is_aktif'] = $request->is_aktif ? true : false;

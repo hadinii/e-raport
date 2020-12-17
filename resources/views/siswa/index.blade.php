@@ -155,10 +155,10 @@ $showNav = true;
                                         <small class="text-muted">Terdiri dari 10 digit angka</small>
                                     </div>
                                     <div class="form-group form-primary">
-                                        <select id="jenis_kelamin" name="jenis_kelamin" class="form-control @error('jenis_kelamin') is-invalid @enderror" placeholder="Jenis Kelamin" value="{{ old('jenis_kelamin') }}" required>
+                                        <select id="jenis_kelamin" name="jenis_kelamin" class="form-control @error('jenis_kelamin') is-invalid @enderror" placeholder="Jenis Kelamin" required>
                                             <option value="">Jenis Kelamin</option>
-                                            <option value="Laki-Laki">Laki-Laki</option>
-                                            <option value="Perempuan">Perempuan</option>
+                                            <option value="Laki-Laki" {{ old('jenis_kelamin') == 'Laki-Laki' ? 'Selected' : '' }}>Laki-Laki</option>
+                                            <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'Selected' : '' }}>Perempuan</option>
                                         </select>
                                         <span class="form-bar"></span>
                                     </div>

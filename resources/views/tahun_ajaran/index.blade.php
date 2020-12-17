@@ -40,6 +40,7 @@ $showNav = true;
                                     <thead>
                                     <tr>
                                         <th>Nama</th>
+                                        <th>Kurikulum</th>
                                         <th>Tanggal Raport</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -49,6 +50,7 @@ $showNav = true;
                                         @foreach ($semester as $row)
                                         <tr>
                                             <td>{{ $row->tahun_aktif .' - '. $row->semester }}</td>
+                                            <td>{{ $row->kurikulum }}</td>
                                             <td>{{ $row->tanggal_raport->format('d F Y') }}</td>
                                             <td>
                                                 <label class="badge badge-{{ $row->is_aktif ? 'success' : 'danger'}}">
@@ -114,6 +116,16 @@ $showNav = true;
                                     <option value="">Pilih Semester</option>
                                     <option value="Ganjil">Ganjil</option>
                                     <option value="Genap">Genap</option>
+                                </select>
+                                <span class="form-bar"></span>
+                                {{-- <small class="text-muted">Terdiri dari 18 digit angka</small> --}}
+                            </div>
+                            <div class="form-group form-primary">
+                                <select id="kurikulum" name="kurikulum_id" class="kurikulum form-control treshold-i @error('kurikulum') is-invalid @enderror" placeholder="Kurikulum" value="{{ old('kurikulum') }}" required>
+                                    <option value="">Pilih Kurikulum</option>
+                                    @foreach ($kurikulum as $row)
+                                        <option value="{{ $row->id }}">{{ $row->nama }}</option>
+                                    @endforeach
                                 </select>
                                 <span class="form-bar"></span>
                                 {{-- <small class="text-muted">Terdiri dari 18 digit angka</small> --}}
