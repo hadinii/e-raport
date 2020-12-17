@@ -13,18 +13,19 @@ class KelasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(TahunAjaran $semester = null)
+    public function index(Request $request)
     {
+        $semester = TahunAjaran::find($request->semester);
         is_null($semester) && $semester = TahunAjaran::getActive();
-        $kelas = $semester->kelas;
+        $kelas = ($semester->kelas ?? []);
         $allSemester = TahunAjaran::getAll();
-        return $semester;
 
         $data = [
             'semester' => $semester,
             'allSemester' => $allSemester,
             'kelas' => $kelas
         ];
+        // return $data;
         return view('kelas.index', $data);
     }
 

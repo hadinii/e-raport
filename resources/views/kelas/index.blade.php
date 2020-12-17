@@ -37,18 +37,23 @@ $showNav = true;
                             </div>
                         </div>
                         <div class="card-block">
-                            <div class="col-4 form-group row px-0">
-                                <label class="col-sm-5 col-form-label">Tahun Ajaran :</label>
-                                <div class="col-sm-7">
-                                    <select name="status" class="form-control">
-                                        <option value="">Semua</option>
-                                        @foreach ($allSemester as $row)
-                                            <option value="{{ $row->id }}" {{ $semester->id == $row->id ? 'selected' : '' }}>{{ $row->tahun_aktif.' - '.$row->semester }}</option>
-                                        @endforeach
-                                    </select>
+                            <form action="{{ route('kelas.index') }}">
+                                <div class="col-4 form-group row px-0">
+                                    <label class="col-sm-5 col-form-label">Tahun Ajaran :</label>
+                                    <div class="col-sm-7">
+                                        <select id="semester" name="semester" class="form-control">
+                                            @if ($allSemester !== [])
+                                                @foreach ($allSemester as $row)
+                                                    <option value="{{ $row->id }}" {{ $semester->id == $row->id ? 'selected' : '' }}>{{ $row->tahun_aktif.' - '.$row->semester }}</option>
+                                                @endforeach
+                                            @else
+                                                <option value=""> - </option>
+                                            @endif
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                <button type="submit" class="btn btn-sm btn-primary float-right">Filter</button>
+                            </form>
                         </div>
                     </div>
                     <!-- Zero config.table start -->
