@@ -29,15 +29,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     // Setters
     public function setPasswordAttribute($value)
     {
@@ -47,9 +38,17 @@ class User extends Authenticatable
     // Getters
     public static function getAll()
     {
-        return User::where('role', 'Non-Admin')
-            ->orderByDesc('id')
+        return self::where('role', 'Non-Admin')
+            ->latest()
             ->get();
+    }
+
+    public static function getActive()
+    {
+        return self::where('role', 'Non-Admin')
+            ->where('is_aktif', 1)
+            ->latest()
+            ->pluck('id', 'nama');
     }
 
     // Relations

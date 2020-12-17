@@ -40,7 +40,9 @@ class TahunAjaran extends Model
 
     public static function getActive()
     {
-        return self::where('is_aktif', 1)->first();
+        return self::where('is_aktif', 1)
+            ->with(['kelas'])
+            ->first();
     }
 
     public static function getAll()

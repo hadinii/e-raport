@@ -48,4 +48,5 @@ Route::prefix('/kurikulum')->name('kurikulum.')->group(function () {
 // Kelas Routes
 Route::prefix('/kelas')->name('kelas.')->group(function () {
     Route::get('/', 'KelasController@index')->name('index')->middleware('auth');
+    Route::post('/', 'KelasController@store')->name('store')->middleware('auth');
 });

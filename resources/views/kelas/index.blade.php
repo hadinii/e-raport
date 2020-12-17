@@ -42,9 +42,9 @@ $showNav = true;
                                     <label class="col-sm-5 col-form-label">Tahun Ajaran :</label>
                                     <div class="col-sm-7">
                                         <select id="semester" name="semester" class="form-control">
-                                            @if ($allSemester !== [])
-                                                @foreach ($allSemester as $row)
-                                                    <option value="{{ $row->id }}" {{ $semester->id == $row->id ? 'selected' : '' }}>{{ $row->tahun_aktif.' - '.$row->semester }}</option>
+                                            @if (!$semester->isEmpty())
+                                                @foreach ($semester as $row)
+                                                    <option value="{{ $row->id }}" {{ $currentSemester->id == $row->id ? 'selected' : '' }}>{{ $row->tahun_aktif.' - '.$row->semester }}</option>
                                                 @endforeach
                                             @else
                                                 <option value=""> - </option>
@@ -59,9 +59,11 @@ $showNav = true;
                     <!-- Zero config.table start -->
                     <div class="card">
                         <div class="card-header">
-                            <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modal-create-edit">
-                                <i class="feather icon-plus"></i>Tambah Kelas
-                            </button>
+                            @if (optional($currentSemester)->is_aktif)
+                                <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modal-create-edit">
+                                    <i class="feather icon-plus"></i>Tambah Kelas
+                                </button>
+                            @endif
                         </div>
                         <div class="card-block">
                             <div class="dt-responsive table-responsive">
@@ -77,7 +79,7 @@ $showNav = true;
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($kelas as $row)
+                                        @foreach ($currentSemester->kelas ?? [] as $row)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->tingkat.' - '.$row->nama }}</td>
@@ -107,6 +109,69 @@ $showNav = true;
             </div>
         </div>
         <!-- Page Body end -->
+        <!-- Modal create and edit start -->
+        <div class="modal fade" id="modal-create-edit" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Guru</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="form-create-edit" action="{{ route('kelas.store') }}" method="POST">
+                        @csrf
+                        <input id="method-form-create-edit" type="hidden" name="_method" value="">
+                        <div class="modal-body">
+                            @if($errors->any())
+                                <div class="alert alert-warning background-warning">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <i class="icofont icofont-close-line-circled text-white"></i>
+                                    </button>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{$error}}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <input type="hidden" name="tahun_ajaran_id" id="tahun_ajaran_id" value="{{ $currentSemester->id ?? null }}">
+                            <div class="form-group form-primary row">
+                                <div class="col-2">
+                                    <select name="tingkat_id" id="tingkat_id" class="form-control">
+                                        <option value="1">I</option>
+                                        <option value="2">II</option>
+                                        <option value="3">III</option>
+                                        <option value="4">IV</option>
+                                        <option value="5">V</option>
+                                        <option value="6">VI</option>
+                                    </select>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Kelas" value="{{ old('nama') }}" required>
+                                    {{-- <span class="form-bar"></span> --}}
+                                    {{-- <small class="text-muted">Nama lengkap dan gelar</small> --}}
+                                </div>
+                            </div>
+                            <div class="form-group form-primary">
+                                <select id="wali_kelas_id" name="wali_kelas_id" class="form-control @error('wali_kelas_id') is-invalid @enderror" required>
+                                    <option value="">Wali Kelas</option>
+                                    @foreach ($guru as $row => $id)
+                                        <option value="{{ $id }}" {{ old('wali_kelas_id') == $id ? 'Selected' : '' }}>{{ $row }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="form-bar"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal create and edit end -->
     </div>
 @endsection
 
@@ -116,8 +181,12 @@ $showNav = true;
     <script src="{{ asset('adminty\files\bower_components\datatables.net-bs4\js\dataTables.bootstrap4.min.js') }}"></script>
 
     <script>
+
+        const url = '{{ route('kelas.index') }}';
+
         $(document).ready(function() {
             $('#simpletable').DataTable();
         });
+
     </script>
 @endpush

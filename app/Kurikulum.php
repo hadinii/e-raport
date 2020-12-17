@@ -20,4 +20,9 @@ class Kurikulum extends Model
     {
         return $this->belongsToMany('App\TahunAjaran');
     }
+
+    public function pelajaran()
+    {
+        return $this->hasMany('App\Pelajaran');
+    }
 }

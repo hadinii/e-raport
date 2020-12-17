@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Kelas;
 use App\TahunAjaran;
 use Illuminate\Http\Request;
@@ -15,28 +16,18 @@ class KelasController extends Controller
      */
     public function index(Request $request)
     {
-        $semester = TahunAjaran::find($request->semester);
-        is_null($semester) && $semester = TahunAjaran::getActive();
-        $kelas = ($semester->kelas ?? []);
-        $allSemester = TahunAjaran::getAll();
+        $currentSemester = TahunAjaran::find($request->semester);
+        is_null($currentSemester) && $currentSemester = TahunAjaran::getActive();
+
+        $semester = TahunAjaran::getAll();
+        $guru = User::getActive();
 
         $data = [
+            'currentSemester' => $currentSemester,
             'semester' => $semester,
-            'allSemester' => $allSemester,
-            'kelas' => $kelas
+            'guru' => $guru
         ];
-        // return $data;
         return view('kelas.index', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -47,7 +38,11 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $kelas = Kelas::create($request->all());
+
+        return redirect()
+            ->route('kelas.index')
+            ->withSuccess('Berhasil manambah data kelas!');
     }
 
     /**
