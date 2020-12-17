@@ -51,7 +51,7 @@ $showNav = true;
                                         <tr>
                                             <td>{{ $row->tahun_aktif .' - '. $row->semester }}</td>
                                             <td>{{ $row->kurikulum }}</td>
-                                            <td>{{ $row->tanggal_raport->format('d F Y') }}</td>
+                                            <td>{{ $row->tanggal_raport }}</td>
                                             <td>
                                                 <label class="badge badge-{{ $row->is_aktif ? 'success' : 'danger'}}">
                                                     {{ $row->is_aktif ? 'Aktif' : 'Non-Aktif' }}
@@ -60,9 +60,6 @@ $showNav = true;
                                             <td>
                                                 <button class="btn btn-sm btn-primary btn-edit px-2" data-form="{{ $row }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
                                                     <i class="feather icon-edit mx-auto"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ubah Password">
-                                                    <i class="feather icon-unlock mx-auto"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger btn-delete px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Hapus">
                                                     <i class="feather icon-trash-2 mx-auto"></i>
@@ -118,7 +115,6 @@ $showNav = true;
                                     <option value="Genap">Genap</option>
                                 </select>
                                 <span class="form-bar"></span>
-                                {{-- <small class="text-muted">Terdiri dari 18 digit angka</small> --}}
                             </div>
                             <div class="form-group form-primary">
                                 <select id="kurikulum" name="kurikulum_id" class="kurikulum form-control treshold-i @error('kurikulum') is-invalid @enderror" placeholder="Kurikulum" value="{{ old('kurikulum') }}" required>
@@ -128,7 +124,6 @@ $showNav = true;
                                     @endforeach
                                 </select>
                                 <span class="form-bar"></span>
-                                {{-- <small class="text-muted">Terdiri dari 18 digit angka</small> --}}
                             </div>
                             <div class="form-group form-primary">
                                 <input type="text" id="tanggal_raport" name="tanggal_raport" class="form-control @error('tanggal_raport') is-invalid @enderror" placeholder="Tanggal Raport" value="{{ old('tanggal_raport') }}" required>
@@ -155,7 +150,7 @@ $showNav = true;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Hapus data guru</h4>
+                        <h4 class="modal-title">Hapus data tahun ajaran</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -164,11 +159,11 @@ $showNav = true;
                         @csrf
                         @method('DELETE')
                         <div class="modal-body">
-                            <p class="text-center">Apakah anda yakin ingin menghapus data guru ini ?</p>
+                            <p class="text-center">Apakah anda yakin ingin menghapus data tahun ajaran ini ?</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light ">Hapus</button>
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Hapus</button>
                         </div>
                     </form>
                 </div>
@@ -189,6 +184,9 @@ $showNav = true;
     <!-- Date-dropper js -->
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\datedropper\js\datedropper.min.js') }}"></script>
     <script>
+
+        const url = '{{ route('tahun.index') }}';
+
         $(document).ready(function() {
             $('#simpletable').DataTable();
             $("#tanggal_raport").dateDropper( {
@@ -204,15 +202,14 @@ $showNav = true;
             const form = $(this).data('form');
 
             // change url to specific row
-            const url = '{{ route('user.update') }}';
             $('#form-create-edit').attr('action', `${url}/${form.id}`);
             $('#method-form-create-edit').val('PUT');
 
 
             // change form to specific row
-            $('#nama').val(form.nama);
-            $('#nip').val(form.nip);
-
+            $('#tahun_aktif').val(form.tahun_aktif);
+            $('#tanggal_raport').val(form.tanggal_raport);
+            $('#semester').val(form.semester);
         });
 
         $('.btn-delete').click(function() {
@@ -220,7 +217,6 @@ $showNav = true;
             const id = $(this).data('id');
 
             // change url to specific row
-            const url = '{{ route('user.update') }}';
             $('#form-delete').attr('action', `${url}/${id}`);
         });
 

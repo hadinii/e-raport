@@ -26,16 +26,6 @@ class TahunAjaranController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -70,17 +60,6 @@ class TahunAjaranController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\TahunAjaran  $tahunAjaran
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TahunAjaran $tahunAjaran)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -100,6 +79,10 @@ class TahunAjaranController extends Controller
      */
     public function destroy(TahunAjaran $tahunAjaran)
     {
-        //
+        $tahunAjaran->delete();
+
+        return redirect()
+            ->route('tahun.index')
+            ->withSuccess('Berhasil menghapus data tahun ajaran!');
     }
 }

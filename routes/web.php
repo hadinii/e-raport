@@ -37,6 +37,7 @@ Route::prefix('/siswa')->name('siswa.')->group(function () {
 Route::prefix('/tahun')->name('tahun.')->group(function () {
     Route::get('/', 'TahunAjaranController@index')->name('index')->middleware('auth');
     Route::post('/', 'TahunAjaranController@store')->name('store')->middleware('auth');
+    Route::delete('/{tahunAjaran?}', 'TahunAjaranController@destroy')->name('destroy')->middleware('auth');
 });
 
 // Kurikulum Routes

@@ -28,6 +28,11 @@ class TahunAjaran extends Model
     ];
 
     // Getters
+    public function getTanggalRaportAttribute($value)
+    {
+        return $this->castAttribute('tanggal_raport', $value)->format('d F Y');
+    }
+
     public function getKurikulumAttribute()
     {
         return $this->kurikulum()->first()->nama;
