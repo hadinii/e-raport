@@ -17,7 +17,7 @@ class CreateJadwalTable extends Migration
             $table->id();
             $table->integer('pelajaran_id');
             $table->integer('kelas_id');
-            $table->integer('guru_id');
+            $table->integer('guru_id')->nullable();
             $table->timestamps();
         });
     }

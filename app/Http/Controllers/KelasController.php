@@ -31,6 +31,26 @@ class KelasController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        // TO DO: check semester available
+        $currentSemester = TahunAjaran::getActive();
+        $pelajaran = $currentSemester->getPelajaran();
+
+        $guru = User::getActive();
+
+        $data = [
+            'guru' => $guru,
+            'pelajaran' => $pelajaran
+        ];
+        return view('kelas.create', $data);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,7 +58,16 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        $kelas = Kelas::create($request->all());
+        $form = $this->validate($request, [
+            'nama' => 'required|string',
+            'tingkat_id' => 'required|integer',
+            'wali_kelas_id' => 'required|integer',
+            'pelajaran' => 'required|array'
+        ]);
+
+        $kelas = Kelas::create($form);
+        // return $form['pelajaran'];
+        $kelas->setPelajaran($form['pelajaran']);
 
         return redirect()
             ->route('kelas.index')
@@ -53,7 +82,13 @@ class KelasController extends Controller
      */
     public function show(Kelas $kelas)
     {
-        //
+        $data = [
+            'kelas' => $kelas,
+            'pelajaran' => $kelas->getPelajaran(),
+            'tahun_ajaran' => $kelas->tahun_ajaran()
+        ];
+        // return $data;
+        return view('kelas.show', $data);
     }
 
     /**
@@ -87,6 +122,10 @@ class KelasController extends Controller
      */
     public function destroy(Kelas $kelas)
     {
-        //
+        $kelas->delete();
+
+        return redirect()
+            ->route('kelas.index')
+            ->withSuccess('Berhasil menghapus data kelas!');
     }
 }

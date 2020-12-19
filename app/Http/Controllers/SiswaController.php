@@ -14,7 +14,7 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $siswa = Siswa::all();
+        $siswa = Siswa::getAll();
 
         $data = [
             'siswa' => $siswa

@@ -41,7 +41,7 @@ $showNav = true;
                                 <div class="col-4 form-group row px-0">
                                     <label class="col-sm-5 col-form-label">Tahun Ajaran :</label>
                                     <div class="col-sm-7">
-                                        <select id="semester" name="semester" class="form-control">
+                                        <select id="semester" name="semester" class="form-control custom-select">
                                             @if (!$semester->isEmpty())
                                                 @foreach ($semester as $row)
                                                     <option value="{{ $row->id }}" {{ $currentSemester->id == $row->id ? 'selected' : '' }}>{{ $row->tahun_aktif.' - '.$row->semester }}</option>
@@ -60,9 +60,9 @@ $showNav = true;
                     <div class="card">
                         <div class="card-header">
                             @if (optional($currentSemester)->is_aktif)
-                                <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modal-create-edit">
+                                <a href="{{ route('kelas.create') }}" class="btn btn-sm btn-primary float-right">
                                     <i class="feather icon-plus"></i>Tambah Kelas
-                                </button>
+                                </a>
                             @endif
                         </div>
                         <div class="card-block">
@@ -82,14 +82,14 @@ $showNav = true;
                                         @foreach ($currentSemester->kelas ?? [] as $row)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $row->tingkat.' - '.$row->nama }}</td>
+                                            <td>{{ $row->nama_lengkap }}</td>
                                             <td>{{ $row->wali_kelas->nama }}</td>
                                             <td>{{ $row->jumlah_siswa }}</td>
                                             <td>{{ $row->jumlah_mapel }}</td>
                                             <td>
-                                                <button class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
+                                                <a href="{{ route('kelas.show', $row->id) }}" class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
                                                     <i class="feather icon-info mx-auto"></i>
-                                                </button>
+                                                </a>
                                                 <button class="btn btn-sm btn-primary btn-edit px-2" data-form="{{ $row }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
                                                     <i class="feather icon-edit mx-auto"></i>
                                                 </button>
@@ -172,6 +172,30 @@ $showNav = true;
             </div>
         </div>
         <!-- Modal create and edit end -->
+        <!-- Modal delete start -->
+        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Hapus data kelas</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="form-delete" action="{{ route('kelas.destroy') }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-body">
+                            <p class="text-center">Apakah anda yakin ingin menghapus data kelas ini ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light ">Hapus</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -186,6 +210,15 @@ $showNav = true;
 
         $(document).ready(function() {
             $('#simpletable').DataTable();
+        });
+
+        // on delete btn clicked
+        $('.btn-delete').click(function() {
+            $('#modal-delete').modal('show');
+            const id = $(this).data('id');
+
+            // change url to specific row
+            $('#form-delete').attr('action', `${url}/${id}`);
         });
 
     </script>

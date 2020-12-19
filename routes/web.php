@@ -48,5 +48,8 @@ Route::prefix('/kurikulum')->name('kurikulum.')->group(function () {
 // Kelas Routes
 Route::prefix('/kelas')->name('kelas.')->group(function () {
     Route::get('/', 'KelasController@index')->name('index')->middleware('auth');
+    Route::get('/create', 'KelasController@create')->name('create')->middleware('auth');
     Route::post('/', 'KelasController@store')->name('store')->middleware('auth');
+    Route::get('/{kelas?}', 'KelasController@show')->name('show')->middleware('auth');
+    Route::delete('/{kelas?}', 'KelasController@destroy')->name('destroy')->middleware('auth');
 });

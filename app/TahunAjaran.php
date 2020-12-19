@@ -24,18 +24,15 @@ class TahunAjaran extends Model
      * @var array
      */
     protected $appends = [
-        'kurikulum'
+        'kurikulum',
+        'nama'
     ];
 
     // Getters
-    public function getTanggalRaportAttribute($value)
+    public static function getAll()
     {
-        return $this->castAttribute('tanggal_raport', $value)->format('d F Y');
-    }
-
-    public function getKurikulumAttribute()
-    {
-        return $this->kurikulum()->first()->nama;
+        return self::latest()
+            ->get();
     }
 
     public static function getActive()
@@ -45,9 +42,28 @@ class TahunAjaran extends Model
             ->first();
     }
 
-    public static function getAll()
+    public function getPelajaran()
     {
-        return self::latest()->get();
+        return $this->kurikulum()
+            ->pelajaran;
+    }
+
+    public function getTanggalRaportAttribute($value)
+    {
+        return $this->castAttribute('tanggal_raport', $value)
+            ->format('d F Y');
+    }
+
+    public function getKurikulumAttribute()
+    {
+        return $this->kurikulum()
+            ->first()
+            ->nama;
+    }
+
+    public function getNamaAttribute()
+    {
+        return "{$this->tahun_aktif} - {$this->semester}";
     }
 
     // Setters
@@ -68,6 +84,6 @@ class TahunAjaran extends Model
 
     public function kurikulum()
     {
-        return $this->belongsTo('App\Kurikulum');
+        return $this->belongsTo('App\Kurikulum')->first();
     }
 }

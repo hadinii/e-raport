@@ -9,6 +9,20 @@ class Siswa extends Model
     protected $table = 'siswa';
     protected $guarded = ['id'];
 
+    // Getters
+    public static function getAll()
+    {
+        return self::latest()
+            ->get();
+    }
+
+    public static function getActive()
+    {
+        return self::where('is_aktif', 1)
+            ->latest()
+            ->pluck('id', 'nama');
+    }
+
     // Setters
     public function setIsAktifAttribute($value)
     {
