@@ -14,7 +14,12 @@ class SekolahController extends Controller
      */
     public function index()
     {
-        //
+        $sekolah = Sekolah::All();
+
+        $data = [
+            'sekolah' => $sekolah
+        ];
+        return view('sekolah.index', $data);
     }
 
     /**
@@ -35,7 +40,20 @@ class SekolahController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form = $this->validate($request, [
+            'nama'           => 'required|string',
+            'alamat'         => 'required|String',
+            'kepala_sekolah' => 'required|String',
+        ]);
+
+        // make default password
+        // $form['password'] = '12345678';
+        // $form['is_aktif'] = $request->is_aktif ? true : false;
+        $user = Sekolah::create($form);
+
+        return redirect()
+            ->route('sekolah.index')
+            ->withSuccess('Berhasil menambah data sekolah!');
     }
 
     /**
@@ -69,7 +87,17 @@ class SekolahController extends Controller
      */
     public function update(Request $request, Sekolah $sekolah)
     {
-        //
+        $form = $this->validate($request, [
+            'nama'           => 'required|string',
+            'alamat'         => 'required|String',
+            'kepala_sekolah' => 'required|String',
+        ]);
+
+        $sekolah->update($form);
+
+        return redirect()
+            ->route('sekolah.index')
+            ->withSuccess('Berhasil mengubah data sekolah!');
     }
 
     /**
@@ -80,6 +108,10 @@ class SekolahController extends Controller
      */
     public function destroy(Sekolah $sekolah)
     {
-        //
+        $sekolah->delete();
+
+        return redirect()
+            ->route('sekolah.index')
+            ->withSuccess('Berhasil menghapus data sekolah!');
     }
 }

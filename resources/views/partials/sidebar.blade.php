@@ -16,16 +16,22 @@ $currentUrl = url()->current();
             </ul>
             <div class="pcoded-navigatio-lavel">Data Master</div>
             <ul class="pcoded-item pcoded-left-item">
-                <li class="">
-                    <a href="{{ route('dashboard') }}">
+                <li class="{{ $currentUrl == route('sekolah.index') ? 'active pcoded-trigger' : '' }}">
+                    <a href="{{ route('sekolah.index') }}">
                         <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                         <span class="pcoded-mtext">Data Sekolah</span>
                     </a>
                 </li>
-                <li class="">
-                    <a href="{{ route('dashboard') }}">
+                <li class="{{ $currentUrl == route('kurikulum.index') ? 'active pcoded-trigger' : '' }}">
+                    <a href="{{ route('kurikulum.index') }}">
                         <span class="pcoded-micon"><i class="feather icon-clipboard"></i></span>
                         <span class="pcoded-mtext">Data Kurikulum</span>
+                    </a>
+                </li>
+                <li class="{{ $currentUrl == route('pelajaran.index') ? 'active pcoded-trigger' : '' }}">
+                    <a href="{{ route('pelajaran.index') }}">
+                        <span class="pcoded-micon"><i class="feather icon-book"></i></span>
+                        <span class="pcoded-mtext">Data Mata Pelajaran</span>
                     </a>
                 </li>
                 <li class="{{ $currentUrl == route('user.index') ? 'active pcoded-trigger' : '' }}">

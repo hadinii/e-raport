@@ -1,5 +1,5 @@
 <?php
-$title = 'Data Kurikulum';
+$title = 'Data Sekolah';
 $showNav = true;
 ?>
 @extends('layouts.adminty')
@@ -15,7 +15,7 @@ $showNav = true;
                     <div class="page-header-title">
                         <div class="d-inline">
                             <h4>{{$title}}</h4>
-                            <span>Halaman data kurikulum, digunakan untuk melihat, menambah, mengubah, dan menghapus data kurikulum. </span>
+                            <span>Halaman data sekolah, digunakan untuk melihat, menambah, mengubah, dan menghapus data sekolah. </span>
                         </div>
                     </div>
                 </div>
@@ -39,24 +39,24 @@ $showNav = true;
                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                     <thead>
                                     <tr>
-                                        <th>Nama Kurikulum</th>
-                                        <th>Deskripsi</th>
-                                        <th>Total Mata Pelajaran</th>
+                                        <th>Nama Sekolah</th>
+                                        <th>Alamat</th>
+                                        <th>Kepala Sekolah</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($kurikulum as $row)
+                                        @foreach ($sekolah as $row)
                                         <tr>
                                             <td>{{ $row->nama }}</td>
-                                            <td>{{ $row->deskripsi }}</td>
-                                            <td></td>
+                                            <td>{{ $row->alamat }}</td>
+                                            <td>{{ $row->kepala_sekolah }}</td>
                                             <td>
-                                                <button class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
-                                                    <i class="feather icon-info mx-auto"></i>
-                                                </button>
                                                 <button class="btn btn-sm btn-primary btn-edit px-2" data-form="{{ $row }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
                                                     <i class="feather icon-edit mx-auto"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ubah Password">
+                                                    <i class="feather icon-unlock mx-auto"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger btn-delete px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Hapus">
                                                     <i class="feather icon-trash-2 mx-auto"></i>
@@ -84,7 +84,7 @@ $showNav = true;
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-create-edit" action="{{ route('kurikulum.store') }}" method="POST">
+                    <form id="form-create-edit" action="{{ route('sekolah.store') }}" method="POST">
                         @csrf
                         <input id="method-form-create-edit" type="hidden" name="_method" value="">
                         <div class="modal-body">
@@ -106,8 +106,14 @@ $showNav = true;
                                 <small class="text-muted">Tahun ajaran, cth: 2020/2021</small>
                             </div>
                             <div class="form-group form-primary">
-                                <textarea rows="7" cols="5" id="deskripsi" name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Nama" value="{{ old('deskripsi') }}" required></textarea>
+                                <input type="text" id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" placeholder="Alamat" value="{{ old('alamat') }}" required>
+                                <span class="form-bar"></span>
                                 <small class="text-muted">Buat Alamat Sekolah Dengan Lengkap</small>
+                            </div>
+                            <div class="form-group form-primary">
+                                <input type="text" id="kepala_sekolah" name="kepala_sekolah" class="form-control @error('kepala_sekolah') is-invalid @enderror" placeholder="Tanggal Raport" value="{{ old('kepala_sekolah') }}" required>
+                                <span class="form-bar"></span>
+                                <small class="text-muted">Buat Nama Beserta Gelarnya</small>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -124,16 +130,16 @@ $showNav = true;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Hapus data kurikulum</h4>
+                        <h4 class="modal-title">Hapus data sekolah</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-delete" action="{{ route('kurikulum.destroy') }}" method="POST">
+                    <form id="form-delete" action="{{ route('sekolah.destroy') }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body">
-                            <p class="text-center">Apakah anda yakin ingin menghapus data kurikulum ini ?</p>
+                            <p class="text-center">Apakah anda yakin ingin menghapus data sekolah ini ?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
@@ -173,14 +179,15 @@ $showNav = true;
             const form = $(this).data('form');
 
             // change url to specific row
-            const url = '{{ route('kurikulum.update') }}';
+            const url = '{{ route('sekolah.update') }}';
             $('#form-create-edit').attr('action', `${url}/${form.id}`);
             $('#method-form-create-edit').val('PUT');
 
 
             // change form to specific row
             $('#nama').val(form.nama);
-            $('#deskripsi').val(form.deskripsi);
+            $('#alamat').val(form.alamat);
+            $('#kepala_sekolah').val(form.kepala_sekolah);
 
         });
 
@@ -189,7 +196,7 @@ $showNav = true;
             const id = $(this).data('id');
 
             // change url to specific row
-            const url = '{{ route('kurikulum.update') }}';
+            const url = '{{ route('sekolah.update') }}';
             $('#form-delete').attr('action', `${url}/${id}`);
         });
 
@@ -205,4 +212,3 @@ $showNav = true;
         @endif
     </script>
 @endpush
-
