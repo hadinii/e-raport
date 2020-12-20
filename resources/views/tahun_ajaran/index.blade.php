@@ -109,7 +109,7 @@ $showNav = true;
                                 <small class="text-muted">Tahun ajaran, cth: 2020/2021</small>
                             </div>
                             <div class="form-group form-primary">
-                                <select id="semester" name="semester" class="semester form-control treshold-i @error('semester') is-invalid @enderror" placeholder="Semester" value="{{ old('semester') }}" required>
+                                <select id="semester" name="semester" class="form-control custom-select treshold-i @error('semester') is-invalid @enderror" placeholder="Semester" required>
                                     <option value="">Pilih Semester</option>
                                     <option value="Ganjil">Ganjil</option>
                                     <option value="Genap">Genap</option>
@@ -117,10 +117,10 @@ $showNav = true;
                                 <span class="form-bar"></span>
                             </div>
                             <div class="form-group form-primary">
-                                <select id="kurikulum" name="kurikulum_id" class="kurikulum form-control treshold-i @error('kurikulum') is-invalid @enderror" placeholder="Kurikulum" value="{{ old('kurikulum') }}" required>
+                                <select id="kurikulum_id" name="kurikulum_id" class="form-control custom-select treshold-i @error('kurikulum_id') is-invalid @enderror" placeholder="Kurikulum" required>
                                     <option value="">Pilih Kurikulum</option>
                                     @foreach ($kurikulum as $row)
-                                        <option value="{{ $row->id }}">{{ $row->nama }}</option>
+                                        <option value="{{ $row->id }}" {{ old('kurikulum_id') == $row->id ? 'Selected' : '' }}>{{ $row->nama }}</option>
                                     @endforeach
                                 </select>
                                 <span class="form-bar"></span>
@@ -178,7 +178,6 @@ $showNav = true;
     <script src="{{ asset('adminty\files\bower_components\datatables.net-bs4\js\dataTables.bootstrap4.min.js') }}"></script>
     <!-- Switch component js -->
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\switchery\js\switchery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('adminty\files\assets\pages\advance-elements\swithces.js') }}"></script>
     <!-- Max-length js -->
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\bootstrap-maxlength\js\bootstrap-maxlength.js') }}"></script>
     <!-- Date-dropper js -->
@@ -186,6 +185,8 @@ $showNav = true;
     <script>
 
         const url = '{{ route('tahun.index') }}';
+        var elemsingle = document.querySelector('#is_aktif');
+        var is_aktif = new Switchery(elemsingle, { color: '#4680ff', jackColor: '#fff', size: 'small' });
 
         $(document).ready(function() {
             $('#simpletable').DataTable();
@@ -210,6 +211,8 @@ $showNav = true;
             $('#tahun_aktif').val(form.tahun_aktif);
             $('#tanggal_raport').val(form.tanggal_raport);
             $('#semester').val(form.semester);
+            $('#kurikulum_id').val(form.kurikulum_id);
+            _switchAktif(form.is_aktif);
         });
 
         $('.btn-delete').click(function() {
@@ -219,6 +222,12 @@ $showNav = true;
             // change url to specific row
             $('#form-delete').attr('action', `${url}/${id}`);
         });
+
+        // change switch value
+        function _switchAktif (val) {
+            elemsingle.checked = val;
+            is_aktif.handleOnchange(val);
+        }
 
         @if ($errors->any())
             $('#modal-create-edit').modal('show');

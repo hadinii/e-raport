@@ -49,17 +49,6 @@ class TahunAjaranController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\TahunAjaran  $tahunAjaran
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TahunAjaran $tahunAjaran)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -68,7 +57,19 @@ class TahunAjaranController extends Controller
      */
     public function update(Request $request, TahunAjaran $tahunAjaran)
     {
-        //
+        $form = $this->validate($request, [
+            'tahun_aktif' => 'required|string',
+            'semester' => 'required|string|in:Ganjil,Genap',
+            'tanggal_raport' => 'required|date',
+            'kurikulum_id' => 'required',
+        ]);
+
+        $form['is_aktif'] = $request->is_aktif ? true : false;
+        $tahunAjaran->update($form);
+
+        return redirect()
+            ->route('tahun.index')
+            ->withSuccess('Berhasil mengubah data tahun ajaran!');
     }
 
     /**
