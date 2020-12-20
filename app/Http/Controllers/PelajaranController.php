@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Pelajaran;
+use App\Kurikulum;
 use Illuminate\Http\Request;
 
 class PelajaranController extends Controller
@@ -14,7 +15,12 @@ class PelajaranController extends Controller
      */
     public function index()
     {
-        //
+        $kurikulum = Kurikulum::All();
+
+        $data = [
+            'kurikulum' => $kurikulum
+        ];
+        return view('pelajaran.index', $data);
     }
 
     /**
@@ -35,7 +41,20 @@ class PelajaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form = $this->validate($request, [
+            'kurikulum_id'   => 'required',
+            'nama'           => 'required|string',
+            'singkatan'      => 'required|String',
+        ]);
+
+        // make default password
+        // $form['password'] = '12345678';
+        // $form['is_aktif'] = $request->is_aktif ? true : false;
+        $pelajaran = Pelajaran::create($form);
+
+        return redirect()
+            ->route('pelajaran.index')
+            ->withSuccess('Berhasil menambah data pelajaran!');
     }
 
     /**
@@ -69,7 +88,16 @@ class PelajaranController extends Controller
      */
     public function update(Request $request, Pelajaran $pelajaran)
     {
-        //
+        $form = $this->validate($request, [
+            'nama'           => 'required|string',
+            'singkatan'      => 'required|String',
+        ]);
+
+        $pelajaran->update($form);
+
+        return redirect()
+            ->route('pelajaran.index')
+            ->withSuccess('Berhasil mengubah data pelajaran!');
     }
 
     /**
@@ -80,6 +108,10 @@ class PelajaranController extends Controller
      */
     public function destroy(Pelajaran $pelajaran)
     {
-        //
+        $pelajaran->delete();
+
+        return redirect()
+            ->route('pelajaran.index')
+            ->withSuccess('Berhasil menghapus data pelajaran!');
     }
 }

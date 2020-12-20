@@ -8,4 +8,9 @@ class Pelajaran extends Model
 {
     protected $table = 'pelajaran';
     protected $guarded = ['id'];
+
+    public function kurikulum()
+    {
+        return $this->belongsTo('App\Kurikulum','kurikulum_id');
+    }
 }

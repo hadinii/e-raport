@@ -14,7 +14,12 @@ class KurikulumController extends Controller
      */
     public function index()
     {
-        //
+        $kurikulum = Kurikulum::All();
+
+        $data = [
+            'kurikulum' => $kurikulum
+        ];
+        return view('kurikulum.index', $data);
     }
 
     /**
@@ -24,7 +29,7 @@ class KurikulumController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -35,7 +40,19 @@ class KurikulumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form = $this->validate($request, [
+            'nama'           => 'required|string',
+            'deskripsi'      => 'required|String',
+        ]);
+
+        // make default password
+        // $form['password'] = '12345678';
+        // $form['is_aktif'] = $request->is_aktif ? true : false;
+        $kurikulum = Kurikulum::create($form);
+
+        return redirect()
+            ->route('kurikulum.index')
+            ->withSuccess('Berhasil menambah data kurikulum!');
     }
 
     /**
@@ -69,7 +86,16 @@ class KurikulumController extends Controller
      */
     public function update(Request $request, Kurikulum $kurikulum)
     {
-        //
+        $form = $this->validate($request, [
+            'nama'           => 'required|string',
+            'deskripsi'      => 'required|String',
+        ]);
+
+        $kurikulum->update($form);
+
+        return redirect()
+            ->route('kurikulum.index')
+            ->withSuccess('Berhasil mengubah data kurikulum!');
     }
 
     /**
@@ -80,6 +106,10 @@ class KurikulumController extends Controller
      */
     public function destroy(Kurikulum $kurikulum)
     {
-        //
+        $kurikulum->delete();
+
+        return redirect()
+            ->route('kurikulum.index')
+            ->withSuccess('Berhasil menghapus data kurikulum!');
     }
 }

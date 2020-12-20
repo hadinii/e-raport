@@ -1,5 +1,5 @@
 <?php
-$title = 'Data Kurikulum';
+$title = 'Data Mata Pelajaran';
 $showNav = true;
 ?>
 @extends('layouts.adminty')
@@ -15,7 +15,7 @@ $showNav = true;
                     <div class="page-header-title">
                         <div class="d-inline">
                             <h4>{{$title}}</h4>
-                            <span>Halaman data kurikulum, digunakan untuk melihat, menambah, mengubah, dan menghapus data kurikulum. </span>
+                            <span>Halaman data mata pelajaran, digunakan untuk melihat, menambah, mengubah, dan menghapus data mata pelajaran. </span>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ $showNav = true;
                     <div class="card">
                         <div class="card-header">
                             <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modal-create-edit">
-                                <i class="feather icon-plus"></i>Tambah tahun ajaran
+                                <i class="feather icon-plus"></i>Tambah Mata Pelajaran
                             </button>
                         </div>
                         <div class="card-block">
@@ -39,18 +39,19 @@ $showNav = true;
                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                     <thead>
                                     <tr>
-                                        <th>Nama Kurikulum</th>
-                                        <th>Deskripsi</th>
-                                        <th>Total Mata Pelajaran</th>
+                                        <th>Nama Mata Pelajaran</th>
+                                        <th>Singkatan</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($kurikulum as $row)
+                                        @foreach ($row->pelajaran as $mapel)
                                         <tr>
-                                            <td>{{ $row->nama }}</td>
-                                            <td>{{ $row->deskripsi }}</td>
-                                            <td></td>
+                                            
+                                            <td>{{ $mapel->nama }}</td>
+                                            <td>{{  $mapel->singkatan  }}</td>
+                                            
                                             <td>
                                                 <button class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
                                                     <i class="feather icon-info mx-auto"></i>
@@ -63,6 +64,7 @@ $showNav = true;
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -79,12 +81,12 @@ $showNav = true;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Tahun Ajaran</h4>
+                        <h4 class="modal-title">Mata Pelajaran</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-create-edit" action="{{ route('kurikulum.store') }}" method="POST">
+                    <form id="form-create-edit" action="{{ route('pelajaran.store') }}" method="POST">
                         @csrf
                         <input id="method-form-create-edit" type="hidden" name="_method" value="">
                         <div class="modal-body">
@@ -100,14 +102,27 @@ $showNav = true;
                                     </ul>
                                 </div>
                             @endif
+                            
+                            <div class="form-group form-primary">
+                                <select id="kurikulum_id" name="kurikulum_id" class="form-control @error('kurikulum_id') is-invalid @enderror" placeholder="Jenis Kelamin" value="{{ old('kurikulum_id') }}" required>
+                                    <option value="">-- PIlih Kurikulum --</option>
+                                    @foreach ($kurikulum as $row)
+                                    <option value="{{ $row->id }}">
+                                        {{ $row->nama }}</option>
+                                    
+                                    @endforeach
+                                </select>
+                                <span class="form-bar"></span>
+                            </div>
                             <div class="form-group form-primary">
                                 <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama" value="{{ old('nama') }}" required>
                                 <span class="form-bar"></span>
                                 <small class="text-muted">Tahun ajaran, cth: 2020/2021</small>
                             </div>
                             <div class="form-group form-primary">
-                                <textarea rows="7" cols="5" id="deskripsi" name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Nama" value="{{ old('deskripsi') }}" required></textarea>
-                                <small class="text-muted">Buat Alamat Sekolah Dengan Lengkap</small>
+                                <input type="text" id="singkatan" name="singkatan" class="form-control @error('singkatan') is-invalid @enderror" placeholder="Nama" value="{{ old('singkatan') }}" required>
+                                <span class="form-bar"></span>
+                                <small class="text-muted">Tahun ajaran, cth: 2020/2021</small>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -124,16 +139,16 @@ $showNav = true;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Hapus data kurikulum</h4>
+                        <h4 class="modal-title">Hapus data pelajaran</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-delete" action="{{ route('kurikulum.destroy') }}" method="POST">
+                    <form id="form-delete" action="{{ route('pelajaran.destroy') }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body">
-                            <p class="text-center">Apakah anda yakin ingin menghapus data kurikulum ini ?</p>
+                            <p class="text-center">Apakah anda yakin ingin menghapus data pelajaran ini ?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
@@ -173,14 +188,15 @@ $showNav = true;
             const form = $(this).data('form');
 
             // change url to specific row
-            const url = '{{ route('kurikulum.update') }}';
+            const url = '{{ route('pelajaran.update') }}';
             $('#form-create-edit').attr('action', `${url}/${form.id}`);
             $('#method-form-create-edit').val('PUT');
 
 
             // change form to specific row
+            $('#kurikulum_id').val(form.kurikulum_id);
             $('#nama').val(form.nama);
-            $('#deskripsi').val(form.deskripsi);
+            $('#singkatan').val(form.singkatan);
 
         });
 
@@ -189,7 +205,7 @@ $showNav = true;
             const id = $(this).data('id');
 
             // change url to specific row
-            const url = '{{ route('kurikulum.update') }}';
+            const url = '{{ route('pelajaran.update') }}';
             $('#form-delete').attr('action', `${url}/${id}`);
         });
 

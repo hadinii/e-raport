@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\files\bower_components\sweetalert\css\sweetalert.css') }}">
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\files\assets\icon\icofont\css\icofont.css') }}">
+    <!-- j-form css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\files\assets\pages\j-pro\css\j-forms.css') }}">
     <!-- feather Awesome -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\files\assets\icon\feather\css\feather.css') }}">
     <!-- Data Table Css -->
