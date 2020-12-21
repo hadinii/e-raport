@@ -82,15 +82,16 @@ class KelasController extends Controller
     public function show(Kelas $kelas)
     {
         $guru = User::getActive();
+        $currentSemester = TahunAjaran::getActive();
 
         $data = [
             'kelas' => $kelas,
             'pelajaran' => $kelas->getPelajaran(),
             'siswa' => $kelas->getSiswa(),
             'tahun_ajaran' => $kelas->tahun_ajaran(),
+            'currentSemester' => $currentSemester,
             'guru' => $guru
         ];
-        // return $data;
         return view('kelas.show', $data);
     }
 

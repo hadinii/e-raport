@@ -67,7 +67,17 @@ $showNav = true;
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Anggota Kelas</h5>
-                                    <span>Silahkan import siswa untuk memasukkan data siswa ke dalam kelas</span>
+                                    <span>Data siswa kelas pada tahun ajaran terkait</span>
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                            <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Import Siswa">
+                                                <i class="feather import-siswa icon-upload-cloud"></i>
+                                            </li>
+                                            <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize">
+                                                <i class="feather minimize-card icon-minus"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="card-block">
                                     @foreach ($siswa as $row)
@@ -77,17 +87,32 @@ $showNav = true;
                                             </p>
                                         </div>
                                     @endforeach
+                                    @if ($siswa->count() < 1)
+                                    <p class="text-dark">
+                                        Tidak ada siswa kelas, silahkan import data siswa terlebih dahulu !
+                                    </p>
+                                    @endif
                                 </div>
-                                <div class="card-footer">
+                                {{-- <div class="card-footer">
                                     <button class="btn btn-sm btn-primary float-right"  data-toggle="modal" data-target="#modal-import-siswa">Import</button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Pelajaran</h5>
-                                    <span>Silahkan edit guru mata pelajaran</span>
+                                    <span>Data pelajaran pada kelas ini</span>
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                            <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Guru Mapel">
+                                                <i class="feather edit-guru icon-edit"></i>
+                                            </li>
+                                            <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize">
+                                                <i class="feather minimize-card icon-minus"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="card-block">
                                     @foreach ($pelajaran as $row)
@@ -99,9 +124,9 @@ $showNav = true;
                                         </div>
                                     @endforeach
                                 </div>
-                                <div class="card-footer">
+                                {{-- <div class="card-footer">
                                     <button class="btn btn-sm btn-primary float-right"  data-toggle="modal" data-target="#modal-edit-guru">Edit</button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -229,6 +254,14 @@ $showNav = true;
         $(document).ready(function() {
             $('#upload').click(function() {
                 $('#data-siswa').click();
+            });
+
+            $('.import-siswa').click(function(){
+                $('#modal-import-siswa').modal('show');
+            });
+
+            $('.edit-guru').click(function(){
+                $('#modal-edit-guru').modal('show');
             });
 
             $('#data-siswa').change(function() {

@@ -23,7 +23,10 @@ class RaportExport implements FromQuery, WithMapping, WithHeadings
 
     public function query()
     {
-        return Raport::query()->select('kelas_id', 'siswa_id')->with('siswa');
+        return Raport::query()
+            ->select('kelas_id', 'siswa_id')
+            ->where('kelas_id', $this->kelas->id)
+            ->with('siswa');
     }
 
     public function map($raport): array
