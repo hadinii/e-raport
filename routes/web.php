@@ -73,3 +73,14 @@ Route::prefix('/kelas')->name('kelas.')->group(function () {
     Route::get('/{kelas?}', 'KelasController@show')->name('show')->middleware('auth');
     Route::delete('/{kelas?}', 'KelasController@destroy')->name('destroy')->middleware('auth');
 });
+
+// Jadwal Routes
+Route::prefix('/jadwal')->name('jadwal.')->group(function () {
+    Route::put('/{kelas?}', 'JadwalController@update')->name('update')->middleware('auth');
+});
+
+// Raport Routes
+Route::prefix('/raport')->name('raport.')->group(function () {
+    Route::get('/export/{kelas?}', 'RaportController@export')->name('export')->middleware('auth');
+    Route::post('/import/{kelas?}', 'RaportController@import')->name('import')->middleware('auth');
+});

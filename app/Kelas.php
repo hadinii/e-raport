@@ -76,6 +76,13 @@ class Kelas extends Model
             ->get();
     }
 
+    public function getSiswa()
+    {
+        return $this->siswa()
+            ->with('siswa')
+            ->get();
+    }
+
     // Setters
     public function setPelajaran($pelajaran)
     {

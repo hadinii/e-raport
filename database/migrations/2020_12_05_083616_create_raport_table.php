@@ -18,17 +18,17 @@ class CreateRaportTable extends Migration
             $table->integer('siswa_id');
             $table->integer('tahun_ajaran_id');
             $table->integer('kelas_id');
-            $table->text('sikap_spiritual');
-            $table->text('sikap_sosial');
-            $table->text('saran');
-            $table->string('tinggi_badan');
-            $table->string('berat_badan');
-            $table->string('kondisi_pendengaran');
-            $table->string('kondisi_penglihatan');
-            $table->string('kondisi_gigi');
-            $table->string('sakit');
-            $table->string('alfa');
-            $table->string('tanpa_keterangan');
+            $table->text('sikap_spiritual')->nullable();
+            $table->text('sikap_sosial')->nullable();
+            $table->text('saran')->nullable();
+            $table->string('tinggi_badan')->nullable();
+            $table->string('berat_badan')->nullable();
+            $table->string('kondisi_pendengaran')->nullable();
+            $table->string('kondisi_penglihatan')->nullable();
+            $table->string('kondisi_gigi')->nullable();
+            $table->string('sakit')->nullable();
+            $table->string('alfa')->nullable();
+            $table->string('tanpa_keterangan')->nullable();
             $table->timestamps();
         });
     }

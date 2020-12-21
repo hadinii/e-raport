@@ -66,11 +66,10 @@ class KelasController extends Controller
         ]);
 
         $kelas = Kelas::create($form);
-        // return $form['pelajaran'];
         $kelas->setPelajaran($form['pelajaran']);
 
         return redirect()
-            ->route('kelas.index')
+            ->route('kelas.show', $kelas)
             ->withSuccess('Berhasil manambah data kelas!');
     }
 
@@ -82,10 +81,14 @@ class KelasController extends Controller
      */
     public function show(Kelas $kelas)
     {
+        $guru = User::getActive();
+
         $data = [
             'kelas' => $kelas,
             'pelajaran' => $kelas->getPelajaran(),
-            'tahun_ajaran' => $kelas->tahun_ajaran()
+            'siswa' => $kelas->getSiswa(),
+            'tahun_ajaran' => $kelas->tahun_ajaran(),
+            'guru' => $guru
         ];
         // return $data;
         return view('kelas.show', $data);

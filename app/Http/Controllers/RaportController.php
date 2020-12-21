@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Kelas;
 use App\Raport;
 use Illuminate\Http\Request;
+use App\Imports\RaportImport;
+use App\Exports\RaportExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RaportController extends Controller
 {
@@ -28,14 +32,31 @@ class RaportController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Import a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function import(Request $request, Kelas $kelas)
     {
-        //
+        Excel::import(new RaportImport, $request->file('data-siswa'));
+
+        return redirect()
+            ->route('kelas.show', $kelas)
+            ->withSuccess('berhasil mengimport data siswa!');
+    }
+
+    /**
+     * Export resource in storage.
+     *
+     * @param  \App\Kelas  $kelas
+     * @return \Illuminate\Http\Response
+     */
+    public function export(Kelas $kelas)
+    {
+        $name = "import kelas {$kelas->nama_lengkap}.xlsx";
+        return Excel::download(new RaportExport($kelas), $name);
     }
 
     /**

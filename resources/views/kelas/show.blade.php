@@ -67,9 +67,19 @@ $showNav = true;
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Anggota Kelas</h5>
+                                    <span>Silahkan import siswa untuk memasukkan data siswa ke dalam kelas</span>
                                 </div>
                                 <div class="card-block">
-                                    asdaspdk
+                                    @foreach ($siswa as $row)
+                                        <div class="alert alert-primary border-default mb-3">
+                                            <p class="text-dark">
+                                                <strong>{{ $row->siswa->nama }}</strong> ( {{ $row->siswa->nisn }} )
+                                            </p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-sm btn-primary float-right"  data-toggle="modal" data-target="#modal-import-siswa">Import</button>
                                 </div>
                             </div>
                         </div>
@@ -77,6 +87,7 @@ $showNav = true;
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Pelajaran</h5>
+                                    <span>Silahkan edit guru mata pelajaran</span>
                                 </div>
                                 <div class="card-block">
                                     @foreach ($pelajaran as $row)
@@ -88,6 +99,9 @@ $showNav = true;
                                         </div>
                                     @endforeach
                                 </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-sm btn-primary float-right"  data-toggle="modal" data-target="#modal-edit-guru">Edit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -95,5 +109,141 @@ $showNav = true;
             </div>
         </div>
         <!-- Page Body end -->
+        <!-- Modal import siswa -->
+        <div class="modal fade" id="modal-import-siswa" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Siswa</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="form-delete" action="{{ route('raport.import', $kelas) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="sub-header"><strong>1. Download Template Excel</strong></h6>
+                                    <span class="text-16">Download template untuk memasukkan data anggota kelas.</span>
+                                    <a href="{{ route('raport.export', $kelas) }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">Download</a>
+                                </div>
+                                <div class="card-header">
+                                    <h6 class="sub-header"><strong>2. Isi data Siswa</strong></h6>
+                                    <span class="text-16">Isi data siswa sesuai dengan anggota. Data yg harus diisi adalah nomor dan NISN, <strong>kelas_id diisi {{$kelas->id}}</strong> </span>
+                                    <div class="card-block table-border-style mt-2">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>NISN</th>
+                                                        <th>kelas_id</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>1234567890</td>
+                                                        <th>{{ $kelas->id }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>0987654321</td>
+                                                        <th>{{ $kelas->id }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>1234509876</td>
+                                                        <th>{{ $kelas->id }}</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header">
+                                    <h6 class="sub-header"><strong>3. Upload Template Excel</strong></h6>
+                                    <span class="text-16">Upload template yang telah diisi dengan data anggota kelas dengan extension xlxs.</span>
+                                    <div>
+                                        <label id="file-name" class="label bg-primary d-none mt-2"></label>
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="upload">Upload</button>
+                                        <input type="file" id="data-siswa" name="data-siswa" class="d-none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light ">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal edit guru -->
+        <div class="modal fade" id="modal-edit-guru" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Pelajaran</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="form-delete" action="{{ route('jadwal.update', $kelas) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            @foreach ($pelajaran as $row)
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">{{ $row->pelajaran->singkatan }}</label>
+                                <div class="col-sm-9">
+                                    <select id="{{ "guru_id-{$row->id}" }}" name="{{ "guru_id-{$row->id}"}}" class="form-control" required>
+                                        <option value="">-- Guru Mata Pelajaran --</option>
+                                        @foreach ($guru as $prop => $value)
+                                            <option value="{{ $value }}" {{ $row->guru_id == $value ? 'selected' : '' }}>{{ $prop }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light ">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+
+        const url = '{{ route('kelas.index') }}';
+
+        $(document).ready(function() {
+            $('#upload').click(function() {
+                $('#data-siswa').click();
+            });
+
+            $('#data-siswa').change(function() {
+                const fileName = $(this).val().split('\\').pop();
+                $('#file-name').removeClass('d-none');
+                $('#file-name').html(fileName);
+            });
+        });
+
+        // show success notification on success
+        @if ($message = session('success'))
+            const message = '{{ $message }}'
+            notify('fas fa-check', 'success', message);
+        @endif
+
+    </script>
+@endpush
+

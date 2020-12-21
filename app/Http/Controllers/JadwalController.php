@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Kelas;
 use App\Jadwal;
 use Illuminate\Http\Request;
 
@@ -67,9 +68,19 @@ class JadwalController extends Controller
      * @param  \App\Jadwal  $jadwal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jadwal $jadwal)
+    public function update(Request $request, Kelas $kelas)
     {
-        //
+        // return $request->all();
+        foreach ($request->all() as $row => $value) {
+            $name = explode('-', $row);
+            if ($name[0] == 'guru_id') {
+                Jadwal::find($name[1])->update([$name[0] => $value]);
+            }
+        }
+
+        return redirect()
+            ->route('kelas.show', $kelas)
+            ->withSuccess('Berhasil mengubah guru pelajaran!');
     }
 
     /**

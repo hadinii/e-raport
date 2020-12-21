@@ -221,5 +221,11 @@ $showNav = true;
             $('#form-delete').attr('action', `${url}/${id}`);
         });
 
+        // show success notification on success
+        @if ($message = session('success'))
+            const message = '{{ $message }}'
+            notify('fas fa-check', 'success', message);
+        @endif
+
     </script>
 @endpush
