@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -51,14 +50,30 @@ class User extends Authenticatable
             ->pluck('id', 'nama');
     }
 
+    public function getKelas()
+    {
+        return $this->kelas()
+            ->with('tahun_ajaran')
+            ->latest()
+            ->get();
+    }
+
+    public function getJadwal()
+    {
+        return $this->pelajaran()
+            ->with('pelajaran', 'kelas.tahun_ajaran')
+            ->latest()
+            ->get();
+    }
+
     // Relations
     public function pelajaran()
     {
-        return $this->hasMany('App\Jadwal');
+        return $this->hasMany('App\Jadwal', 'guru_id');
     }
 
     public function kelas()
     {
-        return $this->hasOne('App\Kelas');
+        return $this->hasMany('App\Kelas', 'wali_kelas_id');
     }
 }

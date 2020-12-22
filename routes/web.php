@@ -20,6 +20,8 @@ Auth::routes();
 // User Routes
 Route::prefix('/user')->name('user.')->group(function () {
     Route::get('/', 'UserController@index')->name('index')->middleware('auth');
+    Route::get('/kelas/{user?}', 'UserController@showKelas')->name('kelas')->middleware('auth');
+    Route::get('/jadwal/{user?}', 'UserController@showJadwal')->name('jadwal')->middleware('auth');
     Route::post('/', 'UserController@store')->name('store')->middleware('auth');
     Route::put('/{user?}', 'UserController@update')->name('update')->middleware('auth');
     Route::delete('/{user?}', 'UserController@destroy')->name('destroy')->middleware('auth');

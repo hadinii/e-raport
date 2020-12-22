@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -66,6 +68,51 @@ class UserController extends Controller
         return redirect()
             ->route('user.index')
             ->withSuccess('Berhasil mengubah data guru!');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function showKelas(User $user)
+    {
+        is_null($user->id) && $user = Auth::user();
+
+        $data = [
+            'kelas' => $user->getKelas()
+        ];
+        // return $data;
+        return view('user.kelas', $data);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function showJadwal(User $user)
+    {
+        is_null($user->id) && $user = Auth::user();
+
+        $data = [
+            'jadwal' => $user->getJadwal()
+        ];
+        // return $data;
+        return view('user.jadwal', $data);
     }
 
     /**

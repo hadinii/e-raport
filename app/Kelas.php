@@ -49,12 +49,13 @@ class Kelas extends Model
 
     public function getTingkatAttribute()
     {
-        return $this->tingkat()->nama;
+        return $this->tingkat()->first()->nama;
     }
 
     public function getWaliKelasAttribute()
     {
-        return $this->wali_kelas();
+        return $this->wali_kelas()
+            ->first();
     }
 
     public function getJumlahSiswaAttribute()
@@ -83,6 +84,12 @@ class Kelas extends Model
             ->get();
     }
 
+    public function getSemester()
+    {
+        return $this->tahun_ajaran()
+            ->first();
+    }
+
     // Setters
     public function setPelajaran($pelajaran)
     {
@@ -108,17 +115,17 @@ class Kelas extends Model
     // Relations
     public function tingkat()
     {
-        return $this->belongsTo('App\Tingkat')->first();
+        return $this->belongsTo('App\Tingkat');
     }
 
     public function wali_kelas()
     {
-        return $this->belongsTo('App\User')->first();
+        return $this->belongsTo('App\User');
     }
 
     public function tahun_ajaran()
     {
-        return $this->belongsTo('App\TahunAjaran')->first();
+        return $this->belongsTo('App\TahunAjaran');
     }
     public function siswa()
     {

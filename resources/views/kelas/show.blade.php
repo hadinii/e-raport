@@ -1,6 +1,10 @@
 <?php
 $title = 'Kelas '.$kelas->nama_lengkap;
 $showNav = true;
+$role = Auth::user()->role;
+$route = [
+    'data-kelas' => $role == 'Admin' ? 'kelas.index' : 'user.kelas'
+];
 ?>
 @extends('layouts.adminty')
 
@@ -19,7 +23,7 @@ $showNav = true;
                         </div>
                     </div>
                 </div>
-                @include('partials.breadcrumb', ['breadcrumbs' => ['kelas.index' => 'Data Kelas']])
+                @include('partials.breadcrumb', ['breadcrumbs' => [ $route['data-kelas'] => 'Data Kelas' ]])
             </div>
         </div>
         <!-- Page Header end -->
@@ -70,9 +74,11 @@ $showNav = true;
                                     <span>Data siswa kelas pada tahun ajaran terkait</span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
-                                            <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Import Siswa">
-                                                <i class="feather import-siswa icon-upload-cloud"></i>
-                                            </li>
+                                            @if ($tahun_ajaran->is_aktif && $role == 'Admin')
+                                                <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Import Siswa">
+                                                    <i class="feather import-siswa icon-upload-cloud"></i>
+                                                </li>
+                                            @endif
                                             <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize">
                                                 <i class="feather minimize-card icon-minus"></i>
                                             </li>
@@ -93,9 +99,6 @@ $showNav = true;
                                     </p>
                                     @endif
                                 </div>
-                                {{-- <div class="card-footer">
-                                    <button class="btn btn-sm btn-primary float-right"  data-toggle="modal" data-target="#modal-import-siswa">Import</button>
-                                </div> --}}
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -105,9 +108,11 @@ $showNav = true;
                                     <span>Data pelajaran pada kelas ini</span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
-                                            <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Guru Mapel">
-                                                <i class="feather edit-guru icon-edit"></i>
-                                            </li>
+                                            @if ($tahun_ajaran->is_aktif && $role == 'Admin')
+                                                <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Guru Mapel">
+                                                    <i class="feather edit-guru icon-edit"></i>
+                                                </li>
+                                            @endif
                                             <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize">
                                                 <i class="feather minimize-card icon-minus"></i>
                                             </li>
@@ -124,9 +129,6 @@ $showNav = true;
                                         </div>
                                     @endforeach
                                 </div>
-                                {{-- <div class="card-footer">
-                                    <button class="btn btn-sm btn-primary float-right"  data-toggle="modal" data-target="#modal-edit-guru">Edit</button>
-                                </div> --}}
                             </div>
                         </div>
                     </div>

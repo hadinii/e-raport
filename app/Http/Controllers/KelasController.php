@@ -88,8 +88,7 @@ class KelasController extends Controller
             'kelas' => $kelas,
             'pelajaran' => $kelas->getPelajaran(),
             'siswa' => $kelas->getSiswa(),
-            'tahun_ajaran' => $kelas->tahun_ajaran(),
-            'currentSemester' => $currentSemester,
+            'tahun_ajaran' => $kelas->getSemester(),
             'guru' => $guru
         ];
         return view('kelas.show', $data);
