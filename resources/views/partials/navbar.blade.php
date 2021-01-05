@@ -6,7 +6,9 @@
                 <i class="feather icon-menu"></i>
             </a>
             <a href="{{ route('dashboard') }}">
-                <img class="img-fluid" src="{{ asset('adminty\files\assets\images\logo.png') }}" alt="Theme-Logo">
+                <img class="img-fluid mt-10" src="{{ asset('adminty\files\assets\images\logo.png') }}" alt="Theme-Logo" style="height: 35px;">
+                <span class="text-center" style="font-size: 12px">SDN 017
+                Sungai Gantang</span>
             </a>
             <a class="mobile-options">
                 <i class="feather icon-more-horizontal"></i>
