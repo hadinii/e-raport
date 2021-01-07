@@ -14,22 +14,12 @@ class KurikulumController extends Controller
      */
     public function index()
     {
-        $kurikulum = Kurikulum::All();
+        $kurikulum = Kurikulum::with('pelajaran')->get();
 
         $data = [
             'kurikulum' => $kurikulum
         ];
         return view('kurikulum.index', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
     }
 
     /**
@@ -45,36 +35,11 @@ class KurikulumController extends Controller
             'deskripsi'      => 'required|String',
         ]);
 
-        // make default password
-        // $form['password'] = '12345678';
-        // $form['is_aktif'] = $request->is_aktif ? true : false;
         $kurikulum = Kurikulum::create($form);
 
         return redirect()
             ->route('kurikulum.index')
             ->withSuccess('Berhasil menambah data kurikulum!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Kurikulum  $kurikulum
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Kurikulum $kurikulum)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Kurikulum  $kurikulum
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Kurikulum $kurikulum)
-    {
-        //
     }
 
     /**

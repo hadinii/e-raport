@@ -50,7 +50,7 @@ $showNav = true;
                                         <tr>
                                             <td>{{ $row->nama }}</td>
                                             <td>{{ $row->deskripsi }}</td>
-                                            <td></td>
+                                            <td>{{ $row->pelajaran->count() }}</td>
                                             <td>
                                                 <button class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
                                                     <i class="feather icon-info mx-auto"></i>

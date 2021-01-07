@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Pelajaran;
 use App\Kurikulum;
+use App\TahunAjaran;
 use Illuminate\Http\Request;
 
 class PelajaranController extends Controller
@@ -13,24 +14,23 @@ class PelajaranController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kurikulum = Kurikulum::All();
+        $currentKurikulum = $request->kurikulum;
+
+        if (is_null($currentKurikulum)) {
+            $currentKurikulum = TahunAjaran::getActive()->kurikulum_id;
+        }
+
+        $pelajaran = Pelajaran::getByKurikulum($currentKurikulum);
+        $kurikulum = Kurikulum::all();
 
         $data = [
+            'pelajaran' => $pelajaran,
+            'currentKurikulum' => $currentKurikulum,
             'kurikulum' => $kurikulum
         ];
         return view('pelajaran.index', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -47,36 +47,11 @@ class PelajaranController extends Controller
             'singkatan'      => 'required|String',
         ]);
 
-        // make default password
-        // $form['password'] = '12345678';
-        // $form['is_aktif'] = $request->is_aktif ? true : false;
         $pelajaran = Pelajaran::create($form);
 
         return redirect()
             ->route('pelajaran.index')
             ->withSuccess('Berhasil menambah data pelajaran!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Pelajaran  $pelajaran
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pelajaran $pelajaran)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Pelajaran  $pelajaran
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pelajaran $pelajaran)
-    {
-        //
     }
 
     /**

@@ -18,6 +18,16 @@ class Pelajaran extends Model
         'created_at', 'updated_at',
     ];
 
+    // Getters
+    public static function getByKurikulum($kurikulum_id = null)
+    {
+        return self::when($kurikulum_id, function ($q) use ($kurikulum_id) {
+            return $q->where('kurikulum_id', $kurikulum_id);
+        })
+            ->latest()
+            ->get();
+    }
+
     // Relations
     public function kurikulum()
     {

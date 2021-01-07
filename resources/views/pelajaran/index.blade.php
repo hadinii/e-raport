@@ -27,6 +27,36 @@ $showNav = true;
         <div class="page-body">
             <div class="row">
                 <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="text-muted"><i class="feather icon-filter"></i> Filter</h6>
+                            <div class="card-header-right">
+                                <ul class="list-unstyled card-option">
+                                    <li><i class="feather minimize-card icon-minus"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <form action="{{ route('pelajaran.index') }}">
+                                <div class="col-4 form-group row px-0">
+                                    <label class="col-sm-5 col-form-label">Kurikulum :</label>
+                                    <div class="col-sm-7">
+                                        <select id="kurikulum" name="kurikulum" class="form-control custom-select">
+                                            @if (!$kurikulum->isEmpty())
+                                                @foreach ($kurikulum as $row)
+                                                    <option value=""> - </option>
+                                                    <option value="{{ $row->id }}" {{ $currentKurikulum == $row->id ? 'selected' : '' }}>{{ $row->nama }}</option>
+                                                @endforeach
+                                            @else
+                                                <option value=""> - </option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-primary float-right">Filter</button>
+                            </form>
+                        </div>
+                    </div>
                     <!-- Zero config.table start -->
                     <div class="card">
                         <div class="card-header">
@@ -41,16 +71,17 @@ $showNav = true;
                                     <tr>
                                         <th>Nama Mata Pelajaran</th>
                                         <th>Singkatan</th>
+                                        <th>Kurikulum</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($kurikulum as $row)
-                                        @foreach ($row->pelajaran as $mapel)
+                                        @foreach ($pelajaran as $row)
                                         <tr>
 
-                                            <td>{{ $mapel->nama }}</td>
-                                            <td>{{  $mapel->singkatan  }}</td>
+                                            <td>{{ $row->nama }}</td>
+                                            <td>{{ $row->singkatan }}</td>
+                                            <td>{{ $row->kurikulum->nama }}</td>
 
                                             <td>
                                                 <button class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
@@ -64,7 +95,6 @@ $showNav = true;
                                                 </button>
                                             </td>
                                         </tr>
-                                        @endforeach
                                         @endforeach
                                     </tbody>
                                 </table>
