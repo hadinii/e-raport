@@ -78,7 +78,7 @@ $role = $user->role;
                 </a>
             </li>
         </ul>
-        @if ($user->getKelas()->count() > 1)
+        @if ($user->getKelas()->count() > 0)
         <div class="pcoded-navigatio-lavel">Wali Kelas</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="{{ $currentUrl == route('user.kelas') ? 'active pcoded-trigger' : '' }}">
@@ -89,9 +89,7 @@ $role = $user->role;
             </li>
         </ul>
         @endif
-        {{-- @if ($user->get)
-
-        @endif --}}
+        @if ($user->getJadwal()->count() > 0)
         <div class="pcoded-navigatio-lavel">Guru Mata Pelajaran</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="{{ $currentUrl == route('user.jadwal') ? 'active pcoded-trigger' : '' }}">
@@ -101,6 +99,7 @@ $role = $user->role;
                 </a>
             </li>
         </ul>
+        @endif
     </div>
 </nav>
 @endif
