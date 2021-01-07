@@ -48,10 +48,10 @@ $showNav = true;
                                         @foreach ($kurikulum as $row)
                                         @foreach ($row->pelajaran as $mapel)
                                         <tr>
-                                            
+
                                             <td>{{ $mapel->nama }}</td>
                                             <td>{{  $mapel->singkatan  }}</td>
-                                            
+
                                             <td>
                                                 <button class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
                                                     <i class="feather icon-info mx-auto"></i>
@@ -102,27 +102,25 @@ $showNav = true;
                                     </ul>
                                 </div>
                             @endif
-                            
+
                             <div class="form-group form-primary">
                                 <select id="kurikulum_id" name="kurikulum_id" class="form-control @error('kurikulum_id') is-invalid @enderror" placeholder="Jenis Kelamin" value="{{ old('kurikulum_id') }}" required>
                                     <option value="">-- PIlih Kurikulum --</option>
                                     @foreach ($kurikulum as $row)
                                     <option value="{{ $row->id }}">
                                         {{ $row->nama }}</option>
-                                    
+
                                     @endforeach
                                 </select>
                                 <span class="form-bar"></span>
                             </div>
                             <div class="form-group form-primary">
-                                <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama" value="{{ old('nama') }}" required>
+                                <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Pelajaran" value="{{ old('nama') }}" required>
                                 <span class="form-bar"></span>
-                                <small class="text-muted">Tahun ajaran, cth: 2020/2021</small>
                             </div>
                             <div class="form-group form-primary">
-                                <input type="text" id="singkatan" name="singkatan" class="form-control @error('singkatan') is-invalid @enderror" placeholder="Nama" value="{{ old('singkatan') }}" required>
+                                <input type="text" id="singkatan" name="singkatan" class="form-control @error('singkatan') is-invalid @enderror" placeholder="Singkatan" value="{{ old('singkatan') }}" required>
                                 <span class="form-bar"></span>
-                                <small class="text-muted">Tahun ajaran, cth: 2020/2021</small>
                             </div>
                         </div>
                         <div class="modal-footer">

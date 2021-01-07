@@ -31,7 +31,7 @@ $showNav = true;
                     <div class="card">
                         <div class="card-header">
                             <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modal-create-edit">
-                                <i class="feather icon-plus"></i>Tambah tahun ajaran
+                                <i class="feather icon-plus"></i>Tambah Kurikulum
                             </button>
                         </div>
                         <div class="card-block">
@@ -79,7 +79,7 @@ $showNav = true;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Tahun Ajaran</h4>
+                        <h4 class="modal-title">Kurikulum</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -103,11 +103,11 @@ $showNav = true;
                             <div class="form-group form-primary">
                                 <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama" value="{{ old('nama') }}" required>
                                 <span class="form-bar"></span>
-                                <small class="text-muted">Tahun ajaran, cth: 2020/2021</small>
+                                <small class="text-muted">cth: Kurikulum 2012</small>
                             </div>
                             <div class="form-group form-primary">
-                                <textarea rows="7" cols="5" id="deskripsi" name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Nama" value="{{ old('deskripsi') }}" required></textarea>
-                                <small class="text-muted">Buat Alamat Sekolah Dengan Lengkap</small>
+                                <textarea rows="7" cols="5" id="deskripsi" name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Deskripsi" value="{{ old('deskripsi') }}" required></textarea>
+                                <small class="text-muted">Deskripsi Kurikulum</small>
                             </div>
                         </div>
                         <div class="modal-footer">
