@@ -77,10 +77,14 @@ class Kelas extends Model
             ->get();
     }
 
-    public function getSiswa()
+    public function getSiswa($pelajaran_id = null)
     {
         return $this->siswa()
-            ->with('siswa')
+            ->with(['siswa', 'nilai' => function ($q) use ($pelajaran_id) {
+                if ($pelajaran_id) {
+                    return $q->where('pelajaran_id', $pelajaran_id);
+                }
+            }])
             ->get();
     }
 

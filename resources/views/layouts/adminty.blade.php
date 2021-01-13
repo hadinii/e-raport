@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>@yield('title') | {{config('app.name')}}</title>`
+    <title>@yield('title') | {{config('app.name')}}</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -42,7 +42,6 @@
 </head>
 
 <body>
-
     <!-- Pre-loader start -->
     @include('partials.loader')
     <!-- Pre-loader end -->

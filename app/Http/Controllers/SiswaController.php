@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Siswa;
+use App\TahunAjaran;
 use Illuminate\Http\Request;
 
 class SiswaController extends Controller
@@ -12,12 +13,20 @@ class SiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $siswa = Siswa::getAll();
+        $filter = [
+            'status' => $request->status,
+            'semester' => $request->semester,
+        ];
+
+        $siswa = Siswa::getAll($filter['semester'], $filter['status']);
+        $semester = TahunAjaran::get();
 
         $data = [
-            'siswa' => $siswa
+            'siswa' => $siswa,
+            'semester' => $semester,
+            'filter' => $filter
         ];
         return view('siswa.index', $data);
     }

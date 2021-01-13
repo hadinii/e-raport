@@ -58,13 +58,14 @@ $showNav = true;
                                                 </label>
                                             </td>
                                             <td>
-                                                <a href="{{ route('kelas.show', $row) }}" class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
+                                                @if ($row->kelas->tahun_ajaran->is_aktif)
+                                                <a href="{{ route('jadwal.show', $row) }}" class="btn btn-sm btn-primary px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Isi Nilai">
+                                                    <i class="feather icon-edit mx-auto"></i>
+                                                </a>
+                                                @else
+                                                <a href="{{ route('jadwal.show', $row) }}" class="btn btn-sm btn-inverse px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
                                                     <i class="feather icon-info mx-auto"></i>
                                                 </a>
-                                                @if ($row->kelas->tahun_ajaran->is_aktif)
-                                                <button class="btn btn-sm btn-primary px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Isi Nilai Raport">
-                                                    <i class="feather icon-edit mx-auto"></i>
-                                                </button>
                                                 @endif
                                             </td>
                                         </tr>

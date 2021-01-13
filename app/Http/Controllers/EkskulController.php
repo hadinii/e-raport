@@ -14,17 +14,12 @@ class EkskulController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $ekskul = Ekskul::get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data = [
+            'ekskul' => $ekskul,
+        ];
+        return view('ekskul.index', $data);
     }
 
     /**
@@ -35,29 +30,16 @@ class EkskulController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $form = $this->validate($request, [
+            'nama' => 'required',
+            'deskripsi' => 'required'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Ekskul  $ekskul
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ekskul $ekskul)
-    {
-        //
-    }
+        $ekskul = Ekskul::create($form);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Ekskul  $ekskul
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ekskul $ekskul)
-    {
-        //
+        return redirect()
+            ->route('ekskul.index')
+            ->withSuccess('Berhasil menambah data ekskul!');
     }
 
     /**
@@ -69,7 +51,16 @@ class EkskulController extends Controller
      */
     public function update(Request $request, Ekskul $ekskul)
     {
-        //
+        $form = $this->validate($request, [
+            'nama' => 'required',
+            'deskripsi' => 'required'
+        ]);
+
+        $ekskul->update($form);
+
+        return redirect()
+            ->route('ekskul.index')
+            ->withSuccess('Berhasil mengubah data ekskul!');
     }
 
     /**
@@ -80,6 +71,10 @@ class EkskulController extends Controller
      */
     public function destroy(Ekskul $ekskul)
     {
-        //
+        $ekskul->delete();
+
+        return redirect()
+            ->route('ekskul.index')
+            ->withSuccess('Berhasil menghapus data ekskul!');
     }
 }

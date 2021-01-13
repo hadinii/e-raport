@@ -32,34 +32,35 @@ $showNav = true;
                             <h6 class="text-muted"><i class="feather icon-filter"></i> Filter</h6>
                             <div class="card-header-right">
                                 <ul class="list-unstyled card-option">
-                                    {{-- <li><i class="feather full-card icon-maximize"></i></li> --}}
                                     <li><i class="feather minimize-card icon-minus"></i></li>
-                                    {{-- <li><i class="feather icon-trash-2 close-card"></i></li> --}}
                                 </ul>
                             </div>
                         </div>
                         <div class="card-block">
-                            <div class="col-4 form-group row px-0">
-                                <label class="col-sm-5 col-form-label">Status :</label>
-                                <div class="col-sm-7">
-                                    <select name="status" class="form-control">
-                                        <option value="">Semua</option>
-                                        <option value="Aktif">Aktif</option>
-                                        <option value="Non-Aktif">Non-Aktif</option>
-                                    </select>
+                            <form action="{{route('siswa.index')}}">
+                                <div class="col-4 form-group row px-0">
+                                    <label class="col-sm-5 col-form-label">Status :</label>
+                                    <div class="col-sm-7">
+                                        <select name="status" class="form-control">
+                                            <option value="">Semua</option>
+                                            <option value="Aktif" {{$filter['status'] == 'Aktif' ? 'selected' : ''}}>Aktif</option>
+                                            <option value="Non-Aktif" {{$filter['status'] == 'Non-Aktif' ? 'selected' : ''}}>Non-Aktif</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-4 form-group row px-0">
-                                <label class="col-sm-5 col-form-label">Tahun Masuk :</label>
-                                <div class="col-sm-7">
-                                    <select name="status" class="form-control">
-                                        <option value="">Semua</option>
-                                        <option value="Aktif">Aktif</option>
-                                        <option value="Non-Aktif">Non-Aktif</option>
-                                    </select>
+                                <div class="col-4 form-group row px-0">
+                                    <label class="col-sm-5 col-form-label">Tahun Ajaran :</label>
+                                    <div class="col-sm-7">
+                                        <select name="semester" class="form-control">
+                                            <option value="">-</option>
+                                            @foreach ($semester as $row)
+                                            <option value="{{$row->id}}" {{$row->id == $filter['semester'] ? 'selected' : ''}}>{{$row->nama}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                <button type="submit" class="btn btn-sm btn-primary float-right">Filter</button>
+                            </form>
                         </div>
                     </div>
                     <!-- Zero config.table start -->

@@ -51,6 +51,14 @@ Route::prefix('/kurikulum')->name('kurikulum.')->group(function () {
     Route::delete('/{kurikulum?}', 'KurikulumController@destroy')->name('destroy')->middleware('auth');
 });
 
+// Ekstrakurikuler
+Route::prefix('/ekskul')->name('ekskul.')->group(function () {
+    Route::get('/', 'EkskulController@index')->name('index')->middleware('auth');
+    Route::post('/', 'EkskulController@store')->name('store')->middleware('auth');
+    Route::put('/{ekskul?}', 'EkskulController@update')->name('update')->middleware('auth');
+    Route::delete('/{ekskul?}', 'EkskulController@destroy')->name('destroy')->middleware('auth');
+});
+
 // Siswa Routes
 Route::prefix('/siswa')->name('siswa.')->group(function () {
     Route::get('/', 'SiswaController@index')->name('index')->middleware('auth');
@@ -78,6 +86,7 @@ Route::prefix('/kelas')->name('kelas.')->group(function () {
 
 // Jadwal Routes
 Route::prefix('/jadwal')->name('jadwal.')->group(function () {
+    Route::get('/{jadwal}', 'JadwalController@show')->name('show')->middleware('auth');
     Route::put('/{kelas?}', 'JadwalController@update')->name('update')->middleware('auth');
 });
 
@@ -85,4 +94,11 @@ Route::prefix('/jadwal')->name('jadwal.')->group(function () {
 Route::prefix('/raport')->name('raport.')->group(function () {
     Route::get('/export/{kelas?}', 'RaportController@export')->name('export')->middleware('auth');
     Route::post('/import/{kelas?}', 'RaportController@import')->name('import')->middleware('auth');
+});
+
+// Nilai Routes
+Route::prefix('/nilai')->name('nilai.')->group(function () {
+    Route::get('/', 'NilaiController@index')->name('index')->middleware('auth');
+    Route::post('/', 'NilaiController@store')->name('store')->middleware('auth');
+    Route::post('/hander', 'NilaiController@handler')->name('handle-api')->middleware('auth');
 });

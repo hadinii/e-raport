@@ -1,5 +1,5 @@
 <?php
-$title = 'Data Kelas';
+$title = 'Data Ekstrakurikuler';
 $showNav = true;
 ?>
 @extends('layouts.adminty')
@@ -27,7 +27,7 @@ $showNav = true;
         <div class="page-body">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-header">
                             <h6 class="text-muted"><i class="feather icon-filter"></i> Filter</h6>
                             <div class="card-header-right">
@@ -55,15 +55,13 @@ $showNav = true;
                                 <button type="submit" class="btn btn-sm btn-primary float-right">Filter</button>
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- Zero config.table start -->
                     <div class="card">
                         <div class="card-header">
-                            @if (optional($currentSemester)->is_aktif)
-                                <a href="{{ route('kelas.create') }}" class="btn btn-sm btn-primary float-right">
-                                    <i class="feather icon-plus"></i>Tambah Kelas
-                                </a>
-                            @endif
+                            <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modal-create-edit">
+                                <i class="feather icon-plus"></i>Tambah Ekskul
+                            </button>
                         </div>
                         <div class="card-block">
                             <div class="dt-responsive table-responsive">
@@ -72,24 +70,17 @@ $showNav = true;
                                     <tr>
                                         <th>#</th>
                                         <th>Nama</th>
-                                        <th>Wali Kelas</th>
-                                        <th>Jumlah Siswa</th>
-                                        <th>Jumlah Mata Pelajaran</th>
+                                        <th>Deskripsi</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($currentSemester->kelas ?? [] as $row)
+                                        @foreach ($ekskul as $row)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $row->nama_lengkap }}</td>
-                                            <td>{{ $row->wali_kelas->nama }}</td>
-                                            <td>{{ $row->jumlah_siswa }}</td>
-                                            <td>{{ $row->jumlah_mapel }}</td>
+                                            <td>{{ $row->nama }}</td>
+                                            <td>{{ $row->deskripsi }}</td>
                                             <td>
-                                                <a href="{{ route('kelas.show', $row->id) }}" class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
-                                                    <i class="feather icon-info mx-auto"></i>
-                                                </a>
                                                 <button class="btn btn-sm btn-primary btn-edit px-2" data-form="{{ $row }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
                                                     <i class="feather icon-edit mx-auto"></i>
                                                 </button>
@@ -114,12 +105,12 @@ $showNav = true;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Guru</h4>
+                        <h4 class="modal-title">Ekskul</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-create-edit" action="{{ route('kelas.store') }}" method="POST">
+                    <form id="form-create-edit" action="{{ route('ekskul.store') }}" method="POST">
                         @csrf
                         <input id="method-form-create-edit" type="hidden" name="_method" value="">
                         <div class="modal-body">
@@ -136,29 +127,11 @@ $showNav = true;
                                 </div>
                             @endif
                             <input type="hidden" name="tahun_ajaran_id" id="tahun_ajaran_id" value="{{ $currentSemester->id ?? null }}">
-                            <div class="form-group form-primary row">
-                                <div class="col-2">
-                                    <select name="tingkat_id" id="tingkat_id" class="form-control">
-                                        <option value="1">I</option>
-                                        <option value="2">II</option>
-                                        <option value="3">III</option>
-                                        <option value="4">IV</option>
-                                        <option value="5">V</option>
-                                        <option value="6">VI</option>
-                                    </select>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Kelas" value="{{ old('nama') }}" required>
-                                </div>
+                            <div class="form-group form-primary">
+                                <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Ekskul" value="{{ old('nama') }}" required>
                             </div>
                             <div class="form-group form-primary">
-                                <select id="wali_kelas_id" name="wali_kelas_id" class="form-control @error('wali_kelas_id') is-invalid @enderror" required>
-                                    <option value="">Wali Kelas</option>
-                                    @foreach ($guru as $row => $id)
-                                        <option value="{{ $id }}" {{ old('wali_kelas_id') == $id ? 'Selected' : '' }}>{{ $row }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="form-bar"></span>
+                                <textarea id="deskripsi" name="deskripsi" class="form-control" rows="5" placeholder="Deskripsi"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -175,16 +148,16 @@ $showNav = true;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Hapus data kelas</h4>
+                        <h4 class="modal-title">Hapus data ekskul</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-delete" action="{{ route('kelas.destroy') }}" method="POST">
+                    <form id="form-delete" action="{{ route('ekskul.destroy') }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body">
-                            <p class="text-center">Apakah anda yakin ingin menghapus data kelas ini ?</p>
+                            <p class="text-center">Apakah anda yakin ingin menghapus data ekskul ini ?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
@@ -204,10 +177,24 @@ $showNav = true;
 
     <script>
 
-        const url = '{{ route('kelas.index') }}';
+        const url = '{{ route('ekskul.index') }}';
 
         $(document).ready(function() {
             $('#simpletable').DataTable();
+        });
+
+        // on edit btn clicked
+        $('.btn-edit').click(function() {
+            $('#modal-create-edit').modal('show');
+            const form = $(this).data('form');
+
+            // change url to specific row
+            $('#form-create-edit').attr('action', `${url}/${form.id}`);
+            $('#method-form-create-edit').val('PUT');
+
+            // change form to specific row
+            $('#nama').val(form.nama);
+            $('#deskripsi').val(form.deskripsi);
         });
 
         // on delete btn clicked

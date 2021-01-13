@@ -47,7 +47,19 @@ class JadwalController extends Controller
      */
     public function show(Jadwal $jadwal)
     {
-        //
+        $pelajaran = $jadwal->getPelajaran();
+        $kelas = $jadwal->getKelas();
+        $semester = $jadwal->getSemester();
+        $nilai = $jadwal->getNilai();
+
+        $data = [
+            'pelajaran' => $pelajaran,
+            'kelas' => $kelas,
+            'tahun_ajaran' => $semester,
+            'nilai' => $nilai
+        ];
+        // return $data;
+        return view('jadwal.show', $data);
     }
 
     /**

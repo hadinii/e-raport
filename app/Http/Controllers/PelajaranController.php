@@ -19,7 +19,8 @@ class PelajaranController extends Controller
         $currentKurikulum = $request->kurikulum;
 
         if (is_null($currentKurikulum)) {
-            $currentKurikulum = TahunAjaran::getActive()->kurikulum_id;
+            $currentSemester = TahunAjaran::getActive();
+            $currentKurikulum = optional($currentSemester)->kurikulum_id;
         }
 
         $pelajaran = Pelajaran::getByKurikulum($currentKurikulum);

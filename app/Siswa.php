@@ -10,9 +10,17 @@ class Siswa extends Model
     protected $guarded = ['id'];
 
     // Getters
-    public static function getAll()
+    public static function getAll($semester = null, $status = null)
     {
         return self::latest()
+            ->when($status, function ($q) use ($status) {
+                return $q->where('is_aktif', $status == 'Aktif');
+            })
+            ->when($semester, function ($q) use ($semester) {
+                return $q->whereHas('kelas', function ($q) use ($semester) {
+                    return $q->where('tahun_ajaran_id', $semester);
+                });
+            })
             ->get();
     }
 

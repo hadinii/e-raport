@@ -16,6 +16,21 @@ $role = $user->role;
                 </a>
             </li>
         </ul>
+        <div class="pcoded-navigatio-lavel">Raport</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="{{ $currentUrl == route('tahun.index') ? 'active pcoded-trigger' : '' }}">
+                <a href="{{ route('tahun.index') }}">
+                    <span class="pcoded-micon"><i class="feather icon-bookmark"></i></span>
+                    <span class="pcoded-mtext">Data Tahun Ajaran</span>
+                </a>
+            </li>
+            <li class="{{ $currentUrl == route('kelas.index') ? 'active pcoded-trigger' : '' }}">
+                <a href="{{ route('kelas.index') }}">
+                    <span class="pcoded-micon"><i class="feather icon-server"></i></span>
+                    <span class="pcoded-mtext">Data Kelas</span>
+                </a>
+            </li>
+        </ul>
         <div class="pcoded-navigatio-lavel">Data Master</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="{{ $currentUrl == route('sekolah.index') ? 'active pcoded-trigger' : '' }}">
@@ -48,19 +63,10 @@ $role = $user->role;
                     <span class="pcoded-mtext">Data Siswa</span>
                 </a>
             </li>
-        </ul>
-        <div class="pcoded-navigatio-lavel">Raport</div>
-        <ul class="pcoded-item pcoded-left-item">
-            <li class="{{ $currentUrl == route('tahun.index') ? 'active pcoded-trigger' : '' }}">
-                <a href="{{ route('tahun.index') }}">
-                    <span class="pcoded-micon"><i class="feather icon-bookmark"></i></span>
-                    <span class="pcoded-mtext">Data Tahun Ajaran</span>
-                </a>
-            </li>
-            <li class="{{ $currentUrl == route('kelas.index') ? 'active pcoded-trigger' : '' }}">
-                <a href="{{ route('kelas.index') }}">
-                    <span class="pcoded-micon"><i class="feather icon-server"></i></span>
-                    <span class="pcoded-mtext">Data Kelas</span>
+            <li class="{{ $currentUrl == route('ekskul.index') ? 'active pcoded-trigger' : '' }}">
+                <a href="{{ route('ekskul.index') }}">
+                    <span class="pcoded-micon"><i class="feather icon-aperture"></i></span>
+                    <span class="pcoded-mtext">Data Ekstrakurikuler</span>
                 </a>
             </li>
         </ul>

@@ -35,7 +35,15 @@ class NilaiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nilai = Nilai::findOrFail($request->id);
+        // return $nilai;
+        $nilai->update($request->all());
+
+        $reply = [
+            'status' => true,
+            'message' => 'Nilai berhasil diubah!'
+        ];
+        return response()->json($reply, 200);
     }
 
     /**

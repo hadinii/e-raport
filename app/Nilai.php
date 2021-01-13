@@ -8,4 +8,10 @@ class Nilai extends Model
 {
     protected $table = 'nilai';
     protected $guarded = ['id'];
+
+    // Relations
+    public function raport()
+    {
+        return $this->belongsTo('App\Raport');
+    }
 }

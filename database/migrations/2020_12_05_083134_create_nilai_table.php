@@ -17,10 +17,10 @@ class CreateNilaiTable extends Migration
             $table->id();
             $table->integer('raport_id');
             $table->integer('pelajaran_id');
-            $table->integer('nilai_pengetahuan')->min(0)->max(100);
-            $table->string('deskripsi_pengetahuan');
-            $table->integer('nilai_keterampilan')->min(0)->max(100);
-            $table->string('deskripsi_keterampilan');
+            $table->integer('nilai_pengetahuan')->default(0)->min(0)->max(100);
+            $table->text('deskripsi_pengetahuan')->nullable();
+            $table->integer('nilai_keterampilan')->default(0)->min(0)->max(100);
+            $table->text('deskripsi_keterampilan')->nullable();
             $table->timestamps();
         });
     }

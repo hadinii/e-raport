@@ -201,6 +201,8 @@ $showNav = true;
     <!-- Date-dropper js -->
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\datedropper\js\datedropper.min.js') }}"></script>
     <script>
+        const url = '{{ route('pelajaran.update') }}';
+
         $(document).ready(function() {
             $('#simpletable').DataTable();
             $("#tanggal_raport").dateDropper( {
@@ -216,7 +218,6 @@ $showNav = true;
             const form = $(this).data('form');
 
             // change url to specific row
-            const url = '{{ route('pelajaran.update') }}';
             $('#form-create-edit').attr('action', `${url}/${form.id}`);
             $('#method-form-create-edit').val('PUT');
 
@@ -225,7 +226,6 @@ $showNav = true;
             $('#kurikulum_id').val(form.kurikulum_id);
             $('#nama').val(form.nama);
             $('#singkatan').val(form.singkatan);
-
         });
 
         $('.btn-delete').click(function() {
@@ -233,7 +233,6 @@ $showNav = true;
             const id = $(this).data('id');
 
             // change url to specific row
-            const url = '{{ route('pelajaran.update') }}';
             $('#form-delete').attr('action', `${url}/${id}`);
         });
 
