@@ -16,6 +16,8 @@ class Raport extends Model
      */
     protected $appends = [
         'nama_siswa',
+        'nama_kelas',
+        'nama_tahun_ajaran',
     ];
 
     // Gettters
@@ -26,10 +28,27 @@ class Raport extends Model
             ->nama;
     }
 
+    public function getNamaKelasAttribute()
+    {
+        return $this->kelas()->first()->nama_lengkap;
+    }
+
+    public function getNamaTahunAjaranAttribute()
+    {
+        return $this->tahun_ajaran()
+            ->first()
+            ->nama;
+    }
+
     // Relations
     public function siswa()
     {
         return $this->belongsTo('App\Siswa');
+    }
+
+    public function tahun_ajaran()
+    {
+        return $this->belongsTo('App\TahunAjaran');
     }
 
     public function kelas()

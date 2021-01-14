@@ -44,7 +44,6 @@ $showNav = true;
                                         <select id="kurikulum" name="kurikulum" class="form-control custom-select">
                                             @if (!$kurikulum->isEmpty())
                                                 @foreach ($kurikulum as $row)
-                                                    <option value=""> - </option>
                                                     <option value="{{ $row->id }}" {{ $currentKurikulum == $row->id ? 'selected' : '' }}>{{ $row->nama }}</option>
                                                 @endforeach
                                             @else
@@ -69,6 +68,7 @@ $showNav = true;
                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                     <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Nama Mata Pelajaran</th>
                                         <th>Singkatan</th>
                                         <th>Kurikulum</th>
@@ -78,11 +78,10 @@ $showNav = true;
                                     <tbody>
                                         @foreach ($pelajaran as $row)
                                         <tr>
-
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->nama }}</td>
                                             <td>{{ $row->singkatan }}</td>
                                             <td>{{ $row->kurikulum->nama }}</td>
-
                                             <td>
                                                 <button class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
                                                     <i class="feather icon-info mx-auto"></i>
