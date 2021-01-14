@@ -125,7 +125,11 @@ $route = [
                                             <p class="text-dark">
                                                 <strong>{{ $row->pelajaran->nama }}</strong> ( {{ $row->pelajaran->singkatan }} )
                                             </p>
-                                            <p class="text-muted">{{ optional($row->guru)->nama ?? 'Belom ada' }}</p>
+                                            @if (optional($row->guru)->nama)
+                                            <p class="text-muted">{{ optional($row->guru)->nama }}</p>
+                                            @else
+                                            <p class="text-danger">Belom ada</p>
+                                            @endif
                                         </div>
                                     @endforeach
                                 </div>
