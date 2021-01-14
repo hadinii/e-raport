@@ -40,7 +40,7 @@ class RaportController extends Controller
      */
     public function import(Request $request, Kelas $kelas)
     {
-        Excel::import(new RaportImport, $request->file('data-siswa'));
+        Excel::import(new RaportImport($kelas), $request->file('data-siswa'));
 
         return redirect()
             ->route('kelas.show', $kelas)

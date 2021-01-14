@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Kelas;
 use App\Raport;
 use App\Siswa;
 use App\TahunAjaran;
@@ -12,17 +13,23 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class RaportImport implements ToCollection, WithHeadingRow
 {
+    protected $kelas;
+
+    public function __construct(Kelas $kelas)
+    {
+        $this->kelas = $kelas;
+    }
+
     /**
      * @param Collection $collection
      */
     public function collection(Collection $collection)
     {
         $tahunAjaran = TahunAjaran::getActive();
-        $kelas_id = null;
+        $kelas_id = $this->kelas->id;
 
         foreach ($collection as $row) {
             $nisn = $row['nisn'];
-            isset($row['kelas_id']) && $kelas_id = $row['kelas_id'];
 
             if (!isset($nisn)) {
                 return null;

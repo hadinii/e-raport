@@ -15,7 +15,7 @@ $showNav = true;
                     <div class="page-header-title">
                         <div class="d-inline">
                             <h4>{{$title}}</h4>
-                            <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                            <span>Halaman Ekstrakurikuler Digunakan untuk Melihat, Menambah dan Menghapus Data Ekstrakurikuler</span>
                         </div>
                     </div>
                 </div>

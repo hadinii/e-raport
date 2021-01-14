@@ -16,7 +16,7 @@ $role = Auth::user()->role;
                     <div class="page-header-title">
                         <div class="d-inline">
                             <h4>{{ $title }}</h4>
-                            <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                            <span>Halaman input nilai pelajaran</span>
                         </div>
                     </div>
                 </div>

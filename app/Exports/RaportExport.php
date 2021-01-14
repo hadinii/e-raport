@@ -33,8 +33,7 @@ class RaportExport implements FromQuery, WithMapping, WithHeadings
     {
         return [
             $this->index++,
-            $raport->siswa->nisn,
-            $this->kelas->id
+            $raport->siswa->nisn
         ];
     }
 
@@ -43,7 +42,6 @@ class RaportExport implements FromQuery, WithMapping, WithHeadings
         return [
             'No',
             'NISN',
-            'kelas_id'
         ];
     }
 }

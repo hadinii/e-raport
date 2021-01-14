@@ -21,7 +21,7 @@ $showNav = true;
                     <div class="page-header-title">
                         <div class="d-inline">
                             <h4>{{ $title }}</h4>
-                            <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                            <span>Halaman Tambah Data Kelas</span>
                         </div>
                     </div>
                 </div>

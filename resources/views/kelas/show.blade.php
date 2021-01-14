@@ -19,7 +19,7 @@ $route = [
                     <div class="page-header-title">
                         <div class="d-inline">
                             <h4>{{ $title }}</h4>
-                            <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                            <span>Halaman data kelas pada wali kelas</span>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@ $route = [
                                 </div>
                                 <div class="card-header">
                                     <h6 class="sub-header"><strong>2. Isi data Siswa</strong></h6>
-                                    <span class="text-16">Isi data siswa sesuai dengan anggota. Data yg harus diisi adalah nomor dan NISN, <strong>kelas_id diisi {{$kelas->id}}</strong> </span>
+                                    <span class="text-16">Isi data siswa sesuai dengan anggota. Data yg harus diisi adalah nomor dan NISN. </span>
                                     <div class="card-block table-border-style mt-2">
                                         <div class="table-responsive">
                                             <table class="table">
@@ -165,24 +165,20 @@ $route = [
                                                     <tr>
                                                         <th>No</th>
                                                         <th>NISN</th>
-                                                        <th>kelas_id</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         <td>1</td>
                                                         <td>1234567890</td>
-                                                        <th>{{ $kelas->id }}</th>
                                                     </tr>
                                                     <tr>
                                                         <td>2</td>
                                                         <td>0987654321</td>
-                                                        <th>{{ $kelas->id }}</th>
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
                                                         <td>1234509876</td>
-                                                        <th>{{ $kelas->id }}</th>
                                                     </tr>
                                                 </tbody>
                                             </table>

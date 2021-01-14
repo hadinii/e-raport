@@ -15,7 +15,7 @@ $showNav = true;
                     <div class="page-header-title">
                         <div class="d-inline">
                             <h4>{{$title}}</h4>
-                            <span>Halaman data guru, digunakan untuk melihat, menambah, mengubah, dan menghapus data guru. </span>
+                            <span>Halaman data Mata Pelajaran di guru digunakan untuk menginputkan nilai pelajaran  </span>
                         </div>
                     </div>
                 </div>
