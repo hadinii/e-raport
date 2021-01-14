@@ -2,23 +2,28 @@
     <div class="page-wrapper">
         <div class="page-body">
             <div class="row">
+                <div class="col-xl-6 col-md-6 mb-3">
+                    <h4> <span>Selamat Datang {{$user->nama}}</span>    </h4>
+                </div>
+            </div>
+            <div class="row">
                 <!-- task, page, download counter  start -->
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-c-yellow update-card">
                         <div class="card-block">
                             <div class="row align-items-end">
                                 <div class="col-8">
-                                    <h4 class="text-white">$30200</h4>
-                                    <h6 class="text-white m-b-0">All Earnings</h6>
+                                    <h4 class="text-white">{{$totalSiswaActive}}</h4>
+                                    <h6 class="text-white m-b-0">Total Siswa Aktif</h6>
                                 </div>
                                 <div class="col-4 text-right">
                                     <canvas id="update-chart-1" height="50"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
+                        {{-- <div class="card-footer">
                             <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>update : 2:15 am</p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-xl-3 col-md-6">
@@ -26,17 +31,17 @@
                         <div class="card-block">
                             <div class="row align-items-end">
                                 <div class="col-8">
-                                    <h4 class="text-white">290+</h4>
-                                    <h6 class="text-white m-b-0">Page Views</h6>
+                                    <h4 class="text-white">{{$totalKelas}}</h4>
+                                    <h6 class="text-white m-b-0">Total Kelas</h6>
                                 </div>
                                 <div class="col-4 text-right">
                                     <canvas id="update-chart-2" height="50"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
+                        {{-- <div class="card-footer">
                             <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>update : 2:15 am</p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-xl-3 col-md-6">
@@ -44,17 +49,17 @@
                         <div class="card-block">
                             <div class="row align-items-end">
                                 <div class="col-8">
-                                    <h4 class="text-white">145</h4>
-                                    <h6 class="text-white m-b-0">Task Completed</h6>
+                                    <h4 class="text-white">{{$totalGuru}}</h4>
+                                    <h6 class="text-white m-b-0">Total Guru</h6>
                                 </div>
                                 <div class="col-4 text-right">
                                     <canvas id="update-chart-3" height="50"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
+                        {{-- <div class="card-footer">
                             <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>update : 2:15 am</p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-xl-3 col-md-6">
@@ -62,22 +67,43 @@
                         <div class="card-block">
                             <div class="row align-items-end">
                                 <div class="col-8">
-                                    <h4 class="text-white">500</h4>
-                                    <h6 class="text-white m-b-0">Downloads</h6>
+                                    <h4 class="text-white">{{$totalPelajaran}}</h4>
+                                    <h6 class="text-white m-b-0">Total Pelajaran</h6>
                                 </div>
                                 <div class="col-4 text-right">
                                     <canvas id="update-chart-4" height="50"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
+                        {{-- <div class="card-footer">
                             <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>update : 2:15 am</p>
+                        </div> --}}
+                    </div>
+                </div>
+                {{-- visi misi --}}
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Visi SDN 017 Sungai Gantang</h4>
+                        </div>
+                        <div class="card-header">
+                            <h4>test</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Misi SDN 017 Sungai Gantang</h4>
+                        </div>
+                        <div class="card-header">
+                            <h4>test</h4>
                         </div>
                     </div>
                 </div>
                 <!-- task, page, download counter  end -->
 
-                <!--  sale analytics start -->
+                {{-- <!--  sale analytics start -->
                 <div class="col-xl-9 col-md-12">
                     <div class="card">
                         <div class="card-header">
@@ -493,7 +519,7 @@
                         <a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>
                     </div>
                 </div>
-                <!-- social download  end -->
+                <!-- social download  end --> --}}
             </div>
         </div>
     </div>
