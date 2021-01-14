@@ -114,7 +114,18 @@ class KelasController extends Controller
      */
     public function update(Request $request, Kelas $kelas)
     {
-        //
+        $form = $this->validate($request, [
+            'nama' => 'required|string',
+            'tingkat_id' => 'required|integer',
+            'wali_kelas_id' => 'required|integer',
+            // 'pelajaran' => 'required|array'
+        ]);
+
+        $kelas->update($form);
+
+        return redirect()
+            ->route('kelas.index')
+            ->withSuccess('Berhasil mengubah data kelas!');
     }
 
     /**

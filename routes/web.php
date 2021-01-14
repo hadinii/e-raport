@@ -81,6 +81,7 @@ Route::prefix('/kelas')->name('kelas.')->group(function () {
     Route::get('/create', 'KelasController@create')->name('create')->middleware('auth');
     Route::post('/', 'KelasController@store')->name('store')->middleware('auth');
     Route::get('/{kelas?}', 'KelasController@show')->name('show')->middleware('auth');
+    Route::put('/{kelas?}', 'KelasController@update')->name('update')->middleware('auth');
     Route::delete('/{kelas?}', 'KelasController@destroy')->name('destroy')->middleware('auth');
 });
 

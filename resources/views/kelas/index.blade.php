@@ -109,7 +109,7 @@ $showNav = true;
             </div>
         </div>
         <!-- Page Body end -->
-        <!-- Modal create and edit start -->
+        <!-- Modal edit start -->
         <div class="modal fade" id="modal-create-edit" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -119,9 +119,9 @@ $showNav = true;
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-create-edit" action="{{ route('kelas.store') }}" method="POST">
+                    <form id="form-create-edit" action="{{ route('kelas.update') }}" method="POST">
                         @csrf
-                        <input id="method-form-create-edit" type="hidden" name="_method" value="">
+                        @method('PUT')
                         <div class="modal-body">
                             @if($errors->any())
                                 <div class="alert alert-warning background-warning">
@@ -208,6 +208,20 @@ $showNav = true;
 
         $(document).ready(function() {
             $('#simpletable').DataTable();
+        });
+
+        // on edit btn clicked
+        $('.btn-edit').click(function() {
+            $('#modal-create-edit').modal('show');
+            const form = $(this).data('form');
+
+            // change url to specific row
+            $('#form-create-edit').attr('action', `${url}/${form.id}`);
+
+            // change form to specific row
+            $('#nama').val(form.nama);
+            $('#tingkat_id').val(form.tingkat_id);
+            $('#wali_kelas_id').val(form.wali_kelas_id);
         });
 
         // on delete btn clicked
