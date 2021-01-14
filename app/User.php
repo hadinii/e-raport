@@ -50,18 +50,26 @@ class User extends Authenticatable
             ->pluck('id', 'nama');
     }
 
-    public function getKelas()
+    public function getKelas($tahun_ajaran_id = null)
     {
         return $this->kelas()
             ->with('tahun_ajaran')
+            ->when($tahun_ajaran_id, function ($q) use ($tahun_ajaran_id) {
+                return $q->where('tahun_ajaran_id', $tahun_ajaran_id);
+            })
             ->latest()
             ->get();
     }
 
-    public function getJadwal()
+    public function getJadwal($tahun_ajaran_id = null)
     {
         return $this->pelajaran()
             ->with('pelajaran', 'kelas.tahun_ajaran')
+            ->when($tahun_ajaran_id, function ($q) use ($tahun_ajaran_id) {
+                return $q->whereHas('kelas', function ($query) use ($tahun_ajaran_id) {
+                    return $query->where('tahun_ajaran_id', $tahun_ajaran_id);
+                });
+            })
             ->latest()
             ->get();
     }

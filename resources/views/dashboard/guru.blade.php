@@ -2,6 +2,7 @@
     <div class="page-wrapper">
         <div class="page-body">
             <div class="col-12">
+                {{dd($user->getJadwal(2))}}
                 <div class="row">
                     <!-- wather user -->
                     <div class="col-xl-6 col-md-12">
