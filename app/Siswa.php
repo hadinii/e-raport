@@ -12,7 +12,7 @@ class Siswa extends Model
     // Getters
     public static function getAll($semester = null, $status = null)
     {
-        return self::latest()
+        return self::with('kelas')
             ->when($status, function ($q) use ($status) {
                 return $q->where('is_aktif', $status == 'Aktif');
             })
@@ -21,6 +21,7 @@ class Siswa extends Model
                     return $q->where('tahun_ajaran_id', $semester);
                 });
             })
+            ->latest()
             ->get();
     }
 
@@ -36,6 +37,11 @@ class Siswa extends Model
     {
         $value && $this->tahun_keluar = null;
         $this->attributes['is_aktif'] = $value;
+    }
+
+    public function setTanggalLahirAttribute($value)
+    {
+        $this->attributes['tanggal_lahir'] = date('d F Y', strtotime($value));
     }
 
     // Relations

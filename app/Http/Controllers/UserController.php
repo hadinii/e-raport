@@ -70,6 +70,19 @@ class UserController extends Controller
             ->withSuccess('Berhasil mengubah data guru!');
     }
 
+    public function changePassword(Request $request, User $user)
+    {
+        $form = $this->validate($request, [
+            'password' => 'required|string',
+            'password2' => 'required|string|same:password',
+        ]);
+        $user->update($form);
+
+        return redirect()
+            ->route('user.index')
+            ->withSuccess('Berhasil mengubah password!');
+    }
+
     /**
      * Display the specified resource.
      *

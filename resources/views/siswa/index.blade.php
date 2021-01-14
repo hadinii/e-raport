@@ -96,7 +96,7 @@ $showNav = true;
                                                 </label>
                                             </td>
                                             <td>
-                                                <button class="btn btn-sm btn-inverse px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
+                                                <button class="btn btn-sm btn-inverse btn-show px-2" data-form="{{ $row }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Info">
                                                     <i class="feather icon-info mx-auto"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-primary btn-edit px-2" data-form="{{ $row }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
@@ -118,6 +118,72 @@ $showNav = true;
             </div>
         </div>
         <!-- Page Body end -->
+        <!-- Modal show start -->
+        <div class="modal fade" id="modal-show" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Siswa</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12 row">
+                            <div class="col-6">
+                                <div class="form-group form-primary row">
+                                    <label class="col-sm-4 col-form-label">Nama</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="show-nama" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-primary row">
+                                    <label class="col-sm-4 col-form-label">NIM</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" min="0" minlength="10" id="show-nisn" class="form-control" value="{{ old('nisn') }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-primary row">
+                                    <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="show-jenis_kelamin" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-primary row">
+                                    <label class="col-sm-4 col-form-label">TTL</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="show-ttl" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-primary row">
+                                    <label class="col-sm-4 col-form-label">Tahun</label>
+                                    <div class="col-4">
+                                        <input type="text" id="show-tahun_masuk" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" id="show-tahun_keluar" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-primary row">
+                                    <label class="col-sm-4 col-form-label">Status</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="show-status" class="form-control" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                Raport
+                                <div class="mt-2">
+                                    <div class="col-12 row pr-0" id="list-raport">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal create and edit start -->
         <div class="modal fade" id="modal-create-edit" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
@@ -168,7 +234,7 @@ $showNav = true;
                                             <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control @error('tempat_lahir') is-invalid @enderror" placeholder="Tempat Lahir" value="{{ old('tempat_lahir') }}" required>
                                         </div>
                                         <div class="col-6">
-                                            <input type="text" id="tanggal_lahir" name="tanggal_lahir" class="form-control" placeholder="Tanggal Lahir" value="{{ old('tanggal_lahir') }}" required>
+                                            <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control" placeholder="Tanggal Lahir" value="{{ old('tanggal_lahir') }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -182,9 +248,9 @@ $showNav = true;
                                             <input type="text" id="tahun_keluar" name="tahun_keluar" class="form-control @error('tahun_keluar') is-invalid @enderror" placeholder="Tahun Keluar" value="{{ old('tahun_keluar') }}" disabled>
                                             <span class="form-bar"></span>
                                         </div>
-                                        {{-- <small>Kosongkan tahun keluar bila masih dalam masa studi</small> --}}
                                     </div>
                                     <div class="j-unit">
+                                        Status :
                                         <label class="j-checkbox-toggle">
                                             <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked="{{ old('is_aktif') }}">
                                         </label>
@@ -200,7 +266,6 @@ $showNav = true;
                 </div>
             </div>
         </div>
-        <!-- Modal create and edit end -->
         <!-- Modal delete start -->
         <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -234,8 +299,8 @@ $showNav = true;
     <script src="{{ asset('adminty\files\bower_components\datatables.net-bs4\js\dataTables.bootstrap4.min.js') }}"></script>
     <!-- Switch component js -->
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\switchery\js\switchery.min.js') }}"></script>
-    <!-- Date-dropper js -->
-    <script type="text/javascript" src="{{ asset('adminty\files\bower_components\datedropper\js\datedropper.min.js') }}"></script>
+    <!-- Moment js -->
+    <script type="text/javascript" src="{{ asset('adminty/files/assets/pages/advance-elements/moment-with-locales.min.js') }}"></script>
     <script>
 
         const url = '{{ route('siswa.index') }}';
@@ -244,18 +309,42 @@ $showNav = true;
 
         $(document).ready(function() {
             $('#simpletable').DataTable();
-            $("#tanggal_lahir").dateDropper( {
-                format: "d F Y",
-                dropWidth: 200,
-                dropPrimaryColor: "#1abc9c",
-                dropBorder: "1px solid #1abc9c"
-            });
         });
 
         $('#is_aktif').click(function() {
             _switchAktif(elemsingle.checked);
         });
 
+        // on show btn clicked
+        $('.btn-show').click(function() {
+            $('#modal-show').modal('show');
+            const form = $(this).data('form');
+
+            // change form to specific row
+            $('#show-nama').val(form.nama);
+            $('#show-nisn').val(form.nisn);
+            $('#show-jenis_kelamin').val(form.jenis_kelamin);
+            $('#show-ttl').val(`${form.tempat_lahir}, ${form.tanggal_lahir}`);
+            $('#show-tahun_masuk').val(form.tahun_masuk);
+            $('#show-tahun_keluar').val(form.tahun_keluar);
+            $('#show-status').val(form.is_aktif ? 'Aktif' : 'Non-Aktif');
+            // raport
+            $('#list-raport').html('');
+            console.log(form.kelas);
+            let append = '';
+            form.kelas.forEach(elem => {
+                const tmp = `<a href="#" class="col-6 alert alert-primary border-default mb-1 py-2 px-3">
+                                <p class="text-dark">
+                                    <strong>${elem.nama_tahun_ajaran}</strong>
+                                </p>
+                                <p class="text-muted">Kelas ${elem.nama_kelas}</p>
+                            </a>`
+                append += tmp;
+            });
+            $('#list-raport').html(append);
+        });
+
+        // on edit btn clicked
         $('.btn-edit').click(function() {
             $('#modal-create-edit').modal('show');
             const form = $(this).data('form');
@@ -269,7 +358,7 @@ $showNav = true;
             $('#nisn').val(form.nisn);
             $('#jenis_kelamin').val(form.jenis_kelamin);
             $('#tempat_lahir').val(form.tempat_lahir);
-            $('#tanggal_lahir').val(form.tanggal_lahir);
+            $('#tanggal_lahir').val(moment(form.tanggal_lahir).format("YYYY-MM-DD"));
             $('#tahun_masuk').val(form.tahun_masuk);
             $('#tahun_keluar').val(form.tahun_keluar);
             _switchAktif(form.is_aktif);

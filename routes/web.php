@@ -23,6 +23,7 @@ Route::prefix('/user')->name('user.')->group(function () {
     Route::get('/kelas/{user?}', 'UserController@showKelas')->name('kelas')->middleware('auth');
     Route::get('/jadwal/{user?}', 'UserController@showJadwal')->name('jadwal')->middleware('auth');
     Route::post('/', 'UserController@store')->name('store')->middleware('auth');
+    Route::put('/pass/{user?}', 'UserController@changePassword')->name('update-password')->middleware('auth');
     Route::put('/{user?}', 'UserController@update')->name('update')->middleware('auth');
     Route::delete('/{user?}', 'UserController@destroy')->name('destroy')->middleware('auth');
 });
@@ -81,6 +82,7 @@ Route::prefix('/kelas')->name('kelas.')->group(function () {
     Route::get('/create', 'KelasController@create')->name('create')->middleware('auth');
     Route::post('/', 'KelasController@store')->name('store')->middleware('auth');
     Route::get('/{kelas?}', 'KelasController@show')->name('show')->middleware('auth');
+    Route::put('/{kelas?}', 'KelasController@update')->name('update')->middleware('auth');
     Route::delete('/{kelas?}', 'KelasController@destroy')->name('destroy')->middleware('auth');
 });
 

@@ -59,7 +59,7 @@ $showNav = true;
                                                 <button class="btn btn-sm btn-primary btn-edit px-2" data-form="{{ $row }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
                                                     <i class="feather icon-edit mx-auto"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ubah Password">
+                                                <button class="btn btn-sm btn-warning btn-change-pw px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ubah Password">
                                                     <i class="feather icon-unlock mx-auto"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger btn-delete px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Hapus">
@@ -78,6 +78,49 @@ $showNav = true;
             </div>
         </div>
         <!-- Page Body end -->
+        <!-- Modal create and edit start -->
+        <div class="modal fade" id="modal-change-password" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Guru</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="form-change-password" action="{{ route('user.update-password') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            @if($errors->any())
+                                <div class="alert alert-warning background-warning">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <i class="icofont icofont-close-line-circled text-white"></i>
+                                    </button>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{$error}}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <div class="form-group form-primary">
+                                <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password Baru" value="{{ old('password') }}" required>
+                                <span class="form-bar"></span>
+                            </div>
+                            <div class="form-group form-primary">
+                                <input type="password" id="password2" name="password2" class="form-control @error('password2') is-invalid @enderror" placeholder="Konfirmasi Password Baru" value="{{ old('password2') }}" required>
+                                <span class="form-bar"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <!-- Modal create and edit start -->
         <div class="modal fade" id="modal-create-edit" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -115,6 +158,7 @@ $showNav = true;
                                 <small class="text-muted">Terdiri dari 18 digit angka</small>
                             </div>
                             <div class="j-unit">
+                                Status :
                                 <label class="j-checkbox-toggle">
                                     <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked="{{ old('is_aktif') }}">
                                 </label>
@@ -129,7 +173,6 @@ $showNav = true;
                 </div>
             </div>
         </div>
-        <!-- Modal create and edit end -->
         <!-- Modal delete start -->
         <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -189,6 +232,21 @@ $showNav = true;
             $('#nama').val(form.nama);
             $('#nip').val(form.nip);
             _switchAktif(form.is_aktif);
+        });
+
+        // on change passwd
+        $('.btn-change-pw').click(function() {
+            $('#modal-change-password').modal('show');
+            const id = $(this).data('id');
+            $('#form-change-password').attr('action', `${url}/pass/${id}`);
+        });
+        $('#form-change-password').submit(function(event) {
+            const password = $('#password').val();
+            const password2 = $('#password2').val();
+            if(password != password2){
+                event.preventDefault();
+                notify('fas fa-check', 'danger', 'Konfirmasi Password harus sama!');
+            }
         });
 
         // on delete btn clicked
