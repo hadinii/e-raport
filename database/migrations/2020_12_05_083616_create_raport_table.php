@@ -20,6 +20,7 @@ class CreateRaportTable extends Migration
             $table->integer('kelas_id');
             $table->text('sikap_spiritual')->nullable();
             $table->text('sikap_sosial')->nullable();
+            $table->json('ekskul')->nullable();
             $table->text('saran')->nullable();
             $table->string('tinggi_badan')->nullable();
             $table->string('berat_badan')->nullable();
@@ -27,7 +28,7 @@ class CreateRaportTable extends Migration
             $table->string('kondisi_penglihatan')->nullable();
             $table->string('kondisi_gigi')->nullable();
             $table->string('sakit')->nullable();
-            $table->string('alfa')->nullable();
+            $table->string('izin')->nullable();
             $table->string('tanpa_keterangan')->nullable();
             $table->timestamps();
         });

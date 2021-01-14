@@ -80,6 +80,8 @@ Route::prefix('/tahun')->name('tahun.')->group(function () {
 Route::prefix('/kelas')->name('kelas.')->group(function () {
     Route::get('/', 'KelasController@index')->name('index')->middleware('auth');
     Route::get('/create', 'KelasController@create')->name('create')->middleware('auth');
+    Route::get('/export/{kelas?}', 'KelasController@export')->name('export')->middleware('auth');
+    Route::post('/import/{kelas?}', 'KelasController@import')->name('import')->middleware('auth');
     Route::post('/', 'KelasController@store')->name('store')->middleware('auth');
     Route::get('/{kelas?}', 'KelasController@show')->name('show')->middleware('auth');
     Route::put('/{kelas?}', 'KelasController@update')->name('update')->middleware('auth');
@@ -95,7 +97,11 @@ Route::prefix('/jadwal')->name('jadwal.')->group(function () {
 // Raport Routes
 Route::prefix('/raport')->name('raport.')->group(function () {
     Route::get('/export/{kelas?}', 'RaportController@export')->name('export')->middleware('auth');
+    Route::get('/{raport?}', 'RaportController@show')->name('show')->middleware('auth');
     Route::post('/import/{kelas?}', 'RaportController@import')->name('import')->middleware('auth');
+    Route::put('/ekskul/{raport?}', 'RaportController@updateEkskul')->name('update-ekskul')->middleware('auth');
+    Route::put('/{raport?}', 'RaportController@update')->name('update')->middleware('auth');
+    Route::delete('/ekskul/{raport?}', 'RaportController@destroyEkskul')->name('destroy-ekskul')->middleware('auth');
 });
 
 // Nilai Routes
@@ -103,4 +109,10 @@ Route::prefix('/nilai')->name('nilai.')->group(function () {
     Route::get('/', 'NilaiController@index')->name('index')->middleware('auth');
     Route::post('/', 'NilaiController@store')->name('store')->middleware('auth');
     Route::post('/hander', 'NilaiController@handler')->name('handle-api')->middleware('auth');
+});
+
+// Prestasi Routes
+Route::prefix('/prestasi')->name('prestasi.')->group(function () {
+    Route::post('/', 'PrestasiController@store')->name('store')->middleware('auth');
+    Route::delete('/{prestasi?}', 'PrestasiController@destroy')->name('destroy')->middleware('auth');
 });

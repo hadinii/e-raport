@@ -332,8 +332,9 @@ $showNav = true;
             $('#list-raport').html('');
             console.log(form.kelas);
             let append = '';
+            const urlShowRaport = '{{route('raport.show')}}'
             form.kelas.forEach(elem => {
-                const tmp = `<a href="#" class="col-6 alert alert-primary border-default mb-1 py-2 px-3">
+                const tmp = `<a href="${urlShowRaport}/${elem.id}" class="col-6 alert alert-primary border-default mb-1 py-2 px-3">
                                 <p class="text-dark">
                                     <strong>${elem.nama_tahun_ajaran}</strong>
                                 </p>

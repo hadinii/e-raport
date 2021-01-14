@@ -9,6 +9,10 @@ class Raport extends Model
     protected $table = 'raport';
     protected $guarded = ['id'];
 
+    protected $attributes = [
+        'ekskul' => '[]'
+    ];
+
     /**
      * The accessors to append to the model's array form.
      *
@@ -40,6 +44,68 @@ class Raport extends Model
             ->nama;
     }
 
+    public function getEkskulAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public function getNilai()
+    {
+        return $this->nilai()
+            ->with('pelajaran')
+            ->get();
+    }
+
+    public function getPrestasi()
+    {
+        return $this->prestasi()
+            ->get();
+    }
+
+    public function getSiswa()
+    {
+        return $this->siswa()->first();
+    }
+
+    public function getKelas()
+    {
+        return $this->kelas()->first();
+    }
+
+    public function getTahunAjaran()
+    {
+        return $this->tahun_ajaran()->first();
+    }
+
+    // Setters
+    public function setEkskulAttribute($value)
+    {
+        $this->attributes['ekskul'] = json_encode($value);
+    }
+
+    public function addNewEkskul($value)
+    {
+        $ekskul = $this->ekskul;
+        foreach ($ekskul as $row) {
+            if ($row->ekskul->id == $value['ekskul']->id) {
+                return;
+            }
+        }
+        array_push($ekskul, $value);
+        $this->update(['ekskul' => $ekskul]);
+    }
+
+    public function removeEkskul($value)
+    {
+        $ekskul = $this->ekskul;
+        foreach ($ekskul as $index => $row) {
+            if ($row->ekskul->id == $value) {
+                unset($ekskul[$index]);
+            }
+        }
+        $this->update(['ekskul' => $ekskul]);
+    }
+
     // Relations
     public function siswa()
     {
@@ -59,5 +125,10 @@ class Raport extends Model
     public function nilai()
     {
         return $this->hasMany('App\Nilai');
+    }
+
+    public function prestasi()
+    {
+        return $this->hasMany('App\Prestasi');
     }
 }

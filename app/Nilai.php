@@ -10,6 +10,11 @@ class Nilai extends Model
     protected $guarded = ['id'];
 
     // Relations
+    public function pelajaran()
+    {
+        return $this->belongsTo('App\Pelajaran');
+    }
+
     public function raport()
     {
         return $this->belongsTo('App\Raport');

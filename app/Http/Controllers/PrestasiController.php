@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Prestasi;
+use App\Raport;
 use Illuminate\Http\Request;
 
 class PrestasiController extends Controller
@@ -18,16 +19,6 @@ class PrestasiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,41 +26,11 @@ class PrestasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        Prestasi::create($request->all());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Prestasi  $prestasi
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Prestasi $prestasi)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Prestasi  $prestasi
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Prestasi $prestasi)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Prestasi  $prestasi
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Prestasi $prestasi)
-    {
-        //
+        return redirect()
+            ->route('raport.show', $request->raport_id)
+            ->withSuccess('Berhasil menambah prestasi!');
     }
 
     /**
@@ -78,8 +39,12 @@ class PrestasiController extends Controller
      * @param  \App\Prestasi  $prestasi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Prestasi $prestasi)
+    public function destroy(Request $request, Prestasi $prestasi)
     {
-        //
+        $prestasi->delete();
+
+        return redirect()
+            ->route('raport.show', $request->raport_id)
+            ->withSuccess('Berhasil menghapus prestasi!');
     }
 }

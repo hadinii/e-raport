@@ -7,7 +7,6 @@ use App\Raport;
 use App\Siswa;
 use App\TahunAjaran;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -40,17 +39,47 @@ class RaportImport implements ToCollection, WithHeadingRow
                 return null;
             }
 
-            Raport::updateOrCreate(
-                [
-                    'tahun_ajaran_id'  => $tahunAjaran->id,
-                    'siswa_id' => $siswa->id
-                ],
-                [
-                    'tahun_ajaran_id'  => $tahunAjaran->id,
-                    'siswa_id' => $siswa->id,
-                    'kelas_id' => $kelas_id
-                ]
-            );
+            $raport = $siswa->kelas()
+                ->where('tahun_ajaran_id', $tahunAjaran->id)
+                ->where('kelas_id', $kelas_id)
+                ->first();
+
+            $raport->update([
+                'sikap_spiritual' => $row['sikap_spiritual'],
+                'sikap_sosial' => $row['sikap_sosial'],
+                'saran' => $row['saran'],
+                'tinggi_badan' => $row['tinggi_badan'],
+                'berat_badan' => $row['berat_badan'],
+                'kondisi_pendengaran' => $row['kondisi_pendengaran'],
+                'kondisi_penglihatan' => $row['kondisi_penglihatan'],
+                'kondisi_gigi' => $row['kondisi_gigi'],
+                'sakit' => $row['sakit'],
+                'izin' => $row['izin'],
+                'tanpa_keterangan' => $row['tanpa_keterangan'],
+            ]);
+
+            // Raport::updateOrCreate(
+            //     [
+            //         'tahun_ajaran_id'  => $tahunAjaran->id,
+            //         'siswa_id' => $siswa->id
+            //     ],
+            //     [
+            //         'tahun_ajaran_id'  => $tahunAjaran->id,
+            //         'siswa_id' => $siswa->id,
+            //         'kelas_id' => $kelas_id,
+            //         'sikap_spiritual' => $row['sikap_spiritual'],
+            //         'sikap_sosial' => $row['sikap_sosial'],
+            //         'saran' => $row['saran'],
+            //         'tinggi_badan' => $row['tinggi_badan'],
+            //         'berat_badan' => $row['berat_badan'],
+            //         'kondisi_pendengaran' => $row['kondisi_pendengaran'],
+            //         'kondisi_penglihatan' => $row['kondisi_penglihatan'],
+            //         'kondisi_gigi' => $row['kondisi_gigi'],
+            //         'sakit' => $row['sakit'],
+            //         'izin' => $row['izin'],
+            //         'tanpa_keterangan' => $row['tanpa_keterangan'],
+            //     ]
+            // );
         }
     }
 }

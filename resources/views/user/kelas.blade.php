@@ -60,7 +60,7 @@ $showNav = true;
                                                     <i class="feather icon-info mx-auto"></i>
                                                 </a>
                                                 @if ($row->tahun_ajaran->is_aktif)
-                                                <button class="btn btn-sm btn-primary px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Isi Raport">
+                                                <button class="btn btn-sm btn-primary btn-import px-2" data-id="{{ $row->id }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Isi Raport">
                                                     <i class="feather icon-edit mx-auto"></i>
                                                 </button>
                                                 @endif
@@ -77,6 +77,79 @@ $showNav = true;
             </div>
         </div>
         <!-- Page Body end -->
+        <!-- Modal import nilai -->
+        <div class="modal fade" id="modal-import" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Import Nilai Raport</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="form-import" action="{{ route('raport.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="sub-header"><strong>1. Download Template Excel</strong></h6>
+                                    <span class="text-16">Download template untuk mengisi nilai raport.</span>
+                                    <a id="link-export" href="{{ route('raport.export') }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">Download</a>
+                                </div>
+                                <div class="card-header">
+                                    <h6 class="sub-header"><strong>2. Isi Nilai Raport</strong></h6>
+                                    <span class="text-16">Isi data nilai raport sesuai dengan isian yang ada.</span>
+                                    <div class="card-block table-border-style mt-2">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>NISN</th>
+                                                        <th>Nama</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>1234567890</td>
+                                                        <td>Panjul</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>0987654321</td>
+                                                        <td>Udin</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>1234509876</td>
+                                                        <td>Ucok</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header">
+                                    <h6 class="sub-header"><strong>3. Upload Template Excel</strong></h6>
+                                    <span class="text-16">Upload template yang telah diisi dengan nilai raport dengan extension xlxs.</span>
+                                    <div>
+                                        <label id="file-name" class="label bg-primary d-none mt-2"></label>
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="upload">Upload</button>
+                                        <input type="file" id="data-siswa" name="data-siswa" class="d-none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light ">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -88,6 +161,27 @@ $showNav = true;
 
         $(document).ready(function() {
             $('#simpletable').DataTable();
+
+            $('#upload').click(function() {
+                $('#data-siswa').click();
+            });
+
+            $('#data-siswa').change(function() {
+                const fileName = $(this).val().split('\\').pop();
+                $('#file-name').removeClass('d-none');
+                $('#file-name').html(fileName);
+            });
+        });
+
+        // btn import
+        $('.btn-import').click(function() {
+            $('#modal-import').modal('show');
+
+            let urlExport = '{{ route('raport.export') }}';
+            let urlImport = '{{ route('raport.import') }}';
+            const id = $(this).data('id');
+            $('#link-export').attr('href', `${urlExport}/${id}`);
+            $('#form-import').attr('action', `${urlImport}/${id}`)
         });
 
         // show success notification on success

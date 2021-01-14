@@ -6,6 +6,9 @@ use App\User;
 use App\Kelas;
 use App\TahunAjaran;
 use Illuminate\Http\Request;
+use App\Imports\KelasImport;
+use App\Exports\KelasExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KelasController extends Controller
 {
@@ -141,5 +144,33 @@ class KelasController extends Controller
         return redirect()
             ->route('kelas.index')
             ->withSuccess('Berhasil menghapus data kelas!');
+    }
+
+    /**
+     * Import a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Kelas  $kelas
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request, Kelas $kelas)
+    {
+        Excel::import(new KelasImport($kelas), $request->file('data-siswa'));
+
+        return redirect()
+            ->route('kelas.show', $kelas)
+            ->withSuccess('berhasil mengimport data siswa!');
+    }
+
+    /**
+     * Export resource in storage.
+     *
+     * @param  \App\Kelas  $kelas
+     * @return \Illuminate\Http\Response
+     */
+    public function export(Kelas $kelas)
+    {
+        $name = "import kelas {$kelas->nama_lengkap}.xlsx";
+        return Excel::download(new KelasExport($kelas), $name);
     }
 }

@@ -86,13 +86,30 @@ $route = [
                                     </div>
                                 </div>
                                 <div class="card-block">
-                                    @foreach ($siswa as $row)
-                                        <div class="alert alert-primary border-default mb-3">
-                                            <p class="text-dark">
-                                                <strong>{{ $row->siswa->nama }}</strong> ( {{ $row->siswa->nisn }} )
-                                            </p>
-                                        </div>
-                                    @endforeach
+                                    <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nama</th>
+                                            <th>NISN</th>
+                                            <th>Raport</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($siswa as $row)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $row->nama_siswa }}</td>
+                                                <td>{{ $row->siswa->nisn }}</td>
+                                                <td>
+                                                    <a href="{{ route('raport.show', $row) }}" class="btn btn-sm btn-inverse px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Lihat Raport">
+                                                        <i class="feather icon-info mx-auto mr-2"></i> Lihat Raport
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                     @if ($siswa->count() < 1)
                                     <p class="text-dark">
                                         Tidak ada siswa kelas, silahkan import data siswa terlebih dahulu !
@@ -150,14 +167,14 @@ $route = [
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form-delete" action="{{ route('raport.import', $kelas) }}" method="POST" enctype="multipart/form-data">
+                    <form id="form-delete" action="{{ route('kelas.import', $kelas) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="card">
                                 <div class="card-header">
                                     <h6 class="sub-header"><strong>1. Download Template Excel</strong></h6>
                                     <span class="text-16">Download template untuk memasukkan data anggota kelas.</span>
-                                    <a href="{{ route('raport.export', $kelas) }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">Download</a>
+                                    <a href="{{ route('kelas.export', $kelas) }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">Download</a>
                                 </div>
                                 <div class="card-header">
                                     <h6 class="sub-header"><strong>2. Isi data Siswa</strong></h6>

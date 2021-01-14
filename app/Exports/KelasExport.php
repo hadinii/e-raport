@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class RaportExport implements FromQuery, WithMapping, WithHeadings
+class KelasExport implements FromQuery, WithMapping, WithHeadings
 {
     protected $raport;
 
@@ -23,6 +23,7 @@ class RaportExport implements FromQuery, WithMapping, WithHeadings
     public function query()
     {
         return Raport::query()
+            ->select('kelas_id', 'siswa_id')
             ->where('kelas_id', $this->kelas->id)
             ->with('siswa');
     }
@@ -31,8 +32,7 @@ class RaportExport implements FromQuery, WithMapping, WithHeadings
     {
         return [
             $this->index++,
-            $raport->siswa->nisn,
-            $raport->nama_siswa,
+            $raport->siswa->nisn
         ];
     }
 
@@ -41,18 +41,6 @@ class RaportExport implements FromQuery, WithMapping, WithHeadings
         return [
             'No',
             'NISN',
-            'Nama',
-            'Sikap Spiritual',
-            'Sikap Sosial',
-            'Saran',
-            'Tinggi Badan',
-            'Berat Badan',
-            'Kondisi Pendengaran',
-            'Kondisi Penglihatan',
-            'Kondisi Gigi',
-            'Sakit',
-            'Izin',
-            'Tanpa Keterangan',
         ];
     }
 }
