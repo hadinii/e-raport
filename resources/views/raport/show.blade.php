@@ -64,7 +64,7 @@ $user = Auth::user();
                                         <label class="col-sm-4 col-form-label">Tahun Ajaran</label>
                                         <label class="col-sm-8 col-form-label">: <strong> {{ $tahun_ajaran->tahun_aktif }} </strong> </label>
                                     </div>
-                                    <button class="btn btn-sm btn-inverse"><i class="fas fa-download"></i> Download</button>
+                                    <a href="{{ route('raport.print', $raport) }}" class="btn btn-sm btn-inverse"><i class="fas fa-download"></i> Download</a>
                                 </div>
                             </div>
                         </div>

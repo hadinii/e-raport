@@ -1,3 +1,12 @@
+<?php
+$title = 'Dashboard';
+$showNav = true;
+$user = Auth::user();
+?>
+@extends('layouts.adminty')
+
+@section('title', $title)
+
 @section('content')
     <div class="page-wrapper">
         <div class="page-body">

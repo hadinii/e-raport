@@ -23,17 +23,6 @@ class SekolahController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Sekolah  $sekolah
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sekolah $sekolah)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -44,8 +33,9 @@ class SekolahController extends Controller
     {
         $form = $this->validate($request, [
             'nama'           => 'required|string',
-            'alamat'         => 'required|String',
-            'kepala_sekolah' => 'required|String',
+            'alamat'         => 'required|string',
+            'kepala_sekolah' => 'required|string',
+            'nip_kepala_sekolah' => 'required|string',
         ]);
 
         $sekolah->update($form);

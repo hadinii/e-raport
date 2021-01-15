@@ -1,128 +1,160 @@
 <?php
 $title = 'Raport';
-$showNav = true;
+$user = Auth::user();
 ?>
-@extends('layouts.adminty')
+@extends('layouts.print')
 
 @section('title', $title)
 
+@push('style')
+<style type="text/css">
+    table {
+        border-collapse:collapse;
+        border-spacing:0;
+        width: 100%
+    }
+</style>
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;width: 100%}
+    .tg td{border-style:none;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg th{border-style:none;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg .tg-ng7p{border-color:#330001;text-align:left;vertical-align:top}
+    .tg .tg-iks7{background-color:#ffffff;border-color:#000000;text-align:left;vertical-align:top}
+    .tg .tg-73oq{border-color:#000000;text-align:left;vertical-align:top}
+</style>
+<style type="text/css">
+    .tg-1  {border-collapse:collapse;border-spacing:0; width: 100%}
+    .tg-1 td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg-1 th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg-1 .tg-a{background-color:#c0c0c0;border-color:#000000;text-align:center;vertical-align:top}
+    .tg-1 .tg-a-1{border-color:#330001;text-align:left;vertical-align:top}
+    .tg-1 .tg-a-2{border-color:#000000;text-align:left;vertical-align:top}
+</style>
+<style type="text/css">
+    .tg-2  {border-collapse:collapse;border-spacing:0;}
+    .tg-2 td{font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg-2 th{font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg-2 .tg-wp8o{border-color:#000000;text-align:center;vertical-align:top}
+    .tg-2 .tg-ths0{border-color:#330001;text-align:right;vertical-align:top}
+    .tg-2 .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<style type="text/css">
+    .tg-3  {border-collapse:collapse;border-spacing:0;}
+    .tg-3 td{font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg-3 th{font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg-3 .tg-baqh{text-align:center;vertical-align:top}
+    .tg-3 .tg-wp8o{border-color:#000000;text-align:center;vertical-align:top}
+    .tg-3 .tg-8g55{border-color:#330001;text-align:center;vertical-align:top}
+    .tg-3 .tg-0lax{text-align:left;vertical-align:top}
+</style>
+@endpush
+
 @section('content')
     <div class="page-wrapper">
-        <!-- Page Header start -->
-        <div class="page-header">
-            <div class="row align-items-end">
-                <div class="col-lg-8">
-                    <div class="page-header-title">
-                        <div class="d-inline">
-                            <h4>{{$title}}</h4>
-                            <span>{{ "$siswa->nama ($raport->nama_tahun_ajaran)" }}</span>
-                        </div>
-                    </div>
-                </div>
-                @include('partials.breadcrumb', ['breadcrumbs' => ['user.kelas' => 'Data Kelas', 'kelas.show' => $kelas->nama_lengkap]])
-            </div>
-        </div>
-        <!-- Page Header end -->
         <!-- Page Body start -->
         <div class="page-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                        <table class="tg">
+                            <thead>
+                                <tr>
+                                <th class="tg-iks7">Nama Peserta Didik</th>
+                                <th class="tg-iks7"><strong> {{ $siswa->nama }} </strong></th>
+                                <th class="tg-iks7">Kelas</th>
+                                <th class="tg-iks7"><strong> {{ $kelas->nama_lengkap }} </strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <td class="tg-ng7p">NISN</td>
+                                <td class="tg-73oq"><strong> {{ $siswa->nisn }} </strong></td>
+                                <td class="tg-73oq">Semester</td>
+                                <td class="tg-73oq"><strong> {{ $tahun_ajaran->semester }} </strong></td>
+                                </tr>
+                                <tr>
+                                <td class="tg-73oq">Nama Sekolah</td>
+                                <td class="tg-73oq"><strong> {{ $sekolah->nama }} </strong></td>
+                                <td class="tg-73oq">Tahun Ajaran</td>
+                                <td class="tg-73oq"><strong> {{ $tahun_ajaran->tahun_aktif }} </strong> </td>
+                                </tr>
+                                <tr>
+                                <td class="tg-73oq">Alamat Sekolah</td>
+                                <td class="tg-73oq"><strong> {{ $sekolah->alamat }} </strong></td>
+                                <td class="tg-73oq"></td>
+                                <td class="tg-73oq"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {{-- Sikap Kompetensi --}}
+                    <div class="card">
                         <div class="card-header">
-                            <button class="btn btn-sm btn-inverse float-right"><i class="fas fa-download"></i> Download</button>
+                            <h5 class="my-1">A. Sikap Kompetensi</h5>
                         </div>
                         <div class="card-block">
-                            <div class="col-12 row">
-                                <div class="col-sm-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">Nama Peserta Didik</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $siswa->nama }} </strong> </label>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">NISN</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $siswa->nisn }} </strong> </label>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">Nama Sekolah</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $sekolah->nama }} </strong> </label>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">Alamat Sekolah</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $sekolah->alamat }} </strong> </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">Kelas</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $kelas->nama_lengkap }} </strong> </label>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">Semester</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $tahun_ajaran->semester }} </strong> </label>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">Tahun Ajaran</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $tahun_ajaran->tahun_aktif }} </strong> </label>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- Sikap Kompetensi --}}
                             <div class="col-12 mt-3">
-                                <h5 class="my-1">A. Sikap Kompetensi</h5>
-                                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                <table class="tg-1">
                                     <thead>
-                                    <tr class="bg-dark">
-                                        <th colspan="4" class="text-center">Deskripsi</th>
-                                    </tr>
+                                      <tr>
+                                        <th class="tg-a" colspan="3">Deskripsi</th>
+                                      </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Sikap Spiritual</td>
-                                            <td class="{{ $raport->sikap_spiritual ?? 'text-danger' }}">{{ $raport->sikap_spiritual ?? 'Belum diisi' }}</td>
-                                            <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Sikap Sosial</td>
-                                            <td class="{{ $raport->sikap_spiritual ?? 'text-danger' }}">{{ $raport->sikap_sosial ?? 'Belum diisi' }}</td>
-                                            <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
-                                            </td>
-                                        </tr>
+                                      <tr>
+                                        <td class="tg-a-1">1</td>
+                                        <td class="tg-a-1">Sikap Spiritual</td>
+                                        <td class="tg-a-2 {{ $raport->sikap_spiritual ?? 'text-danger' }}">
+                                            {{ $raport->sikap_spiritual ?? 'Belum diisi' }}
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td class="tg-a-2">2</td>
+                                        <td class="tg-a-1">Sikap Sosial</td>
+                                        <td class="tg-a-2 {{ $raport->sikap_sosial ?? 'text-danger' }}">
+                                            {{ $raport->sikap_sosial ?? 'Belum diisi' }}
+                                        </td>
+                                      </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            {{-- Kompetensi Pengetahuan dan Keterampilan --}}
+                        </div>
+                    </div>
+                    {{-- Kompetensi Pengetahuan dan Keterampilan --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="my-1">B. Kompetensi Pengetahuan dan Keterampilan</h5>
+                        </div>
+                        <div class="card-block">
                             <div class="col-12 mt-3">
-                                <h5 class="my-1">B. Kompetensi Pengetahuan dan Keterampilan</h5>
-                                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                <table class="tg-1">
                                     <thead>
-                                        <tr class="bg-dark">
-                                            <th rowspan="2">No</th>
-                                            <th rowspan="2">Muatan Pelajaran</th>
-                                            <th colspan="3" class="text-center">Pengetahuan</th>
-                                            <th colspan="3" class="text-center">Keterampilan</th>
-                                            <th rowspan="2"></th>
+                                        <tr>
+                                            <th rowspan="2" class="tg-a">No</th>
+                                            <th rowspan="2" class="tg-a">Muatan Pelajaran</th>
+                                            <th colspan="3" class="tg-a">Pengetahuan</th>
+                                            <th colspan="3" class="tg-a">Keterampilan</th>
                                         </tr>
-                                        <tr class="bg-dark">
-                                            <th>Nilai</th>
-                                            <th>Predikat</th>
-                                            <th>Deskripsi</th>
-                                            <th>Nilai</th>
-                                            <th>Predikat</th>
-                                            <th>Deskripsi</th>
+                                        <tr>
+                                            <th class="tg-a">Nilai</th>
+                                            <th class="tg-a">Predikat</th>
+                                            <th class="tg-a">Deskripsi</th>
+                                            <th class="tg-a">Nilai</th>
+                                            <th class="tg-a">Predikat</th>
+                                            <th class="tg-a">Deskripsi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($nilai as $row)
                                         <tr>
-                                            @foreach ($nilai as $row)
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->pelajaran->nama }}</td>
                                             <td>{{ $row->nilai_pengetahuan }}</td>
@@ -131,204 +163,276 @@ $showNav = true;
                                             <td>{{ $row->nilai_keterampilan }}</td>
                                             <td>{{ $row->nilai_keterampilan }}</td>
                                             <td class="{{ $row->deskripsi_keterampilan ?? 'text-danger' }}">{{ $row->deskripsi_keterampilan ?? 'Belum diisi' }}</td>
-                                            <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
-                                            </td>
-                                            @endforeach
                                         </tr>
+                                        @endforeach
+                                        @if (count($nilai) < 1)
+                                        <tr>
+                                            <td colspan="8" class="text-center">Belum ada nilai</td>
+                                        </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
-                            {{-- Ekstrakurikuler --}}
+                        </div>
+                    </div>
+                    {{-- Ekstrakurikuler --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="my-1">C. Ekstrakurikuler</h5>
+                        </div>
+                        <div class="card-block">
                             <div class="col-12 mt-3">
-                                <h5 class="my-1">C. Ekstrakurikuler</h5>
-                                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                <table class="tg-1">
                                     <thead>
-                                        <tr class="bg-dark">
-                                            <th >No</th>
-                                            <th>Kegiatan Ekstrakurikuler</th>
-                                            <th>Keterangan</th>
-                                            <th></th>
+                                        <tr>
+                                            <th class="tg-a">No</th>
+                                            <th class="tg-a">Kegiatan Ekstrakurikuler</th>
+                                            <th class="tg-a">Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($raport->ekskul as $row)
                                         <tr>
-                                            @foreach ($nilai as $row)
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $row->pelajaran->nama }}</td>
-                                            <td>{{ $row->pelajaran->nama }}</td>
-                                            <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
-                                            </td>
-                                            @endforeach
+                                            <td>{{ $row->ekskul->nama }}</td>
+                                            <td>{{ $row->keterangan }}</td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            {{-- Saran Saran --}}
-                            <div class="col-12 mt-3">
-                                <h5 class="my-1">D. Saran - saran</h5>
-                                <table id="simpletable" class="table table-striped table-bordered nowrap">
-                                    <tbody>
+                                        @endforeach
+                                        @if (count($raport->ekskul) < 1)
                                         <tr>
-                                            <td>
-                                                <p>{{ $raport->saran }}</p>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
-                                            </td>
+                                            <td colspan="4" class="text-center">Belum ada data</td>
                                         </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
-                            {{-- Tinggi Berat --}}
+                        </div>
+                    </div>
+                    {{-- Saran Saran --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="my-1">D. Saran - saran</h5>
+                        </div>
+                        <div class="card-block">
+                            <div class="col-12 mt-3" style="min-height: 100px; border-style: solid; border-width: 1px;">
+                                <p>{{$raport->saran ?? 'Belum diisi'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Tinggi Berat --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="my-1">E. Tinggi dan Berat Badan</h5>
+                        </div>
+                        <div class="card-block">
                             <div class="col-12 mt-3">
-                                <h5 class="my-1">E. Tinggi dan Berat Badan</h5>
-                                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                <table class="tg-1">
                                     <thead>
-                                        <tr class="bg-dark">
-                                            <th >No</th>
-                                            <th>Aspek yang dinilai</th>
-                                            <th>Nilai</th>
-                                            <th></th>
+                                        <tr>
+                                            <th class="tg-a">No</th>
+                                            <th class="tg-a">Aspek yang dinilai</th>
+                                            <th class="tg-a">Nilai</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>1</td>
-                                            <td>Tinggi Badan</td>
-                                            <td>{{$raport->tinggi_badan}}</td>
+                                            <td>Tinggi Badan (Cm)</td>
                                             <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
+                                                {{$raport->tinggi_badan  ?? '-'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td>Berat Badan</td>
-                                            <td>{{$raport->berat_badan}}</td>
+                                            <td>Berat Badan (Kg)</td>
                                             <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
+                                                {{$raport->berat_badan  ?? '-'}}
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            {{-- Kondisi Kesehatan --}}
+                        </div>
+                    </div>
+                    {{-- Kondisi Kesehatan --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="my-1">F. Kondisi Kesehatan</h5>
+                        </div>
+                        <div class="card-block">
                             <div class="col-12 mt-3">
-                                <h5 class="my-1">F. Kondisi Kesehatan</h5>
-                                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                <table class="tg-1">
                                     <thead>
-                                        <tr class="bg-dark">
-                                            <th>No</th>
-                                            <th>Aspek</th>
-                                            <th>Keterangan</th>
-                                            <th></th>
+                                        <tr>
+                                            <th class="tg-a">No</th>
+                                            <th class="tg-a">Aspek</th>
+                                            <th class="tg-a">Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>1</td>
                                             <td>Pendengaran</td>
-                                            <td>{{$raport->kondisi_pendengaran}}</td>
                                             <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
+                                                {{$raport->kondisi_pendengaran  ?? '-'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
                                             <td>Penglihatan</td>
-                                            <td>{{$raport->kondisi_penglihatan}}</td>
                                             <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
+                                                {{$raport->kondisi_penglihatan  ?? '-'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>3</td>
                                             <td>Gigi</td>
-                                            <td>{{$raport->kondisi_gigi}}</td>
                                             <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
+                                                {{$raport->kondisi_gigi  ?? '-'}}
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            {{-- Prestasi --}}
+                        </div>
+                    </div>
+                    {{-- Prestasi --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="my-1">G. Prestasi</h5>
+                        </div>
+                        <div class="card-block">
                             <div class="col-12 mt-3">
-                                <h5 class="my-1">G. Prestasi</h5>
-                                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                <table class="tg-1">
                                     <thead>
-                                        <tr class="bg-dark">
-                                            <th>No</th>
-                                            <th>Jenis Prestasi</th>
-                                            <th>Keterangan</th>
-                                            <th></th>
+                                        <tr>
+                                            <th class="tg-a">No</th>
+                                            <th class="tg-a">Jenis Prestasi</th>
+                                            <th class="tg-a">Tingkat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($prestasi as $row)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $row->nama }}</td>
+                                            <td>{{ $row->tingkat }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Ketidakhadiran --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="my-1">H. Ketidakhadiran</h5>
+                        </div>
+                        <div class="card-block">
+                            <div class="col-12 mt-3">
+                                <table class="tg-1">
+                                    <thead>
+                                        <tr>
+                                            <th class="tg-a">Keterangan</th>
+                                            <th class="tg-a">Jumlah</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            @foreach ($nilai as $row)
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $row->pelajaran->nama }}</td>
-                                            <td>{{ $row->pelajaran->nama }}</td>
-                                            <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
-                                            </td>
-                                            @endforeach
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            {{-- Ketidakhadiran --}}
-                            <div class="col-12 mt-3">
-                                <h5 class="my-1">H. Ketidakhadiran</h5>
-                                <table id="simpletable" class="table table-striped table-bordered nowrap">
-                                    <tbody>
-                                        <tr>
                                             <td>Sakit</td>
-                                            <td>{{$raport->sakit}}</td>
                                             <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
+                                                {{$raport->sakit ?? '-'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Izin</td>
-                                            <td>{{$raport->izin}}</td>
                                             <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
+                                                {{$raport->izin ?? '-'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Tanpa Keterangan</td>
-                                            <td>{{$raport->tanpa_keterangan}}</td>
                                             <td>
-                                                <a href="{{ route('raport.show') }}" class="btn btn-sm btn-warning px-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
-                                                    <i class="feather icon-info mx-auto mr-2"></i> Edit
-                                                </a>
+                                                {{$raport->tanpa_keterangan ?? '-'}}
                                             </td>
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card-header">
+                            <h5 class="my-1"></h5>
+                        </div>
+                        <div class="card-block">
+                            <div class="col-12 mt-3">
+                                <table class="tg-2">
+                                    <thead>
+                                    <tr>
+                                        <td class="tg-wp8o"></td>
+                                        <th class="tg-wp8o">Sungai Ara, {{$tahun_ajaran->tanggal_raport}}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="tg-wp8o">Orangtua / Wali</td>
+                                        <td class="tg-wp8o">Guru Kelas</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0lax" colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0lax" colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0lax" colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-wp8o">_______________</td>
+                                        <td class="tg-wp8o"><strong><u>{{$kelas->wali_kelas->nama}}</u></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0lax"></td>
+                                        <td class="tg-wp8o">NIP. {{$kelas->wali_kelas->nip}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card-header">
+                            <h5 class="my-1"></h5>
+                        </div>
+                        <div class="card-block">
+                            <div class="col-12 mt-3">
+                                <table class="tg-3">
+                                    <thead>
+                                      <tr>
+                                        <th class="tg-8g55">Mengetahui</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td class="tg-wp8o">Kepala Sekolah</td>
+                                      </tr>
+                                      <tr>
+                                        <td class="tg-0lax"></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="tg-0lax"></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="tg-0lax"></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="tg-baqh"><strong><u>{{$tahun_ajaran->nama_kepala_sekolah}}</u></strong></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="tg-baqh">NIP. {{$tahun_ajaran->nip_kepala_sekolah}}</td>
+                                      </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -340,3 +444,4 @@ $showNav = true;
         <!-- Page Body end -->
     </div>
 @endsection
+

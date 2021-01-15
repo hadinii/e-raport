@@ -94,6 +94,16 @@ class Kelas extends Model
             ->first();
     }
 
+    public static function getActive()
+    {
+        $currentSemester = TahunAjaran::getActive();
+        if (is_null($currentSemester)) {
+            return [];
+        }
+        return self::where('tahun_ajaran_id', $currentSemester->id)
+            ->get();
+    }
+
     // Setters
     public function setPelajaran($pelajaran)
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Kurikulum;
+use App\Sekolah;
 use App\TahunAjaran;
 use Illuminate\Http\Request;
 
@@ -15,12 +16,14 @@ class TahunAjaranController extends Controller
      */
     public function index()
     {
-        $semester = TahunAjaran::get();
+        $semester = TahunAjaran::getAll();
         $kurikulum = Kurikulum::getAll();
+        $sekolah = Sekolah::getSekolah();
 
         $data = [
             'semester' => $semester,
-            'kurikulum' => $kurikulum
+            'kurikulum' => $kurikulum,
+            'sekolah' => $sekolah
         ];
         return view('tahun_ajaran.index', $data);
     }
@@ -38,6 +41,8 @@ class TahunAjaranController extends Controller
             'semester' => 'required|string|in:Ganjil,Genap',
             'tanggal_raport' => 'required|date',
             'kurikulum_id' => 'required',
+            'nama_kepala_sekolah' => 'required|string',
+            'nip_kepala_sekolah' => 'required|string',
         ]);
 
         $form['is_aktif'] = $request->is_aktif ? true : false;

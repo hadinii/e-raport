@@ -30,29 +30,38 @@ $showNav = true;
                     <!-- Zero config.table start -->
                     <div class="card">
                         <div class="card-header">
-                            {{-- <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modal-create-edit">
-                                <i class="feather icon-plus"></i>Tambah tahun ajaran
-                            </button> --}}
                         </div>
                         <div class="card-block">
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Nama</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="{{ $sekolah->nama }}" readonly>
+                            <form action="{{ route('sekolah.update', $sekolah->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Nama</label>
+                                    <div class="col-sm-10">
+                                        <input id="nama" name="nama" type="text" class="form-control" value="{{ $sekolah->nama }}" readonly>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Alamat</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" rows="5" readonly>{{ $sekolah->alamat }}</textarea>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Alamat</label>
+                                    <div class="col-sm-10">
+                                        <textarea id="alamat" name="alamat" class="form-control" rows="5" readonly>{{ $sekolah->alamat }}</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Kepala Sekolah</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="{{ $sekolah->kepala_sekolah }}" readonly>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Kepala Sekolah</label>
+                                    <div class="col-sm-10">
+                                        <input id="kepala_sekolah" name="kepala_sekolah" type="text" class="form-control" value="{{ $sekolah->kepala_sekolah }}" readonly>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">NIP Kepala Sekolah</label>
+                                    <div class="col-sm-10">
+                                        <input id="nip_kepala_sekolah" name="nip_kepala_sekolah" type="text" class="form-control" value="{{ $sekolah->nip_kepala_sekolah }}" readonly>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-inverse btn-edit float-right"> Edit</button>
+                                <button type="submit" class="btn btn-sm btn-inverse btn-save float-right d-none"> Simpan</button>
+                            </form>
                         </div>
                     </div>
                     <!-- Zero config.table end -->
@@ -71,6 +80,16 @@ $showNav = true;
     <script>
         $(document).ready(function() {
             //
+        });
+
+        // btn edit
+        $('.btn-edit').click(function() {
+            $('#nama').attr('readonly', false);
+            $('#alamat').attr('readonly', false);
+            $('#kepala_sekolah').attr('readonly', false);
+            $('#nip_kepala_sekolah').attr('readonly', false);
+            $(this).addClass('d-none');
+            $('.btn-save').removeClass('d-none');
         });
 
         // show success notification on success

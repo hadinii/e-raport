@@ -20,6 +20,8 @@ class CreateTahunAjaranTable extends Migration
             $table->date('tanggal_raport');
             $table->boolean('is_aktif')->default(false);
             $table->integer('kurikulum_id');
+            $table->string('nama_kepala_sekolah');
+            $table->string('nip_kepala_sekolah');
             $table->timestamps();
         });
     }

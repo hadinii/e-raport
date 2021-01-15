@@ -31,9 +31,7 @@ Route::prefix('/user')->name('user.')->group(function () {
 // Data Sekolah Routes
 Route::prefix('/sekolah')->name('sekolah.')->group(function () {
     Route::get('/', 'SekolahController@index')->name('index')->middleware('auth');
-    Route::post('/', 'SekolahController@store')->name('store')->middleware('auth');
     Route::put('/{sekolah?}', 'SekolahController@update')->name('update')->middleware('auth');
-    Route::delete('/{sekolah?}', 'SekolahController@destroy')->name('destroy')->middleware('auth');
 });
 
 // Data Mata Pelajaran Routes
@@ -97,6 +95,7 @@ Route::prefix('/jadwal')->name('jadwal.')->group(function () {
 // Raport Routes
 Route::prefix('/raport')->name('raport.')->group(function () {
     Route::get('/export/{kelas?}', 'RaportController@export')->name('export')->middleware('auth');
+    Route::get('/print/{raport?}', 'RaportController@print')->name('print')->middleware('auth');
     Route::get('/{raport?}', 'RaportController@show')->name('show')->middleware('auth');
     Route::post('/import/{kelas?}', 'RaportController@import')->name('import')->middleware('auth');
     Route::put('/ekskul/{raport?}', 'RaportController@updateEkskul')->name('update-ekskul')->middleware('auth');

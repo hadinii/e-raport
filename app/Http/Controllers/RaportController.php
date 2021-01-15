@@ -2,37 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Raport;
 use App\Ekskul;
 use App\Kelas;
-use App\Raport;
+use App\Sekolah;
 use Illuminate\Http\Request;
 use App\Imports\RaportImport;
 use App\Exports\RaportExport;
-use App\Sekolah;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class RaportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -51,19 +32,7 @@ class RaportController extends Controller
             'sekolah' => Sekolah::getSekolah(),
             'ekskul' => Ekskul::all()
         ];
-        // return $data;
         return view('raport.show', $data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Raport  $raport
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Raport $raport)
-    {
-        return $raport;
     }
 
     /**
@@ -142,5 +111,29 @@ class RaportController extends Controller
     {
         $name = "import nilai kelas {$kelas->nama_lengkap}.xlsx";
         return Excel::download(new RaportExport($kelas), $name);
+    }
+
+    /**
+     * Print resource in storage as PDF.
+     *
+     * @param  \App\Raport  $raport
+     * @return \Illuminate\Http\Response
+     */
+    public function print(Raport $raport)
+    {
+        $data = [
+            'raport' => $raport,
+            'siswa' => $raport->getSiswa(),
+            'kelas' => $raport->getKelas(),
+            'nilai' => $raport->getNilai(),
+            'prestasi' => $raport->getPrestasi(),
+            'tahun_ajaran' => $raport->getTahunAjaran(),
+            'sekolah' => Sekolah::getSekolah(),
+            'ekskul' => Ekskul::all()
+        ];
+        // return $data;
+        // return view('raport.print', $data);
+        $pdf = PDF::loadView('raport.print', $data);
+        return $pdf->download("Raport {$raport->nama_siswa} ({$raport->nama_tahun_ajaran}).pdf");
     }
 }

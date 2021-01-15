@@ -39,6 +39,7 @@ $showNav = true;
                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                     <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Nama</th>
                                         <th>NIP</th>
                                         <th>Status</th>
@@ -48,6 +49,7 @@ $showNav = true;
                                     <tbody>
                                         @foreach ($users as $row)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->nama }}</td>
                                             <td>{{ $row->nip }}</td>
                                             <td>

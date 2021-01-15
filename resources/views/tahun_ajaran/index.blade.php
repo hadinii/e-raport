@@ -39,6 +39,7 @@ $showNav = true;
                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                     <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Nama</th>
                                         <th>Kurikulum</th>
                                         <th>Tanggal Raport</th>
@@ -49,6 +50,7 @@ $showNav = true;
                                     <tbody>
                                         @foreach ($semester as $row)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->tahun_aktif .' - '. $row->semester }}</td>
                                             <td>{{ $row->kurikulum }}</td>
                                             <td>{{ $row->tanggal_raport }}</td>
@@ -110,7 +112,7 @@ $showNav = true;
                             </div>
                             <div class="form-group form-primary">
                                 <select id="semester" name="semester" class="form-control custom-select treshold-i @error('semester') is-invalid @enderror" placeholder="Semester" required>
-                                    <option value="">Pilih Semester</option>
+                                    <option value="">-- Pilih Semester --</option>
                                     <option value="Ganjil">Ganjil</option>
                                     <option value="Genap">Genap</option>
                                 </select>
@@ -118,7 +120,7 @@ $showNav = true;
                             </div>
                             <div class="form-group form-primary">
                                 <select id="kurikulum_id" name="kurikulum_id" class="form-control custom-select treshold-i @error('kurikulum_id') is-invalid @enderror" placeholder="Kurikulum" required>
-                                    <option value="">Pilih Kurikulum</option>
+                                    <option value="">-- Pilih Kurikulum --</option>
                                     @foreach ($kurikulum as $row)
                                         <option value="{{ $row->id }}" {{ old('kurikulum_id') == $row->id ? 'Selected' : '' }}>{{ $row->nama }}</option>
                                     @endforeach
@@ -126,11 +128,21 @@ $showNav = true;
                                 <span class="form-bar"></span>
                             </div>
                             <div class="form-group form-primary">
-                                <input type="text" id="tanggal_raport" name="tanggal_raport" class="form-control @error('tanggal_raport') is-invalid @enderror" placeholder="Tanggal Raport" value="{{ old('tanggal_raport') }}" required>
+                                <input type="date" id="tanggal_raport" name="tanggal_raport" class="form-control @error('tanggal_raport') is-invalid @enderror" placeholder="Tanggal Raport" value="{{ old('tanggal_raport') }}" required>
                                 <span class="form-bar"></span>
                                 <small class="text-muted">Tanggal yang akan tertera di raport</small>
                             </div>
+                            <div class="form-group form-primary">
+                                <input type="text" id="nama_kepala_sekolah" name="nama_kepala_sekolah" class="form-control @error('nama_kepala_sekolah') is-invalid @enderror" value="{{ $sekolah->kepala_sekolah }}" readonly>
+                                <span class="form-bar"></span>
+                            </div>
+                            <div class="form-group form-primary">
+                                <input type="text" id="nip_kepala_sekolah" name="nip_kepala_sekolah" class="form-control @error('nip_kepala_sekolah') is-invalid @enderror" placeholder="Tanggal Raport" value="{{ $sekolah->nip_kepala_sekolah }}" readonly>
+                                <span class="form-bar"></span>
+                                <small class="text-muted">Nama dan NIP kepala sekolah yang akan tertera di raport</small>
+                            </div>
                             <div class="j-unit">
+                                Status :
                                 <label class="j-checkbox-toggle">
                                     <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked>
                                 </label>
@@ -180,8 +192,8 @@ $showNav = true;
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\switchery\js\switchery.min.js') }}"></script>
     <!-- Max-length js -->
     <script type="text/javascript" src="{{ asset('adminty\files\bower_components\bootstrap-maxlength\js\bootstrap-maxlength.js') }}"></script>
-    <!-- Date-dropper js -->
-    <script type="text/javascript" src="{{ asset('adminty\files\bower_components\datedropper\js\datedropper.min.js') }}"></script>
+    <!-- Moment js -->
+    <script type="text/javascript" src="{{ asset('adminty/files/assets/pages/advance-elements/moment-with-locales.min.js') }}"></script>
     <script>
 
         const url = '{{ route('tahun.index') }}';
@@ -206,12 +218,14 @@ $showNav = true;
             $('#form-create-edit').attr('action', `${url}/${form.id}`);
             $('#method-form-create-edit').val('PUT');
 
-
+            console.log(moment(form.tanggal_raport).format("YYYY-MM-DD"));
             // change form to specific row
             $('#tahun_aktif').val(form.tahun_aktif);
-            $('#tanggal_raport').val(form.tanggal_raport);
+            $('#tanggal_raport').val(moment(form.tanggal_raport).format("YYYY-MM-DD"));
             $('#semester').val(form.semester);
             $('#kurikulum_id').val(form.kurikulum_id);
+            $('#nama_kepala_sekolah').val(form.nama_kepala_sekolah);
+            $('#nip_kepala_sekolah').val(form.nip_kepala_sekolah);
             _switchAktif(form.is_aktif);
         });
 

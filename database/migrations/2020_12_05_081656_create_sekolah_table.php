@@ -18,6 +18,7 @@ class CreateSekolahTable extends Migration
             $table->string('nama');
             $table->string('alamat');
             $table->string('kepala_sekolah');
+            $table->string('nip_kepala_sekolah');
             $table->timestamps();
         });
     }

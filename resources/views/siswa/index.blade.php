@@ -75,6 +75,7 @@ $showNav = true;
                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                     <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>NISN</th>
                                         <th>Nama</th>
                                         <th>Tempat, Tgl Lahir</th>
@@ -86,6 +87,7 @@ $showNav = true;
                                     <tbody>
                                         @foreach ($siswa as $row)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->nisn }}</td>
                                             <td>{{ $row->nama }}</td>
                                             <td>{{ $row->tempat_lahir.', '.$row->tanggal_lahir }}</td>
