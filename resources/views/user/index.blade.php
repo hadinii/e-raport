@@ -164,6 +164,7 @@ $showNav = true;
                                 <label class="j-checkbox-toggle">
                                     <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked="{{ old('is_aktif') }}">
                                 </label>
+                                <span id="status" class="ml-2">Aktif</span>
                             </div>
                             <small class="">*: Password default untuk guru baru adalah angka 1-8</small>
                         </div>
@@ -220,6 +221,10 @@ $showNav = true;
             $('#simpletable').DataTable();
         });
 
+        $('#is_aktif').click(function() {
+            _switchAktif(elemsingle.checked);
+        });
+
         // on edit btn clicked
         $('.btn-edit').click(function() {
             $('#modal-create-edit').modal('show');
@@ -262,6 +267,11 @@ $showNav = true;
 
         // change switch value
         function _switchAktif (val) {
+            if (val) {
+                $('#status').html('Aktif');
+            }else {
+                $('#status').html('Non-Aktif');
+            }
             elemsingle.checked = val;
             is_aktif.handleOnchange(val);
         }

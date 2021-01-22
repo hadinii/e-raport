@@ -51,7 +51,18 @@ class HomeController extends Controller
 
     public function guru()
     {
-        $data = [];
+        $user = Auth::user();
+        $semester = TahunAjaran::getActive();
+
+        $waliKelas = $semester ? $user->getKelas($semester->id)->first() : [];
+        $jadwal = $semester ? $user->getJadwal($semester->id) : [];
+
+        $data = [
+            'semester' => $semester,
+            'waliKelas' => $waliKelas,
+            'jadwal' => $jadwal
+        ];
+        // return $data;
         return view('dashboard.guru', $data);
     }
 }

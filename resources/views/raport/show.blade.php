@@ -156,10 +156,10 @@ $user = Auth::user();
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->pelajaran->nama }}</td>
                                             <td>{{ $row->nilai_pengetahuan }}</td>
-                                            <td>{{ $row->nilai_pengetahuan }}</td>
+                                            <td>{{ $row->nilai_pengetahuan < 85 ? ($row->nilai_pengetahuan < 67 ? 'C' : 'B' ) : 'A' }}</td>
                                             <td class="{{ $row->deskripsi_pengetahuan ?? 'text-danger' }}">{{ $row->deskripsi_pengetahuan ?? 'Belum diisi' }}</td>
                                             <td>{{ $row->nilai_keterampilan }}</td>
-                                            <td>{{ $row->nilai_keterampilan }}</td>
+                                            <td>{{ $row->nilai_keterampilan < 85 ? ($row->nilai_keterampilan < 67 ? 'C' : 'B' ) : 'A' }}</td>
                                             <td class="{{ $row->deskripsi_keterampilan ?? 'text-danger' }}">{{ $row->deskripsi_keterampilan ?? 'Belum diisi' }}</td>
                                         </tr>
                                         @endforeach
@@ -337,6 +337,13 @@ $user = Auth::user();
                                                 <td>1</td>
                                                 <td>Pendengaran</td>
                                                 <td>
+                                                    {{-- <select name="kondisi_pendengaran" id="kondisi_pendengaran" class="form-control custom-select" value="{{$raport->kondisi_pendengaran}}" readonly>
+                                                        <option value="">Kondisi Pendengaran</option>
+                                                        <option value="Amat Baik" {{ $row->kondisi_pendengaran == 'Amat' ?}}>Amat Baik</option>
+                                                        <option value="Baik">Baik</option>
+                                                        <option value="Cukup">Cukup</option>
+                                                        <option value="Kurang">Kurang</option>
+                                                    </select> --}}
                                                     <input type="text" id="kondisi_pendengaran" name="kondisi_pendengaran" class="form-control" placeholder="Kondisi Pendengaran" value="{{$raport->kondisi_pendengaran}}" readonly>
                                                 </td>
                                             </tr>

@@ -146,6 +146,7 @@ $showNav = true;
                                 <label class="j-checkbox-toggle">
                                     <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked>
                                 </label>
+                                <span id="status" class="ml-2">Aktif</span>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -210,6 +211,10 @@ $showNav = true;
             });
         });
 
+        $('#is_aktif').click(function() {
+            _switchAktif(elemsingle.checked);
+        });
+
         $('.btn-edit').click(function() {
             $('#modal-create-edit').modal('show');
             const form = $(this).data('form');
@@ -239,6 +244,11 @@ $showNav = true;
 
         // change switch value
         function _switchAktif (val) {
+            if (val) {
+                $('#status').html('Aktif');
+            }else {
+                $('#status').html('Non-Aktif');
+            }
             elemsingle.checked = val;
             is_aktif.handleOnchange(val);
         }

@@ -158,10 +158,10 @@ $user = Auth::user();
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->pelajaran->nama }}</td>
                                             <td>{{ $row->nilai_pengetahuan }}</td>
-                                            <td>{{ $row->nilai_pengetahuan }}</td>
+                                            <td>{{ $row->nilai_pengetahuan < 85 ? ($row->nilai_pengetahuan < 67 ? 'C' : 'B' ) : 'A' }}</td>
                                             <td class="{{ $row->deskripsi_pengetahuan ?? 'text-danger' }}">{{ $row->deskripsi_pengetahuan ?? 'Belum diisi' }}</td>
                                             <td>{{ $row->nilai_keterampilan }}</td>
-                                            <td>{{ $row->nilai_keterampilan }}</td>
+                                            <td>{{ $row->nilai_keterampilan < 85 ? ($row->nilai_keterampilan < 67 ? 'C' : 'B' ) : 'A' }}</td>
                                             <td class="{{ $row->deskripsi_keterampilan ?? 'text-danger' }}">{{ $row->deskripsi_keterampilan ?? 'Belum diisi' }}</td>
                                         </tr>
                                         @endforeach

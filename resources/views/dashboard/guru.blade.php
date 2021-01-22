@@ -30,31 +30,26 @@ $user = Auth::user();
                                     <div class="card-block">
                                         <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Wali Kelas</h6>
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <p class="m-b-10 f-w-600">Email</p>
-                                                <h6 class="text-muted f-w-400">asd@asd.asd</h6>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <p class="m-b-10 f-w-600">Phone</p>
-                                                <h6 class="text-muted f-w-400">0023-333-526136</h6>
+                                            <div class="col-sm-12">
+                                                @if ($waliKelas)
+                                                <p class="m-b-10 f-w-600">Kelas {{$waliKelas->nama_lengkap ?? '-'}}</p>
+                                                @else
+                                                <h6 class="text-muted f-w-400">Tidak menjadi wali kelas</h6>
+                                                @endif
                                             </div>
                                         </div>
                                         <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Mata Pelajaran</h6>
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <p class="m-b-10 f-w-600">Recent</p>
-                                                <h6 class="text-muted f-w-400">Guruable Admin</h6>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <p class="m-b-10 f-w-600">Most Viewed</p>
-                                                <h6 class="text-muted f-w-400">Able Pro Admin</h6>
+                                            <div class="col-sm-12">
+                                                @if (count($jadwal) > 0)
+                                                @foreach ($jadwal->unique('pelajaran_id') as $row)
+                                                <p class="m-b-10 f-w-600">{{$row->pelajaran->nama}}</p>
+                                                @endforeach
+                                                @else
+                                                <h6 class="text-muted f-w-400">Tidak mengajar</h6>
+                                                @endif
                                             </div>
                                         </div>
-                                        <ul class="social-link list-unstyled m-t-40 m-b-10">
-                                            <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook"><i class="feather icon-facebook facebook" aria-hidden="true"></i></a></li>
-                                            <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter"><i class="feather icon-twitter twitter" aria-hidden="true"></i></a></li>
-                                            <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram"><i class="feather icon-instagram instagram" aria-hidden="true"></i></a></li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -64,11 +59,29 @@ $user = Auth::user();
                     <!-- task, page, download counter  start -->
                     <div class="col-xl-6 col-md-12 row">
                         <div class="col-xl-6 col-md-6">
+                            <div class="card bg-c-lite-green update-card">
+                                <div class="card-block">
+                                    <div class="row align-items-end">
+                                        <div class="col-8">
+                                            <h4 class="text-white">{{ $semester->tahun_aktif ?? '-' }}</h4>
+                                            <h6 class="text-white m-b-0">{{$semester->semester ?? '-'}}</h6>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <canvas id="update-chart-4" height="50"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <p class="text-white m-b-0"><i class="feather icon-award text-white f-14 m-r-10"></i>Semester Aktif</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
                             <div class="card bg-c-yellow update-card">
                                 <div class="card-block">
                                     <div class="row align-items-end">
                                         <div class="col-8">
-                                            <h4 class="text-white">12</h4>
+                                            <h4 class="text-white">{{ count($jadwal) ? $jadwal->unique('pelajaran_id')->count() : '0'}}</h4>
                                             <h6 class="text-white m-b-0">Pelajaran</h6>
                                         </div>
                                         <div class="col-4 text-right">
@@ -77,7 +90,7 @@ $user = Auth::user();
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>update : 2:15 am</p>
+                                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>Jumlah mengajar pelajaran</p>
                                 </div>
                             </div>
                         </div>
@@ -86,8 +99,8 @@ $user = Auth::user();
                                 <div class="card-block">
                                     <div class="row align-items-end">
                                         <div class="col-8">
-                                            <h4 class="text-white">290</h4>
-                                            <h6 class="text-white m-b-0">Siswa Kelas</h6>
+                                            <h4 class="text-white">{{ count($jadwal) ? $jadwal->sum('kelas.jumlah_siswa') : '0'}}</h4>
+                                            <h6 class="text-white m-b-0">Siswa</h6>
                                         </div>
                                         <div class="col-4 text-right">
                                             <canvas id="update-chart-2" height="50"></canvas>
@@ -95,7 +108,7 @@ $user = Auth::user();
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>update : 2:15 am</p>
+                                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>Jumlah Siswa Kelas</p>
                                 </div>
                             </div>
                         </div>
@@ -104,8 +117,8 @@ $user = Auth::user();
                                 <div class="card-block">
                                     <div class="row align-items-end">
                                         <div class="col-8">
-                                            <h4 class="text-white">15</h4>
-                                            <h6 class="text-white m-b-0">Kelas Mengajar</h6>
+                                            <h4 class="text-white">{{ count($jadwal) ? $jadwal->count() : '0' }}</h4>
+                                            <h6 class="text-white m-b-0">Kelas</h6>
                                         </div>
                                         <div class="col-4 text-right">
                                             <canvas id="update-chart-3" height="50"></canvas>
@@ -113,25 +126,7 @@ $user = Auth::user();
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>update : 2:15 am</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-md-6">
-                            <div class="card bg-c-lite-green update-card">
-                                <div class="card-block">
-                                    <div class="row align-items-end">
-                                        <div class="col-8">
-                                            <h4 class="text-white">500</h4>
-                                            <h6 class="text-white m-b-0">Downloads</h6>
-                                        </div>
-                                        <div class="col-4 text-right">
-                                            <canvas id="update-chart-4" height="50"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>update : 2:15 am</p>
+                                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>Jumlah Kelas Mengajar</p>
                                 </div>
                             </div>
                         </div>

@@ -140,7 +140,7 @@ $showNav = true;
                                     </div>
                                 </div>
                                 <div class="form-group form-primary row">
-                                    <label class="col-sm-4 col-form-label">NIM</label>
+                                    <label class="col-sm-4 col-form-label">NISN</label>
                                     <div class="col-sm-8">
                                         <input type="number" min="0" minlength="10" id="show-nisn" class="form-control" value="{{ old('nisn') }}" readonly>
                                     </div>
@@ -256,6 +256,7 @@ $showNav = true;
                                         <label class="j-checkbox-toggle">
                                             <input type="checkbox" id="is_aktif" name="is_aktif" class="js-single" checked="{{ old('is_aktif') }}">
                                         </label>
+                                        <span id="status" class="ml-2">Aktif</span>
                                     </div>
                                 </div>
                             </div>
@@ -382,8 +383,10 @@ $showNav = true;
             if (val) {
                 tahun_keluar.val(null);
                 tahun_keluar.attr('disabled', true);
+                $('#status').html('Aktif');
             }else {
                 tahun_keluar.attr('disabled', false);
+                $('#status').html('Non-Aktif');
             }
             elemsingle.checked = val;
             is_aktif.handleOnchange(val);

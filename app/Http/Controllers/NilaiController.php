@@ -35,8 +35,9 @@ class NilaiController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->id;
         $nilai = Nilai::findOrFail($request->id);
-        // return $nilai;
+
         $nilai->update($request->all());
 
         $reply = [
