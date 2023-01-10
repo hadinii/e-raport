@@ -75,39 +75,31 @@ $role = Auth::user()->role;
                                             <th>#</th>
                                             <th>Nama</th>
                                             <th>Nilai Pengetahuan</th>
-                                            <th>Deskripsi Pengetahuan</th>
                                             <th>Nilai Keterampilan</th>
-                                            <th>Deskripsi Keterampilan</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($nilai as $row)
                                         <tr>
-                                            <th scope="row"><span class="tabledit-span">{{ $loop->iteration }}</span>
-                                                <input class="tabledit-input form-control input-sm" type="hidden" name="id" value="{{ trim($row->id) }}">
-                                            </th>
-                                            <td>{{ $row->raport->nama_siswa }}</td>
-                                            <td class="tabledit-view-mode"><span class="tabledit-span">{{ $row->nilai_pengetahuan }}</span>
-                                                @if ($tahun_ajaran->is_aktif)
-                                                <input class="tabledit-input form-control input-sm" type="text" name="nilai_pengetahuan" value="{{ trim($row->nilai_pengetahuan) }}">
-                                                @endif
-                                            </td>
-                                            <td class="tabledit-view-mode"><span class="tabledit-span">{{ $row->deskripsi_pengetahuan }}</span>
-                                                @if ($tahun_ajaran->is_aktif)
-                                                <input class="tabledit-input form-control input-sm" type="text" name="deskripsi_pengetahuan" value="{{ trim($row->deskripsi_pengetahuan) }}">
-                                                @endif
-                                            </td>
-                                            <td class="tabledit-view-mode"><span class="tabledit-span">{{ $row->nilai_keterampilan }}</span>
-                                                @if ($tahun_ajaran->is_aktif)
-                                                <input class="tabledit-input form-control input-sm" type="text" name="nilai_keterampilan" value="{{ trim($row->nilai_keterampilan) }}">
-                                                @endif
-                                            </td>
-                                            <td class="tabledit-view-mode"><span class="tabledit-span">{{ $row->deskripsi_keterampilan }}</span>
-                                                @if ($tahun_ajaran->is_aktif)
-                                                <input class="tabledit-input form-control input-sm" type="text" name="deskripsi_keterampilan" value="{{ trim($row->deskripsi_keterampilan) }}">
-                                                @endif
-                                            </td>
-                                            <input class="tabledit-input form-control input-sm" type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <form action="{{ route('nilai.store') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="jadwal_id" value="{{ $jadwal->id }}">
+                                                <th scope="row"><span class="tabledit-span">{{ $loop->iteration }}</span>
+                                                    <input class="tabledit-input form-control input-sm" type="hidden" name="id" value="{{ trim($row->id) }}">
+                                                </th>
+                                                <td>{{ $row->raport->nama_siswa }}</td>
+                                                <td class="tabledit-view-mode">
+                                                    <input class="tabledit-input form-control input-sm" type="text" id="nilai_pengetahuan_{{ $row->id }}" name="nilai_pengetahuan" value="{{ trim($row->nilai_pengetahuan) }}" readonly>
+                                                </td>
+                                                <td class="tabledit-view-mode">
+                                                    <input class="tabledit-input form-control input-sm" type="text" id="nilai_keterampilan_{{ $row->id }}" name="nilai_keterampilan" value="{{ trim($row->nilai_keterampilan) }}" readonly>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-inverse btn-edit-nilai {{ $tahun_ajaran->is_aktif ? '' : 'btn-disabled' }}" data-id="{{ $row->id }}">Ubah</button>
+                                                    <button type="submit" class="btn btn-sm btn-inverse btn-save-nilai d-none" data-id="{{ $row->id }}">Simpan</button>
+                                                </td>
+                                            </form>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -130,44 +122,64 @@ $role = Auth::user()->role;
 
         const url = '{{ route('nilai.store') }}';
 
-        $(document).ready(function() {
-            $('#example-2').Tabledit({
-                url: url,
-                autoFocus: false,
-                deleteButton: false,
-                columns: {
-                    identifier: [0, 'id'],
-                    editable: [[2, 'nilai_pengetahuan'], [3, 'deskripsi_pengetahuan'], [4, 'nilai_keterampilan'], [5, 'deskripsi_keterampilan']]
-                },
-                buttons: {
-                    edit: {
-                        class: 'btn btn-sm btn-primary btn-edit d-inline" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ubah Nilai"',
-                        html: '<i class="feather icon-edit mx-auto"></i>',
-                        action: 'edit'
-                    },
-                    save: {
-                        class: 'btn btn-sm btn-success',
-                        html: 'Save'
-                    }
-                },
-                onAjax: function(action, serialize) {
-                    console.log('onAjax(action, serialize)');
-                },
-                onSuccess: function(data, textStatus, jqXHR) {
-                    if(data.status){
-                        notify('fas fa-check', 'success', data.message);
-                        return;
-                    }
-                    notify('fas fa-exclamation-circle', 'warning', 'Opss Something went wrong');
-                },
-                onFail: function(jqXHR, textStatus, errorThrown) {
-                    notify('fas fa-exclamation-circle', 'danger', errorThrown);
-                    setTimeout(()=>{
-                        location.reload();
-                    }, 3000)
-                },
-            });
+        // btn edit nilai
+        $('.btn-edit-nilai').click(function() {
+            const id = $(this).data('id');
+            $('#nilai_pengetahuan_'+id).attr('readonly', false);
+            $('#nilai_keterampilan_'+id).attr('readonly', false);
+            $(this).addClass('d-none');
+            $('.btn-save-nilai').removeClass('d-none');
         });
+        
+        // btn save nilai
+        // $('.btn-save-nilai').click(function() {
+        //     const id = $(this).data('id');
+        //     $('#nilai_pengetahuan_'+id).attr('readonly', false);
+        //     $('#nilai_keterampilan_'+id).attr('readonly', false);
+        //     $(this).addClass('d-none');
+        //     $('.btn-save-nilai').removeClass('d-none');
+        // });
+
+
+
+        // $(document).ready(function() {
+        //     $('#example-2').Tabledit({
+        //         url: url,
+        //         autoFocus: false,
+        //         deleteButton: false,
+        //         columns: {
+        //             identifier: [0, 'id'],
+        //             editable: [[2, 'nilai_pengetahuan'], [3, 'deskripsi_pengetahuan'], [4, 'nilai_keterampilan'], [5, 'deskripsi_keterampilan']]
+        //         },
+        //         buttons: {
+        //             edit: {
+        //                 class: 'btn btn-sm btn-primary btn-edit d-inline" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ubah Nilai"',
+        //                 html: '<i class="feather icon-edit mx-auto"></i>',
+        //                 action: 'edit'
+        //             },
+        //             save: {
+        //                 class: 'btn btn-sm btn-success',
+        //                 html: 'Save'
+        //             }
+        //         },
+        //         onAjax: function(action, serialize) {
+        //             console.log('onAjax(action, serialize)');
+        //         },
+        //         onSuccess: function(data, textStatus, jqXHR) {
+        //             if(data.status){
+        //                 notify('fas fa-check', 'success', data.message);
+        //                 return;
+        //             }
+        //             notify('fas fa-exclamation-circle', 'warning', 'Opss Something went wrong');
+        //         },
+        //         onFail: function(jqXHR, textStatus, errorThrown) {
+        //             notify('fas fa-exclamation-circle', 'danger', errorThrown);
+        //             setTimeout(()=>{
+        //                 // location.reload();
+        //             }, 3000)
+        //         },
+        //     });
+        // });
 
         // show success notification on success
         @if ($message = session('success'))

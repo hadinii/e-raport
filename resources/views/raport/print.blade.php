@@ -1,6 +1,22 @@
 <?php
 $title = 'Raport';
 $user = Auth::user();
+
+function change_nilai(int $nilai){
+
+    if($nilai <= 70 && $nilai>=0){
+        return "D";
+    } elseif($nilai<=79) {
+        return "C";
+    } elseif($nilai<=89) {
+        return "B";
+    } elseif($nilai<=100) {
+        return "A";
+    } else{
+        return "-";
+    }
+
+}
 ?>
 @extends('layouts.print')
 
@@ -67,28 +83,28 @@ $user = Auth::user();
                         <table class="tg">
                             <thead>
                                 <tr>
-                                <th class="tg-iks7">Nama Peserta Didik</th>
-                                <th class="tg-iks7"><strong> {{ $siswa->nama }} </strong></th>
+                                <th class="tg-iks7">Nama Sekolah</th>
+                                <th class="tg-iks7"><strong>: {{ $sekolah->nama }} </strong></th>
                                 <th class="tg-iks7">Kelas</th>
-                                <th class="tg-iks7"><strong> {{ $kelas->nama_lengkap }} </strong></th>
+                                <th class="tg-iks7"><strong>: {{ $kelas->nama_lengkap }} </strong></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                <td class="tg-ng7p">NISN</td>
-                                <td class="tg-73oq"><strong> {{ $siswa->nisn }} </strong></td>
+                                <td class="tg-ng7p">Alamat Sekolah</td>
+                                <td class="tg-73oq"><strong>: {{ $sekolah->alamat }} </strong></td>
                                 <td class="tg-73oq">Semester</td>
-                                <td class="tg-73oq"><strong> {{ $tahun_ajaran->semester }} </strong></td>
+                                <td class="tg-73oq"><strong>: {{ $tahun_ajaran->semester }} </strong></td>
                                 </tr>
                                 <tr>
-                                <td class="tg-73oq">Nama Sekolah</td>
-                                <td class="tg-73oq"><strong> {{ $sekolah->nama }} </strong></td>
+                                <td class="tg-73oq">Nama Peserta Didik</td>
+                                <td class="tg-73oq"><strong>: {{ $siswa->nama }} </strong></td>
                                 <td class="tg-73oq">Tahun Ajaran</td>
-                                <td class="tg-73oq"><strong> {{ $tahun_ajaran->tahun_aktif }} </strong> </td>
+                                <td class="tg-73oq"><strong>: {{ $tahun_ajaran->tahun_aktif }} </strong> </td>
                                 </tr>
                                 <tr>
-                                <td class="tg-73oq">Alamat Sekolah</td>
-                                <td class="tg-73oq"><strong> {{ $sekolah->alamat }} </strong></td>
+                                <td class="tg-73oq">Nomor Induk / NISN</td>
+                                <td class="tg-73oq"><strong>: {{ $siswa->nisn }} </strong></td>
                                 <td class="tg-73oq"></td>
                                 <td class="tg-73oq"></td>
                                 </tr>
@@ -98,7 +114,13 @@ $user = Auth::user();
                     {{-- Sikap Kompetensi --}}
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="my-1">A. Sikap Kompetensi</h5>
+                            <h4 class="my-1">A. SIKAP
+                                <br><br>
+                                <small>1. Sikap Spritual</small>
+                            </h4>
+                            <h4 class="my-1">
+                                <small>2. Sikap Sosial</small>
+                            </h4>
                         </div>
                         <div class="card-block">
                             <div class="col-12 mt-3">
@@ -158,10 +180,10 @@ $user = Auth::user();
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->pelajaran->nama }}</td>
                                             <td>{{ $row->nilai_pengetahuan }}</td>
-                                            <td>{{ $row->nilai_pengetahuan < 85 ? ($row->nilai_pengetahuan < 67 ? 'C' : 'B' ) : 'A' }}</td>
+                                            <td>{{ change_nilai($row->nilai_pengetahuan) }}</td>
                                             <td class="{{ $row->deskripsi_pengetahuan ?? 'text-danger' }}">{{ $row->deskripsi_pengetahuan ?? 'Belum diisi' }}</td>
                                             <td>{{ $row->nilai_keterampilan }}</td>
-                                            <td>{{ $row->nilai_keterampilan < 85 ? ($row->nilai_keterampilan < 67 ? 'C' : 'B' ) : 'A' }}</td>
+                                            <td>{{ change_nilai($row->nilai_keterampilan) }}</td>
                                             <td class="{{ $row->deskripsi_keterampilan ?? 'text-danger' }}">{{ $row->deskripsi_keterampilan ?? 'Belum diisi' }}</td>
                                         </tr>
                                         @endforeach
@@ -215,7 +237,20 @@ $user = Auth::user();
                         </div>
                         <div class="card-block">
                             <div class="col-12 mt-3" style="min-height: 100px; border-style: solid; border-width: 1px;">
-                                <p>{{$raport->saran ?? 'Belum diisi'}}</p>
+                                <table class="tg-1">
+                                    <thead>
+                                        <tr>
+                                            <th class="tg-a">Saran</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                            <p style="margin-left:10px;">{{$raport->saran ?? '-'}}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

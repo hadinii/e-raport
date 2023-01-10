@@ -38,7 +38,7 @@ $showNav = true;
                         </div>
                         <div class="card-block">
                             <form action="{{ route('kelas.index') }}">
-                                <div class="col-4 form-group row px-0">
+                                <div class="col-5 form-group row px-0">
                                     <label class="col-sm-5 col-form-label">Tahun Ajaran :</label>
                                     <div class="col-sm-7">
                                         <select id="semester" name="semester" class="form-control custom-select">
@@ -137,17 +137,14 @@ $showNav = true;
                             @endif
                             <input type="hidden" name="tahun_ajaran_id" id="tahun_ajaran_id" value="{{ $currentSemester->id ?? null }}">
                             <div class="form-group form-primary row">
-                                <div class="col-2">
+                                <div class="col-3">
                                     <select name="tingkat_id" id="tingkat_id" class="form-control">
-                                        <option value="1">I</option>
-                                        <option value="2">II</option>
-                                        <option value="3">III</option>
-                                        <option value="4">IV</option>
-                                        <option value="5">V</option>
-                                        <option value="6">VI</option>
+                                        <option value="1">VII</option>
+                                        <option value="2">VIII</option>
+                                        <option value="3">IX</option>
                                     </select>
                                 </div>
-                                <div class="col-10">
+                                <div class="col-9">
                                     <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Kelas" value="{{ old('nama') }}" required>
                                 </div>
                             </div>

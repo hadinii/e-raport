@@ -2,6 +2,22 @@
 $title = 'Raport';
 $showNav = true;
 $user = Auth::user();
+function change_nilai(int $nilai){
+
+    if($nilai <= 70 && $nilai>=0){
+        return "D";
+    } elseif($nilai<=79) {
+        return "C";
+    } elseif($nilai<=89) {
+        return "B";
+    } elseif($nilai<=100) {
+        return "A";
+    } else{
+        return "-";
+    }
+
+}
+
 ?>
 @extends('layouts.adminty')
 
@@ -35,20 +51,20 @@ $user = Auth::user();
                             <div class="col-12 row">
                                 <div class="col-sm-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">Nama Peserta Didik</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $siswa->nama }} </strong> </label>
+                                        <label class="col-sm-5 col-form-label">Nama Sekolah</label>
+                                        <label class="col-sm-7 col-form-label">: <strong> {{ $sekolah->nama }} </strong> </label>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">NISN</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $siswa->nisn }} </strong> </label>
+                                        <label class="col-sm-5 col-form-label">Alamat</label>
+                                        <label class="col-sm-7 col-form-label">: <strong> {{ $sekolah->alamat }} </strong> </label>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">Nama Sekolah</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $sekolah->nama }} </strong> </label>
+                                        <label class="col-sm-5 col-form-label">Nama Peserta Didik</label>
+                                        <label class="col-sm-7 col-form-label">: <strong> {{ $siswa->nama }} </strong> </label>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label">Alamat Sekolah</label>
-                                        <label class="col-sm-8 col-form-label">: <strong> {{ $sekolah->alamat }} </strong> </label>
+                                        <label class="col-sm-5 col-form-label">Nomor Induk / NISN</label>
+                                        <label class="col-sm-7 col-form-label">: <strong> {{ $siswa->nisn }} </strong> </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -69,11 +85,11 @@ $user = Auth::user();
                             </div>
                         </div>
                     </div>
-                    {{-- Sikap Kompetensi --}}
+                    {{-- Sikap --}}
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="my-1">A. Sikap Kompetensi</h5>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis deserunt perferendis, eum similique totam nesciunt perspiciatis!</span>
+                            <h5 class="my-1">A. SIKAP</h5>
+                            <h6 class="my-1">1. Sikap Spritual</h6>
                             <div class="card-header-right">
                                 <ul class="list-unstyled card-option">
                                     <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize">
@@ -83,29 +99,53 @@ $user = Auth::user();
                             </div>
                         </div>
                         <div class="card-block">
-                            <div class="col-12 mt-3">
+                            <div class="col-12">
                                 <form action="{{ route('raport.update', $raport) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <table id="simpletable" class="table table-striped table-bordered nowrap">
                                         <thead>
                                         <tr class="bg-dark">
-                                            <th colspan="4" class="text-center">Deskripsi</th>
+                                            <th class="text-center">Predikat</th>
+                                            <th class="text-center">Deskripsi</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Sikap Spiritual</td>
+                                                <td class="text-center">Baik</td>
                                                 <td class="{{ $raport->sikap_spiritual ?? 'text-danger' }}">
                                                     <textarea name="sikap_spiritual" id="sikap_spiritual" class="form-control" rows="5" readonly>{{ $raport->sikap_spiritual ?? 'Belum diisi' }}</textarea>
                                                 </td>
                                             </tr>
+                                        </tbody>
+                                    </table>
+                                    @if ($tahun_ajaran->is_aktif && $kelas->wali_kelas_id == $user->id)
+                                    <button type="button" class="btn btn-sm btn-inverse btn-edit-sikap float-right"><i class="fas fa-download"></i> Ubah</button>
+                                    <button type="submit" class="btn btn-sm btn-inverse btn-save-sikap float-right d-none"><i class="fas fa-download"></i> Simpan</button>
+                                    @endif
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-header">
+                            <h6>2. Sikap Sosial</h6>
+                        </div>
+                        <div class="card-block">
+                            <div class="col-12">
+                                <form action="{{ route('raport.update', $raport) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                        <thead>
+                                        <tr class="bg-dark">
+                                            <th class="text-center">Predikat</th>
+                                            <th class="text-center">Deskripsi</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr>
-                                                <td>2</td>
-                                                <td>Sikap Sosial</td>
-                                                <td class="{{ $raport->sikap_sosial ?? 'text-danger' }}">
-                                                    <textarea name="sikap_sosial" id="sikap_sosial" class="form-control" rows="5" readonly>{{ $raport->sikap_sosial ?? 'Belum diisi' }}</textarea>
+                                                <td class="text-center">Baik</td>
+                                                <td class="{{ $raport->sikap_spiritual ?? 'text-danger' }}">
+                                                    <textarea name="sikap_spiritual" id="sikap_spiritual" class="form-control" rows="5" readonly>{{ $raport->sikap_spiritual ?? 'Belum diisi' }}</textarea>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -118,11 +158,10 @@ $user = Auth::user();
                             </div>
                         </div>
                     </div>
-                    {{-- Kompetensi Pengetahuan dan Keterampilan --}}
+                    {{-- Pengetahuan dan Keterampilan --}}
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="my-1">B. Kompetensi Pengetahuan dan Keterampilan</h5>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis deserunt perferendis, eum similique totam nesciunt perspiciatis!</span>
+                            <h5 class="my-1">B. Pengetahuan dan Keterampilan</h5>
                             <div class="card-header-right">
                                 <ul class="list-unstyled card-option">
                                     <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize">
@@ -133,21 +172,22 @@ $user = Auth::user();
                         </div>
                         <div class="card-block">
                             <div class="col-12 mt-3">
+                            {{-- Pengetahuan --}}
                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                     <thead>
                                         <tr class="bg-dark">
-                                            <th rowspan="2">No</th>
-                                            <th rowspan="2">Muatan Pelajaran</th>
-                                            <th colspan="3" class="text-center">Pengetahuan</th>
-                                            <th colspan="3" class="text-center">Keterampilan</th>
+                                            <th rowspan="2" class="text-center">No</th>
+                                            <th rowspan="2" class="text-center">Mata Pelajaran</th>
+                                            <th colspan="4" class="text-center">Pengetahuan</th>
                                         </tr>
                                         <tr class="bg-dark">
-                                            <th>Nilai</th>
+                                            <th>KKM</th>
+                                            <th>Angka</th>
                                             <th>Predikat</th>
                                             <th>Deskripsi</th>
-                                            <th>Nilai</th>
-                                            <th>Predikat</th>
-                                            <th>Deskripsi</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="6" class="pl-4">Kelompok A</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -156,16 +196,103 @@ $user = Auth::user();
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->pelajaran->nama }}</td>
                                             <td>{{ $row->nilai_pengetahuan }}</td>
-                                            <td>{{ $row->nilai_pengetahuan < 85 ? ($row->nilai_pengetahuan < 67 ? 'C' : 'B' ) : 'A' }}</td>
+                                            <td>{{ change_nilai($row->nilai_pengetahuan) }}</td>
                                             <td class="{{ $row->deskripsi_pengetahuan ?? 'text-danger' }}">{{ $row->deskripsi_pengetahuan ?? 'Belum diisi' }}</td>
                                             <td>{{ $row->nilai_keterampilan }}</td>
-                                            <td>{{ $row->nilai_keterampilan < 85 ? ($row->nilai_keterampilan < 67 ? 'C' : 'B' ) : 'A' }}</td>
-                                            <td class="{{ $row->deskripsi_keterampilan ?? 'text-danger' }}">{{ $row->deskripsi_keterampilan ?? 'Belum diisi' }}</td>
+                                            <!-- <td>{{ change_nilai($row->nilai_keterampilan) }}</td>
+                                            <td class="{{ $row->deskripsi_keterampilan ?? 'text-danger' }}">{{ $row->deskripsi_keterampilan ?? 'Belum diisi' }}</td> -->
                                         </tr>
                                         @endforeach
                                         @if (count($nilai) < 1)
                                         <tr>
-                                            <td colspan="8" class="text-center">Belum ada nilai</td>
+                                            <td colspan="6" class="text-center">Belum ada nilai</td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6" class="pl-4">Kelompok B</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($nilai as $row)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $row->pelajaran->nama }}</td>
+                                            <td>{{ $row->nilai_pengetahuan }}</td>
+                                            <td>{{ change_nilai($row->nilai_pengetahuan) }}</td>
+                                            <td class="{{ $row->deskripsi_pengetahuan ?? 'text-danger' }}">{{ $row->deskripsi_pengetahuan ?? 'Belum diisi' }}</td>
+                                            <td>{{ $row->nilai_keterampilan }}</td>
+                                            <!-- <td>{{ change_nilai($row->nilai_keterampilan) }}</td>
+                                            <td class="{{ $row->deskripsi_keterampilan ?? 'text-danger' }}">{{ $row->deskripsi_keterampilan ?? 'Belum diisi' }}</td> -->
+                                        </tr>
+                                        @endforeach
+                                        @if (count($nilai) < 1)
+                                        <tr>
+                                            <td colspan="6" class="text-center">Belum ada nilai</td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+
+                                {{-- Keterampilan --}}
+                                <table id="simpletable" class="table table-striped table-bordered nowrap mt-5">
+                                    <thead>
+                                        <tr class="bg-dark">
+                                            <th rowspan="2" class="text-center">No</th>
+                                            <th rowspan="2" class="text-center">Mata Pelajaran</th>
+                                            <th colspan="4" class="text-center">Keterampilan</th>
+                                        </tr>
+                                        <tr class="bg-dark">
+                                            <th>KKM</th>
+                                            <th>Angka</th>
+                                            <th>Predikat</th>
+                                            <th>Deskripsi</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="6" class="pl-4">Kelompok A</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($nilai as $row)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $row->pelajaran->nama }}</td>
+                                            <td>{{ $row->nilai_pengetahuan }}</td>
+                                            <td>{{ change_nilai($row->nilai_pengetahuan) }}</td>
+                                            <td class="{{ $row->deskripsi_pengetahuan ?? 'text-danger' }}">{{ $row->deskripsi_pengetahuan ?? 'Belum diisi' }}</td>
+                                            <td>{{ $row->nilai_keterampilan }}</td>
+                                            <!-- <td>{{ change_nilai($row->nilai_keterampilan) }}</td>
+                                            <td class="{{ $row->deskripsi_keterampilan ?? 'text-danger' }}">{{ $row->deskripsi_keterampilan ?? 'Belum diisi' }}</td> -->
+                                        </tr>
+                                        @endforeach
+                                        @if (count($nilai) < 1)
+                                        <tr>
+                                            <td colspan="6" class="text-center">Belum ada nilai</td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6" class="pl-4">Kelompok B</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($nilai as $row)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $row->pelajaran->nama }}</td>
+                                            <td>{{ $row->nilai_pengetahuan }}</td>
+                                            <td>{{ change_nilai($row->nilai_pengetahuan) }}</td>
+                                            <td class="{{ $row->deskripsi_pengetahuan ?? 'text-danger' }}">{{ $row->deskripsi_pengetahuan ?? 'Belum diisi' }}</td>
+                                            <td>{{ $row->nilai_keterampilan }}</td>
+                                            <!-- <td>{{ change_nilai($row->nilai_keterampilan) }}</td>
+                                            <td class="{{ $row->deskripsi_keterampilan ?? 'text-danger' }}">{{ $row->deskripsi_keterampilan ?? 'Belum diisi' }}</td> -->
+                                        </tr>
+                                        @endforeach
+                                        @if (count($nilai) < 1)
+                                        <tr>
+                                            <td colspan="6" class="text-center">Belum ada nilai</td>
                                         </tr>
                                         @endif
                                     </tbody>
@@ -177,7 +304,6 @@ $user = Auth::user();
                     <div class="card">
                         <div class="card-header">
                             <h5 class="my-1">C. Ekstrakurikuler</h5>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis deserunt perferendis, eum similique totam nesciunt perspiciatis!</span>
                             <div class="card-header-right">
                                 <ul class="list-unstyled card-option">
                                     <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Minimize">
@@ -194,9 +320,9 @@ $user = Auth::user();
                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                     <thead>
                                         <tr class="bg-dark">
-                                            <th >No</th>
-                                            <th>Kegiatan Ekstrakurikuler</th>
-                                            <th>Keterangan</th>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Kegiatan Ekstrakurikuler</th>
+                                            <th class="text-center">Keterangan</th>
                                             <th></th>
                                         </tr>
                                     </thead>

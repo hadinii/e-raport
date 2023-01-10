@@ -40,11 +40,9 @@ class NilaiController extends Controller
 
         $nilai->update($request->all());
 
-        $reply = [
-            'status' => true,
-            'message' => 'Nilai berhasil diubah!'
-        ];
-        return response()->json($reply, 200);
+        return redirect()
+            ->route('jadwal.show', $request->jadwal_id)
+            ->withSuccess('Berhasil mengubah nilai!');
     }
 
     /**

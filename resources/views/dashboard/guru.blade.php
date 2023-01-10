@@ -16,7 +16,7 @@ $user = Auth::user();
                     <div class="col-xl-6 col-md-12">
                         <div class="card user-card-full">
                             <div class="row m-l-0 m-r-0">
-                                <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="col-sm-5 bg-c-lite-green user-profile">
                                     <div class="card-block text-center text-white">
                                         <div class="m-b-25">
                                             <img src="{{ asset('adminty\files\assets\images\avatar-4.jpg') }}" class="img-radius" alt="User-Profile-Image">
@@ -26,7 +26,7 @@ $user = Auth::user();
                                         {{-- <i class="feather icon-edit m-t-10 f-16"></i> --}}
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-7">
                                     <div class="card-block">
                                         <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Wali Kelas</h6>
                                         <div class="row">
@@ -62,11 +62,11 @@ $user = Auth::user();
                             <div class="card bg-c-lite-green update-card">
                                 <div class="card-block">
                                     <div class="row align-items-end">
-                                        <div class="col-8">
+                                        <div class="col-9">
                                             <h4 class="text-white">{{ $semester->tahun_aktif ?? '-' }}</h4>
                                             <h6 class="text-white m-b-0">{{$semester->semester ?? '-'}}</h6>
                                         </div>
-                                        <div class="col-4 text-right">
+                                        <div class="col-3 text-right">
                                             <canvas id="update-chart-4" height="50"></canvas>
                                         </div>
                                     </div>

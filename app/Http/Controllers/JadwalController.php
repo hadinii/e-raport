@@ -53,6 +53,7 @@ class JadwalController extends Controller
         $nilai = $jadwal->getNilai();
 
         $data = [
+            'jadwal' => $jadwal,
             'pelajaran' => $pelajaran,
             'kelas' => $kelas,
             'tahun_ajaran' => $semester,

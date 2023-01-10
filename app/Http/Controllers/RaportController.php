@@ -132,7 +132,7 @@ class RaportController extends Controller
             'ekskul' => Ekskul::all()
         ];
         // return $data;
-        // return view('raport.print', $data);
+        return view('raport.print', $data);
         $pdf = PDF::loadView('raport.print', $data);
         return $pdf->download("Raport {$raport->nama_siswa} ({$raport->nama_tahun_ajaran}).pdf");
     }

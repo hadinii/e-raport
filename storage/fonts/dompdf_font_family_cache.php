@@ -78,8 +78,8 @@
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'open sans' => array(
-    'normal' => $fontDir . '/open_sans_normal_e506610fef0257e1844aa011b3f4e88e',
-    '600' => $fontDir . '/open_sans_600_0f0d2d443e3356ccf7c6b3d652414a15',
+    'normal' => $fontDir . '/open_sans_normal_90efcce23046f4cf42180c9b9a0b3885',
+    '600' => $fontDir . '/open_sans_600_87d2b64fb0ffd1f1d2c60018091b1193',
   ),
   'glyphicons halflings' => array(
     'normal' => $fontDir . '/glyphicons_halflings_normal_649b202ffed83c4604c4cf7c88e441bc',

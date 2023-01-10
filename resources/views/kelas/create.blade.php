@@ -57,12 +57,9 @@ $showNav = true;
                                         <label class="col-sm-3 col-form-label">Kelas</label>
                                         <div class="col-sm-3">
                                             <select name="tingkat_id" id="tingkat_id" class="form-control custom-select" required>
-                                                <option value="1">I</option>
-                                                <option value="2">II</option>
-                                                <option value="3">III</option>
-                                                <option value="4">IV</option>
-                                                <option value="5">V</option>
-                                                <option value="6">VI</option>
+                                                <option value="1">VII</option>
+                                                <option value="2">VIII</option>
+                                                <option value="3">IX</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">

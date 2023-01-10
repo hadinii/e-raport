@@ -18,8 +18,7 @@ $showNav = false;
                             <div class="text-center">
                                 <img src="{{ asset('adminty\files\assets\images\logo.png') }}" alt="logo.png" style="height: 100px">
                             </div>
-                            <h3 class="text-center" style="color:white">SDN 017
-                                Sungai Gantang</h3>
+                            <h3 class="text-center" style="color:white">SMP Negeri 10 Tapung</h3>
                             <div class="auth-box card">
                                 <div class="card-block">
                                     <div class="row m-b-20">
